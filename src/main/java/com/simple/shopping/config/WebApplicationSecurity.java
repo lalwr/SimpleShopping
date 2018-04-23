@@ -25,8 +25,8 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                 .csrf().ignoringAntMatchers("/**")
 //                .ignoringAntMatchers("/h2-console/**")
                 .and().headers().frameOptions().disable()
-                .and().formLogin() //시큐리티 로그인 사용
-                //.and().formLogin().loginPage("/users/login").usernameParameter("id").passwordParameter("password")
+//                .and().formLogin() //시큐리티 로그인 사용
+                .and().formLogin().loginPage("/users/login").usernameParameter("id").passwordParameter("password")
 //                .and().rememberMe().tokenRepository(simpleBoardTokenRepositoryImpl).rememberMeParameter("remember-me").tokenValiditySeconds(1209600)
                 .and().logout().permitAll();
     }
