@@ -22,7 +22,7 @@ public class OrderProduct {
     @JoinColumn(name = "order_no")
     private Order order;
 
-    public void addOrderProduct(Order order){
+    public void setOrder(Order order){
         this.order = order;
         if(!order.getOrderProducts().contains(this)){
             order.getOrderProducts().add(this);
@@ -33,7 +33,7 @@ public class OrderProduct {
     @JoinColumn(name = "product_no")
     private Product product;
 
-    public void addOrderProduct(Product product){
+    public void setProduct(Product product){
         this.product = product;
         if(!product.getOrderProducts().contains(this)){
             product.getOrderProducts().add(this);
