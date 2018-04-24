@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "product_category")
+@Table(name = "category")
 @Getter
 @Setter
 public class Category {
@@ -20,7 +20,7 @@ public class Category {
     @Column(name ="name")
     private String name;
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Product> products = new ArrayList<>();
 
     public void addProduct(Product product){
