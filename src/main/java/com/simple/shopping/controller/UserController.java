@@ -44,12 +44,9 @@ public class UserController {
         userRole.setRoleName("USER");
         user.setRoles(userRoleList);
 
-        System.out.println("encode password : " + user.getPassword());
         User saveUser = userService.addUser(user);
 
-        System.out.println(saveUser.getId());
         return "redirect:/";
     }
-
 
 }
