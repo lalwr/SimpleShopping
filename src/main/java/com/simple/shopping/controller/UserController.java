@@ -33,7 +33,7 @@ public class UserController {
     @GetMapping(path = "/login")
     public String login() { return "users/login"; }
 
-    @PostMapping(path = "join")
+    @PostMapping(path = "/join")
     public String join(@ModelAttribute User user){
 
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -48,5 +48,8 @@ public class UserController {
 
         return "redirect:/";
     }
+
+    @GetMapping(path = "/user")
+    public String user() { return "users/user"; }
 
 }
