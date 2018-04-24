@@ -27,17 +27,17 @@ public class Order {
     @JoinColumn(name="user_no")
     private User user;
 
-    public void addOrder(User user){
+    public void setUser(User user){
         this.user = user;
         if(!user.getOrders().contains(this)){
             user.getOrders().add(this);
         }
     }
 
-    @OneToMany(mappedBy = "order_product", fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
-    public void setOrder(OrderProduct orderProduct){
+    public void addOrderProduct(OrderProduct orderProduct){
         this.orderProducts.add(orderProduct);
         if(orderProduct.getOrder() != this){
             orderProduct.setOrder(this);
