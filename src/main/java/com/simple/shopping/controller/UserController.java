@@ -29,10 +29,6 @@ public class UserController {
         modelMap.addAttribute("user", user);
         return "users/join";
     }
-
-    @GetMapping(path = "/login")
-    public String login() { return "users/login"; }
-
     @PostMapping(path = "/join")
     public String join(@ModelAttribute User user){
 
@@ -48,6 +44,11 @@ public class UserController {
 
         return "redirect:/";
     }
+
+    @GetMapping(path = "/login")
+    public String login() { return "users/login"; }
+
+
 
     @GetMapping(path = "/user")
     public String user() { return "users/user"; }
