@@ -18,11 +18,14 @@ public class ShoppingApplication implements WebMvcConfigurer{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		System.out.println("========================================================");
 		if(!registry.hasMappingForPattern("/webjars/**")){
-			System.out.println("webjars has not mapping for pattern!!");
+			System.out.println("has not mapping for pattern : /webjars/**");
 			registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:META-INF/resources/webjars/");
 //			registry.addResourceHandler("/**").addResourceLocations("classpath:META-INF/");
 		}
-
+		if(!registry.hasMappingForPattern("/static/**")){
+			System.out.println("has not mapping for pattern : /static/**");
+			registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+		}
 		System.out.println("========================================================");
 	}
 
