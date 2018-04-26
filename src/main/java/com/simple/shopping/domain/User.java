@@ -29,6 +29,18 @@ public class User implements Serializable{
     private String password;
     private LocalDateTime regdate;
 
+    @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<UserRole> roles = new ArrayList<>();
+
+    // 헬퍼 메소드. User에 UserRole을 추가할때 사용한다.
+    public void addUserRole(UserRole role){
+        this.roles.add(role);
+        if(role.getUser() != this){
+            role.setUser(this);
+        }
+
+    }
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Order> orders = new ArrayList<>();
 
