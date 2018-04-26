@@ -19,13 +19,13 @@ public class OrderProduct {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "order_no")
-    private Order order;
+    @JoinColumn(name = "bill_no")
+    private Bill bill;
 
-    public void setOrder(Order order){
-        this.order = order;
-        if(!order.getOrderProducts().contains(this)){
-            order.getOrderProducts().add(this);
+    public void setBill(Bill bill){
+        this.bill = bill;
+        if(!bill.getOrderProducts().contains(this)){
+            bill.getOrderProducts().add(this);
         }
     }
 
