@@ -41,5 +41,29 @@ public class User implements Serializable{
 
     }
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Order> orders = new ArrayList<>();
+
+    public void addOrder(Order order){
+        this.orders.add(order);
+        if(order.getUser()!=this){
+            order.setUser(this);
+        }
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private List<UserRole> roles;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    List<Cart> carts = new ArrayList<>();
+
+    public void addCart(Cart cart){
+        this.carts.add(cart);
+        if(cart.getUser() != this){
+            cart.setUser(this);
+        }
+    }
+
 
 }
