@@ -29,7 +29,7 @@ public class User implements Serializable{
     private String password;
     private LocalDateTime regdate;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Order> orders = new ArrayList<>();
 
     public void addOrder(Order order){
