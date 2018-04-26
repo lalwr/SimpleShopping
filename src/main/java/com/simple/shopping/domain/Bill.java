@@ -9,11 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name ="order")
+@Table(name ="bill")
 @Getter
 @Setter
-public class Order {
-
+public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
@@ -29,18 +28,18 @@ public class Order {
 
     public void setUser(User user){
         this.user = user;
-        if(!user.getOrders().contains(this)){
-            user.getOrders().add(this);
+        if(!user.getBiils().contains(this)){
+            user.getBiils().add(this);
         }
     }
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "bill", fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
     public void addOrderProduct(OrderProduct orderProduct){
         this.orderProducts.add(orderProduct);
-        if(orderProduct.getOrder() != this){
-            orderProduct.setOrder(this);
+        if(orderProduct.getBill() != this){
+            orderProduct.setBill(this);
         }
     }
 }
