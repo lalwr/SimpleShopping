@@ -29,21 +29,29 @@ public class User implements Serializable{
     private String password;
     private LocalDateTime regdate;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Order> orders = new ArrayList<>();
+    @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserRole> roles = new ArrayList<>();
 
-    public void addOrder(Order order){
-        this.orders.add(order);
-        if(order.getUser()!=this){
-            order.setUser(this);
+    // 헬퍼 메소드. User에 UserRole을 추가할때 사용한다.
+    public void addUserRole(UserRole role){
+        this.roles.add(role);
+        if(role.getUser() != this){
+            role.setUser(this);
+        }
+
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Bill> biils = new ArrayList<>();
+
+    public void addBill(Bill bill){
+        this.biils.add(bill);
+        if(bill.getUser()!=this){
+            bill.setUser(this);
         }
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private List<UserRole> roles;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Cart> carts = new ArrayList<>();
 
     public void addCart(Cart cart){
