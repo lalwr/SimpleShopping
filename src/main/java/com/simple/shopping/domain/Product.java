@@ -26,7 +26,7 @@ public class Product {
 
     private LocalDateTime regdate;
 
-    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<OrderProduct> orderProducts = new ArrayList<>();
 
     public void addOrderProduct(OrderProduct orderProduct){
@@ -36,7 +36,7 @@ public class Product {
         }
     }
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL ,fetch = FetchType.EAGER )
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL ,fetch = FetchType.LAZY )
     List<Cart> carts = new ArrayList<>();
 
     public void addCart(Cart cart){
