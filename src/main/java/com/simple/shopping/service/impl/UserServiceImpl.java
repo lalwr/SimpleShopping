@@ -22,12 +22,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional(readOnly = false)
     public User addUser(User user) {
         User saveuser = userRepository.save(user);
         return saveuser;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }

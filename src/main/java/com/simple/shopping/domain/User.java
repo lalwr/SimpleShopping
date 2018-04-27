@@ -3,6 +3,7 @@ package com.simple.shopping.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -51,7 +52,7 @@ public class User implements Serializable{
         }
     }
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Cart> carts = new ArrayList<>();
 
     public void addCart(Cart cart){
