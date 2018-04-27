@@ -134,7 +134,7 @@ function join(){
     var rePassword = document.getElementById("rePassword");
     var phone = document.getElementById("phone");
     var regExp_phone= /^\d{2,3}-\d{3,4}-\d{4}$/
-    var adddress = document.getElementById("phone");
+    var address = document.getElementById("address");
 
     //빈값 검사
     if( !id.value ){
@@ -149,15 +149,17 @@ function join(){
         alert("email을 입력해주세요.");
         email.focus();
         return false;
-    }else if( email.value.match(regExp_email) != null  ){
+    }/*else if( email.value.match(regExp_email) != null  ){
         alert("email 양식을 확인해주세요.");
+        email.focus();
         return false;
-    }else if( !password.value  ){
+    }*/else if( !password.value  ){
         alert("password를 입력해주세요.");
         password.focus();
         return false;
     }else if( password.value != rePassword.value ){
         alert("비밀번호가 일치하지 않습니다.");
+        password.focus();
         return false;
     }else if( !phone.value  ){
         alert("phone을 입력해주세요.");
@@ -165,11 +167,14 @@ function join(){
         return false;
     }else if( phone.value.match(regExp_phone) != null  ){
         alert("phone은 숫자만 입력가능합니다.");
+        phone.focus();
         return false;
-    }else if( !adddress.value  ){
+    }else if( !address.value  ){
         alert("adddress를 입력해주세요.");
-        adddress.focus();
+        address.focus();
         return false;
+    }else{
+        document.getElementById("formJoin").submit();
     }
 
 }

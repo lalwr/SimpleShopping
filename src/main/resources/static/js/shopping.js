@@ -1,6 +1,6 @@
 function moveLogin(){
-    window.location.href = "/login";
+    window.location.href = "/users/login";
 }
 function moveJoin(){
-    window.location.href = "/join";
+    window.location.href = "/users/join";
 }

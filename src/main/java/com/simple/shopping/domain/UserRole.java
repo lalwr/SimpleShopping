@@ -21,7 +21,7 @@ public class UserRole {
     private String roleName;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_no")
     User user;
 
     //헬퍼메소드
