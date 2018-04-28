@@ -11,13 +11,13 @@
             </li>
         </ul>
 
-        <div class="my-2 my-lg-0">
-            <span class="navbar-text"></span>
+        <div sec:authorize="!isAuthenticated()" class="my-2 my-lg-0">
             <button type="button" class="btn btn-success" onclick="moveLogin()">로그인</button>
+            <button type="button" class="btn btn-info" onclick="moveJoin()">회원가입</button>
         </div>
-        <div class="my-2 my-lg-0">
-            <span class="navbar-text"></span>
-            <button type="button" class="btn btn-primary" onclick="moveJoin()">회원가입</button>
+        <div sec:authorize="isAuthenticated()" class="my-2 my-lg-0">
+            <span class="navbar-text" th:text="${loginUser.name} + '님 환영합니다.'"></span>
+            <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
         </div>
     </div>
 </nav>

@@ -8,10 +8,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/users")
@@ -49,7 +46,18 @@ public class UserController {
     @GetMapping(path = "/user")
     public String user() { return "users/user"; }
 
-    @GetMapping(path = "/update")
-    public String userUpdate() { return "users/userUpdate"; }
+    @PostMapping
+    @RequestMapping("/emailOverlap")
+    @ResponseBody
+    public String emailCheck(@RequestParam("email") String email){
+        String overlap = "false";
+
+        if(userService.countByEmail(email) > 0){
+            overlap = "overlap";
+        }
+
+        return overlap;
+
+    }
 
 }

@@ -33,4 +33,11 @@ public class UserServiceImpl implements UserService{
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long countByEmail(String email) {
+        return userRepository.countByEmail(email);
+    }
+
 }
