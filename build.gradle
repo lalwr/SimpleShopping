@@ -86,6 +86,7 @@ dependencies {
 	compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.3.0'
 
 	compile 'org.thymeleaf.extras:thymeleaf-extras-java8time'
+    compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4'
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile("com.querydsl:querydsl-sql-spatial:${querydslVersion}")
 	compile("com.querydsl:querydsl-jpa:${querydslVersion}")
@@ -94,6 +95,7 @@ dependencies {
 
 	compile 'org.webjars:jquery:3.3.1-1'
 	compile 'org.webjars:bootstrap:4.1.0'
+
 
 	runtime('com.h2database:h2:1.4.197')
 //    runtime('mysql:mysql-connector-java')

@@ -20,7 +20,7 @@
                                 <h3 class="mb-0">Login</h3>
                             </div>
                             <div class="card-body">
-                                <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST" th:action="@{/product}"action="#">
+                                <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST" th:action="@{/users/login}"action="#">
                                     <div class="form-group">
                                         <label for="id">ID</label>
                                         <input type="text" class="form-control form-control-lg rounded-0" name="id" id="id" required="">
@@ -38,7 +38,7 @@
                                             <span class="custom-control-description small text-dark">Remember me on this computer</span>
                                         </label>
                                     </div>
-                                    <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
+                                    <button type="sumit" class="btn btn-success btn-lg float-right" id="login">Login</button>
                                 </form>
                             </div>
                             <!--/card-block-->
