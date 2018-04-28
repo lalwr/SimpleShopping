@@ -32,6 +32,23 @@ $(function() {
                 $this.addClass("show");
                 $(this).addClass("btn-outline-primary");
             }
-        });
+        });d
     });
+
+    $("#formLogin").submit(function() {
+        var id = document.getElementById("id");
+        var password = document.getElementById("password");
+
+        if( !id.value  ){
+            alert("ID를 입력해주세요.");
+            id.focus();
+            return false;
+        }else if( !password.value  ){
+            alert("password를 입력해주세요.");
+            password.focus();
+            return false;
+        }
+    });
+
+
 });

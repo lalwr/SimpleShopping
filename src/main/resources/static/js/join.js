@@ -126,22 +126,17 @@ function closeDaumPostcode() {
 }
 
 function join(){
-    var id = document.getElementById("id");
     var name = document.getElementById("name");
     var email = document.getElementById("email");
     var regExp_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     var password = document.getElementById("password");
     var rePassword = document.getElementById("rePassword");
     var phone = document.getElementById("phone");
-    var regExp_phone= /^\d{2,3}-\d{3,4}-\d{4}$/
+    var regExp_phone= /^[0-9]+$/;
     var address = document.getElementById("address");
 
     //빈값 검사
-    if( !id.value ){
-        alert("id를 입력해주세요.");
-        id.focus();
-        return false;
-    }else if( !name.value  ){
+    if( !name.value  ){
         alert("name을 입력해주세요.");
         name.focus();
         return false;
@@ -149,12 +144,16 @@ function join(){
         alert("email을 입력해주세요.");
         email.focus();
         return false;
-    }/*else if( email.value.match(regExp_email) != null  ){
+    }else if( !email.value.match(regExp_email)  ){
         alert("email 양식을 확인해주세요.");
         email.focus();
         return false;
-    }*/else if( !password.value  ){
+    }else if( !password.value  ){
         alert("password를 입력해주세요.");
+        password.focus();
+        return false;
+    }else if( password.value.length <= 5  && rePassword.value.length <= 5 ){
+        alert("password는 6자이상 가능합니다.");
         password.focus();
         return false;
     }else if( password.value != rePassword.value ){
@@ -165,8 +164,12 @@ function join(){
         alert("phone을 입력해주세요.");
         phone.focus();
         return false;
-    }else if( phone.value.match(regExp_phone) != null  ){
+    }else if( !phone.value.match(regExp_phone)  ){
         alert("phone은 숫자만 입력가능합니다.");
+        phone.focus();
+        return false;
+    }else if( phone.value.length > 11){
+        alert("phone는 11자 이하만 가능합니다.");
         phone.focus();
         return false;
     }else if( !address.value  ){
@@ -174,7 +177,20 @@ function join(){
         address.focus();
         return false;
     }else{
-        document.getElementById("formJoin").submit();
+        $.ajax({
+            type : "POST",
+            url : "/users/emailOverlap",
+            data : {
+                email :$("#email").val()
+            },
+            success : function (data) {
+                if(data == "overlap"){
+                    alert("이메일이 중복입니다. 변경해주세요.");
+                }else{
+                    document.getElementById("formJoin").submit();
+                }
+            }
+        });
     }
 
 }

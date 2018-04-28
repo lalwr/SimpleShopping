@@ -4,3 +4,6 @@ function moveLogin(){
 function moveJoin(){
     window.location.href = "/users/join";
 }
+function logout() {
+    window.location.href = "/logout";
+}

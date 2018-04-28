@@ -20,6 +20,7 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/users/login").permitAll()
                 .antMatchers("/users/join").permitAll()
+                .antMatchers("/users/emailOverlap").permitAll()
                 .antMatchers("/users/**").hasRole("USER")
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().fullyAuthenticated()

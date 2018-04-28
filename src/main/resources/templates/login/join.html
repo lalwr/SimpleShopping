@@ -28,11 +28,6 @@
                             <div class="card-body">
                                 <form class="form" id="formJoin" role="form" autocomplete="off"  novalidate="" method="POST" th:action="@{/users/join}" action="#">
                                     <div class="form-group">
-                                        <label for="id">ID</label>
-                                        <input type="text" class="form-control form-control-lg rounded-0" name="id" id="id" required="" >
-                                        <div class="invalid-feedback">Oops, you missed this one.</div>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="name">name</label>
                                         <input type="text" class="form-control form-control-lg rounded-0" name="name" id="name" required="" >
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
@@ -54,13 +49,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label>phone</label>
-                                        <input type="text" class="form-control form-control-lg rounded-0" id="phone" name="phone" required="" >
+                                        <input type="text" class="form-control form-control-lg rounded-0" id="phone" name="phone" required="" size="11" maxlength="11">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div class="form-group">
                                         <label>address</label>
                                         <button type="button" class="btn btn-info btn-sm" id="addressSearch">search</button>
-                                        <input type="text" class="form-control form-control-lg rounded-0" id="address" name="address" required="" >
+                                        <input type="text" class="form-control form-control-lg rounded-0" id="address" name="address" required="" size="50" maxlength="50">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div>
@@ -70,7 +65,7 @@
                                             <span class="custom-control-description small text-dark">Remember me on this computer</span>
                                         </label>
                                     </div>
-                                    <button type="button" class="btn btn-success btn-lg float-right" id="btnLogin" onclick="join()">Join</button>
+                                    <button type="button" class="btn btn-success btn-lg float-right" id="join" onclick="join()">Join</button>
                                 </form>
                             </div>
                             <!--/card-block-->
