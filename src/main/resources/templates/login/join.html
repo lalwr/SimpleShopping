@@ -2,17 +2,18 @@
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
 
 <th:block layout:fragment="html_head">
-
+    <link th:src="@{/static/css/login.css}">
+    <script th:src="@{/static/js/join.js}"></script>
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <title>회원가입</title>
 </th:block>
 
-
 <th:block layout:fragment="body_main">
-    <form method="post" th:action="@{/login}" th:object="${user}" action="#">
-        <p>email: <input type="text" th:field="*{name}" /></p>
-        <p>email: <input type="text" th:field="*{email}" /></p>
-        <p>password: <input type="password" th:field="*{password}" /></p>
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    <div id="fog"></div>
+    <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
+    <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+        <img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+    </div>
     <div class="container py-5">
         <div class="row">
             <div class="col-md-12">
@@ -25,21 +26,42 @@
                                 <h3 class="mb-0">Join</h3>
                             </div>
                             <div class="card-body">
-                                <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST" th:action="@{/users/join}" th:object="${user}" action="#">
+                                <form class="form" id="formJoin" role="form" autocomplete="off"  novalidate="" method="POST" th:action="@{/users/join}" action="#">
+                                    <div class="form-group">
+                                        <label for="id">ID</label>
+                                        <input type="text" class="form-control form-control-lg rounded-0" name="id" id="id" required="" >
+                                        <div class="invalid-feedback">Oops, you missed this one.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">name</label>
+                                        <input type="text" class="form-control form-control-lg rounded-0" name="name" id="name" required="" >
+                                        <div class="invalid-feedback">Oops, you missed this one.</div>
+                                    </div>
                                     <div class="form-group">
                                         <label for="email">email</label>
-                                        <input type="text" class="form-control form-control-lg rounded-0" name="email" id="email" required="" th:field="*{email}">
+                                        <input type="text" class="form-control form-control-lg rounded-0" name="email" id="email" required="" >
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div class="form-group">
                                         <label>Password</label>
-                                        <input type="password" class="form-control form-control-lg rounded-0" id="pwd1" required="" autocomplete="new-password" th:field="*{password}">
+                                        <input type="password" class="form-control form-control-lg rounded-0" id="password" name="password" required="" autocomplete="new-password" >
                                         <div class="invalid-feedback">Enter your password too!</div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Password</label>
-                                        <input type="password" class="form-control form-control-lg rounded-0" id="pwd2" required="" autocomplete="new-password" th:field="*{password}">
+                                        <label>Re Password</label>
+                                        <input type="password" class="form-control form-control-lg rounded-0" id="rePassword" required="" autocomplete="new-password" >
                                         <div class="invalid-feedback">Enter your password too!</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>phone</label>
+                                        <input type="text" class="form-control form-control-lg rounded-0" id="phone" name="phone" required="" >
+                                        <div class="invalid-feedback">Oops, you missed this one.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>address</label>
+                                        <button type="button" class="btn btn-info btn-sm" id="addressSearch">search</button>
+                                        <input type="text" class="form-control form-control-lg rounded-0" id="address" name="address" required="" >
+                                        <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div>
                                         <label class="custom-control custom-checkbox">
@@ -48,7 +70,7 @@
                                             <span class="custom-control-description small text-dark">Remember me on this computer</span>
                                         </label>
                                     </div>
-                                    <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Join</button>
+                                    <button type="button" class="btn btn-success btn-lg float-right" id="btnLogin" onclick="join()">Join</button>
                                 </form>
                             </div>
                             <!--/card-block-->
