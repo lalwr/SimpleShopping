@@ -31,4 +31,18 @@ public class CategoryServiceImpl implements CategoryService{
     public List<Category> getCategories() {
         return categoryRepository.findAll();
     }
+
+    @Override
+    @Transactional
+    public Category updateCategory(Category ctgr) {
+        Category categoryToUpdate = categoryRepository.getOne(ctgr.getNo());
+        categoryToUpdate.setName(ctgr.getName());
+        return categoryRepository.save(categoryToUpdate);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCategory(Category ctgr) {
+        categoryRepository.delete(ctgr);
+    }
 }

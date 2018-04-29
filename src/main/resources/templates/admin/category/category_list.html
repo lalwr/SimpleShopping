@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layout/main_layout">
+
+<th:block layout:fragment="html_head">
+
+    <title>카테고리 목록보기</title>
+</th:block>
+
+<th:block layout:fragment="body_main">
+    <div style="margin-top: 40px"></div>
+    <form th:action="@{/admin/ctgr}" action="#" method="post" id="addForm">
+        <div class="form-group" style="text-align:center;">
+            <input type="text" class="form-control" id="ctgrName"
+                   aria-describedby="categoryHelp" placeholder="카테고리 명" name="name"
+                    style="width: 20%;display:inline-block;">
+            <button type="submit" class="btn btn-sm btn-outline-secondary" >
+                <span data-feather="calendar"></span>
+                추가
+            </button>
+        </div>
+    </form>
+    <form th:action="@{/admin/ctgr/list}" action="#" method="post" id="modifyForm">
+        <div style="text-align:center;margin:60px 0px 20px 0px;">
+            <div th:if="${not #lists.isEmpty(ctgrs)}" th:each="ctgr, status: ${ctgrs}">
+                <input type="checkbox" th:name="${'ctgrs['+status.index+'].no'}" th:value="${ctgr.no}">
+                <input type="text" th:name="${'ctgrs['+status.index+'].name'}" th:value="${ctgr.name}">
+                <!--<input type="hidden" name="_method" value="put">-->
+            </div>
+            <!--<input type="checkbox" name="ctgrBox" value="1:Linux">-->
+            <!--<input type="checkbox" name="ctgrBox" value="2:Software">-->
+            <!--<input type="checkbox" name="ctgrBox" value="3:apple">-->
+            <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="'submitByMethod(\'modifyForm\', \'PUT\');'">
+                <span data-feather="calendar"></span>
+                선택 수정
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="'submitByMethod(\'modifyForm\', \'DELETE\');'">
+                <span data-feather="calendar"></span>
+                선택 삭제
+            </button>
+        </div>
+    </form>
+    <script th:src="@{/static/js/admin.js}"></script>
+</th:block>
+</html>

@@ -1,6 +1,7 @@
 package com.simple.shopping.controller;
 
 import com.simple.shopping.domain.Category;
+import com.simple.shopping.dto.CategoryDto;
 import com.simple.shopping.service.CategoryService;
 import com.simple.shopping.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,34 @@ public class CategoryController {
     @PostMapping
     public String addCategory(@ModelAttribute Category category){
         categoryService.addCategory(category);
-        return "redirect:admin/ctgr";
+        return "redirect:/admin/ctgr/list";
+    }
+
+    @PutMapping(path = "/list")
+    public String updateCategories(@ModelAttribute CategoryDto categoryDto){
+        for(CategoryDto category : categoryDto.getCtgrs()){
+            if(category.getNo() != null){
+                Category ctgr = new Category();
+                ctgr.setNo(category.getNo());
+                ctgr.setName(category.getName());
+                categoryService.updateCategory(ctgr);
+            }
+            System.out.println(category.getNo()+" : "+category.getName());
+        }
+//        categoryService.addCategory(category1);
+        return "redirect:/admin/ctgr/list";
+    }
+
+    @DeleteMapping(path = "/list")
+    public String deleteCategories(@ModelAttribute CategoryDto categoryDto){
+        for(CategoryDto category : categoryDto.getCtgrs()){
+            if(category.getNo() != null){
+                Category ctgr = new Category();
+                ctgr.setNo(category.getNo());
+                categoryService.deleteCategory(ctgr);
+            }
+        }
+        return "redirect:/admin/ctgr/list";
     }
 
     @GetMapping(path = "/list")
