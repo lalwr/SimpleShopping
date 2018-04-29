@@ -32,7 +32,7 @@ $(function() {
                 $this.addClass("show");
                 $(this).addClass("btn-outline-primary");
             }
-        });d
+        });
     });
 
     $("#formLogin").submit(function() {

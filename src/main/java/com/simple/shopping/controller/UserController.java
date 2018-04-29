@@ -19,9 +19,7 @@ public class UserController {
 
 
     @GetMapping(path = "/join")
-    public String userJoin(ModelMap modelMap){
-        User user = new User();
-        modelMap.addAttribute("user", user);
+    public String userJoin(){
         return "login/join";
     }
 
