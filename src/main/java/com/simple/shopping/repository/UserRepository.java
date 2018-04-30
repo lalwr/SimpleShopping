@@ -7,5 +7,7 @@ import com.simple.shopping.domain.User;
 public interface UserRepository extends JpaQueryDslPredicateRepository<User, Long> {
 
     public User findUserByEmail(String email);
+    public Long countByEmail(String email);
+
 }
 // spring data method query
