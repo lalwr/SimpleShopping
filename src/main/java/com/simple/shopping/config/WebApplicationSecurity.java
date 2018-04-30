@@ -17,20 +17,21 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                 .requestMatchers(new AntPathRequestMatcher("/**.html")).permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/css/**").permitAll()
-                .antMatchers("/login/**").permitAll()
-                .antMatchers("/join/**").permitAll()
-                .antMatchers("/users/**").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/static/**").permitAll()
+                .antMatchers("/users/login").permitAll()
+                .antMatchers("/users/join").permitAll()
+                .antMatchers("/users/emailOverlap").permitAll()
+                .antMatchers("/users/**").hasRole("USER")
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .csrf().ignoringAntMatchers("/**")
 //                .ignoringAntMatchers("/h2-console/**")
                 .and().headers().frameOptions().disable()
 //                .and().formLogin() //시큐리티 로그인 사용
-                .and().formLogin().loginPage("/login/login").usernameParameter("id").passwordParameter("password").defaultSuccessUrl("/product")
+                .and().formLogin().loginPage("/users/login").usernameParameter("id").passwordParameter("password").defaultSuccessUrl("/users/user")
 //                .and().rememberMe().tokenRepository(simpleBoardTokenRepositoryImpl).rememberMeParameter("remember-me").tokenValiditySeconds(1209600)
                 .and().logout().permitAll();
     }
+
 }
