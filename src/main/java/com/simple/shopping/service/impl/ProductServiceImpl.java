@@ -14,32 +14,65 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
     @Override
-    @Transactional(readOnly = true)
-    public Page<Product> getProducts(int page) {
-        return getProducts(null,page);
+    @Transactional
+    public int countAllByName(String search) {
+        return productRepository.countAllByName(search);
+    }
+
+    @Override
+    @Transactional
+    public int countAllByCategoryAndName(String search, String category) {
+        return productRepository.countAllByCategoryAndName(search, category);
+    }
+
+    @Override
+    @Transactional
+    public int countAll() {
+        return productRepository.countAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Product> getProducts(String category, int page) {
-        Page<Product> products = null;
+    public Page<Product> getProducts(int page) {
+        return getProducts(null, null,page);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Product> getProducts(String search, String category, int page) {
+        Page<Product> products=null;
         PageRequest pageRequest = PageRequest.of(page - 1, 6,new Sort(Sort.Direction.ASC, "no"));
-        if(("".equals(category)||category == null)) {
-            products = productRepository.findAllBy(pageRequest);
+        if(category == null){
+            category="All";
         }
-//        }else if("Linux".equals(category)){
-//            products = productRepository.findProductsByCategory_No(1, pageRequest);
-//        }else if("Programming".equals(category)){
-//            products = productRepository.findProductsByCategory_No(2, pageRequest);
-//        }else if("Computer".equals(category)){
-//            products = productRepository.findProductsByCategory_No(3, pageRequest);
-//        }else if("ETC".equals(category)){
-//            products = productRepository.findProductsByCategory_No(4, pageRequest);
-//        }
+        if("All".equals(category) && (search == null || "".equals(search))) {
+            products = productRepository.findAllBy(pageRequest);
+        }else if("All".equals(category) && (search != null || !"".equals(search))){
+            products = productRepository.findProductsByName(search,pageRequest);
+        }else{
+            switch (category){
+                case "Linux":
+                    products = productRepository.findProductsByCategoryAndName(search, "Linux",pageRequest);
+                    break;
+                case "Programming":
+                    products = productRepository.findProductsByCategoryAndName(search, "Programming",pageRequest);
+                    break;
+                case "Computer":
+                    products = productRepository.findProductsByCategoryAndName(search, "Computer",pageRequest);
+                    break;
+                case "ETC":
+                    products = productRepository.findProductsByCategoryAndName(search, "ETC",pageRequest);
+            }
+        }
+
 
         return products;
     }
