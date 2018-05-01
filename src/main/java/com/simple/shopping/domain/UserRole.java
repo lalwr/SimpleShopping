@@ -14,14 +14,10 @@ public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
-
-    private String id;
-
-    @Column(name = "role_name")
     private String roleName;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_no")
     User user;
 
     //헬퍼메소드
