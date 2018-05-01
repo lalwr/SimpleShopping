@@ -40,4 +40,10 @@ public class UserServiceImpl implements UserService{
         return userRepository.countByEmail(email);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public String countByEmailAndPassword(String email, String password) {
+        return userRepository.countByEmailAndPassword(email, password);
+    }
+
 }
