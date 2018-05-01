@@ -152,8 +152,8 @@ function join(){
         alert("password를 입력해주세요.");
         password.focus();
         return false;
-    }else if( password.value.length <= 5  && rePassword.value.length <= 5 ){
-        alert("password는 6자이상 가능합니다.");
+    }else if( password.value.length <= 3  && rePassword.value.length <= 3 ){
+        alert("password는 4자이상 가능합니다.");
         password.focus();
         return false;
     }else if( password.value != rePassword.value ){

@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
@@ -42,7 +45,14 @@ public class UserController {
     public String login() { return "login/login"; }
 
     @GetMapping(path = "/user")
-    public String user() { return "users/user"; }
+    public String user(Principal principal, ModelMap modelMap) {
+
+        User user = userService.getUserByEmail(principal.getName());
+
+        modelMap.addAttribute("user", user);
+
+        return "users/user";
+    }
 
     @PostMapping
     @RequestMapping("/emailOverlap")
@@ -56,6 +66,34 @@ public class UserController {
 
         return overlap;
 
+    }
+
+    @PostMapping
+    @RequestMapping("/passwordCheck")
+    @ResponseBody
+    public String passwordCheck(Principal principal, @RequestParam("email") String email, @RequestParam("password") String password){
+
+        String passwordCheck = "false";
+        User user = userService.getUserByEmail(principal.getName());
+
+        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        if(passwordEncoder.matches(password, user.getPassword())){
+            passwordCheck = "true";
+        }
+        return passwordCheck;
+    }
+
+    @PutMapping
+    @RequestMapping("/update")
+    public String userUpdate(Principal principal, User user){
+        User userUpdate = userService.getUserByEmail(principal.getName());
+        userUpdate.setName(user.getName());
+        userUpdate.setAddress(user.getAddress());
+        userUpdate.setPhone(user.getPhone());
+
+        userService.addUser(userUpdate);
+
+        return "redirect:/users/user";
     }
 
 }
