@@ -9,5 +9,4 @@ public interface UserService {
     User addUser(User user);
     User getUserByEmail(String email);
     Long countByEmail(String email);
-    String countByEmailAndPassword(String email, String password);
 }

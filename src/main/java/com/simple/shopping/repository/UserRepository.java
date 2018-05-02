@@ -10,5 +10,6 @@ public interface UserRepository extends JpaQueryDslPredicateRepository<User, Lon
     public Long countByEmail(String email);
     public String countByEmailAndPassword(String email, String password);
 
+
 }
 // spring data method query

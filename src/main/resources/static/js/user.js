@@ -25,6 +25,10 @@ function user(){
         alert("password를 입력해주세요.");
         password.focus();
         return false;
+    }else if( !rePassword.value  ){
+        alert("Re password를 입력해주세요.");
+        rePassword.focus();
+        return false;
     }else if( password.value.length <= 3  && rePassword.value.length <= 3 ){
         alert("password는 4자이상 가능합니다.");
         password.focus();
@@ -46,7 +50,7 @@ function user(){
         phone.focus();
         return false;
     }else if( !address.value  ){
-        alert("adddress를 입력해주세요.");
+        alert("address를 입력해주세요.");
         address.focus();
         return false;
     }else{
@@ -61,10 +65,53 @@ function user(){
                 if(data == "false"){
                     alert("비밀번호가 틀렸습니다.");
                 }else{
+                    $("#formMethod").val("PUT");
+                    $("#formUser").attr("action", "/users/update");
                     document.getElementById("formUser").submit();
                 }
             }
         });
     }
+
+}
+function leave() {
+    var password = document.getElementById("password");
+    var rePassword = document.getElementById("rePassword");
+
+    if( !password.value  ){
+        alert("password를 입력해주세요.");
+        password.focus();
+        return false;
+    }else if( !rePassword.value  ){
+        alert("Re password를 입력해주세요.");
+        rePassword.focus();
+        return false;
+    }else if( password.value != rePassword.value ){
+        alert("비밀번호가 일치하지 않습니다.");
+        password.focus();
+        return false;
+    }
+
+    $.ajax({
+        type : "POST",
+        url : "/users/passwordCheck",
+        data : {
+            email :$("#email").val(),
+            password :$("#password").val()
+        },
+        success : function (data) {
+            if(data == "false"){
+                alert("비밀번호가 틀렸습니다.");
+            }else{
+                if (confirm("탈퇴 하시겠습니까") == true){
+                    $("#formMethod").val("DELETE")
+                    $("#formUser").attr("action", "/users/delete");
+                    document.getElementById("formUser").submit();
+                }else{
+                    alert("탈퇴 실패하였습니다");
+                }
+            }
+        }
+    });
 
 }

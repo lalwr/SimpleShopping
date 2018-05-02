@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 
 @Controller
@@ -31,6 +29,8 @@ public class UserController {
 
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        user.setUse("Y");
 
         UserRole userRole = new UserRole();
         userRole.setRoleName("USER");
@@ -58,6 +58,7 @@ public class UserController {
     @RequestMapping("/emailOverlap")
     @ResponseBody
     public String emailCheck(@RequestParam("email") String email){
+
         String overlap = "false";
 
         if(userService.countByEmail(email) > 0){
@@ -86,6 +87,7 @@ public class UserController {
     @PutMapping
     @RequestMapping("/update")
     public String userUpdate(Principal principal, User user){
+
         User userUpdate = userService.getUserByEmail(principal.getName());
         userUpdate.setName(user.getName());
         userUpdate.setAddress(user.getAddress());
@@ -94,6 +96,18 @@ public class UserController {
         userService.addUser(userUpdate);
 
         return "redirect:/users/user";
+    }
+
+    @DeleteMapping
+    @RequestMapping("/delete")
+    public String userDelete(Principal principal){
+
+        User userDelete = userService.getUserByEmail(principal.getName());
+        userDelete.setUse("N");
+
+        userService.addUser(userDelete);
+
+        return "redirect:/logout";
     }
 
 }
