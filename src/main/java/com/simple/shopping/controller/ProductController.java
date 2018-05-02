@@ -24,17 +24,12 @@ public class ProductController {
         PageManager pageManager = new PageManager();
         Page<Product> products;
         products = productService.getProducts(search,category, page);
-        //데이터베이스에서 상품 리스트 가져오기
-        // 한번에 화면에 출력되는 상품 수, 현재 페이지, 총 페이지 수, 앞으로 가기, 뒤로가기, 맨 앞으로 가기, 맨 뒤로 가기
         if("All".equals(category) && "".equals(search)){
-//            products = productService.getProducts(search,category, page);
-            pageManager.setTotalPage(productService.countAll());
+            pageManager.setTotalPage(PageManager.maxProduct, productService.countAll());
         }else if ("All".equals(category) && !"".equals(search)){
-//            products = productService.getProducts(search, category, page);
-            pageManager.setTotalPage(productService.countAllByName(search));
+            pageManager.setTotalPage(PageManager.maxProduct, productService.countAllByName(search));
         }else{
-//            products = productService.getProducts(search, category, page);
-            pageManager.setTotalPage(productService.countAllByCategoryAndName(search, category));
+            pageManager.setTotalPage(PageManager.maxProduct, productService.countAllByCategoryAndName(search, category));
         }
         modelMap.addAttribute("products", products);
         pageManager.setCurrentPage(page);
@@ -49,7 +44,6 @@ public class ProductController {
     @GetMapping(path = "/detail/{no}")
     public String productDetail(@PathVariable Long no,
                                 ModelMap modelMap){
-        //데이터베이스에서 상품 번호에 해당하는 상품 정보 가져오기
         Product product = productService.getProductByNo(no);
         modelMap.addAttribute("product", product);
         return "product/detail";
