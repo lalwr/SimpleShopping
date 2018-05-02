@@ -16,8 +16,8 @@
                         <h4 class="mb-0">User Information</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form" role="form" autocomplete="off" id="formUser" th:action="@{/users/update}" action="#">
-                            <input type ="hidden" name="_method" value="PUT">
+                        <form class="form" role="form" autocomplete="off" id="formUser" method="post">
+                            <input type ="hidden" name="_method" id="formMethod" value="">
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">email</label>
                                 <div class="col-lg-9">
@@ -65,6 +65,7 @@
                                 <div class="col-lg-9">
                                     <input type="reset" class="btn btn-secondary" value="Cancel">
                                     <input type="button" class="btn btn-primary" value="Save Changes" onclick="user()">
+                                    <input type="button" class="btn btn-danger" value="leave" onclick="leave()">
                                 </div>
                             </div>
                         </form>
