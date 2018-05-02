@@ -47,7 +47,7 @@
                 <li th:classappend="(${pageManager.pageOffset == 0} ? ' disabled ' : ' ')" class="paginate_button page-item previous" id="data_table_previous">
                     <a th:href="@{/product/list(page=${pageManager.pageOffset - pageManager.PAGE_SCOPE+1}, category=${pageManager.category}, search=${pageManager.search})}" th:text="prev" class="page-link"></a>
                 </li>
-                <li th:each="i : ${#numbers.sequence( {pageManager.pageOffset + 1}, {pageManager.pageOffset + pageManager.PAGE_SCOPE})}" th:classappend="(${pageManager.currentPage == i} ? 'active':'') + (${i>pageManager.totalPage})? 'disabled':''" class="paginate_button page-item ">
+                <li th:each="i : ${#numbers.sequence( {pageManager.pageOffset + 1}, {pageManager.pageOffset + pageManager.PAGE_SCOPE})}" th:classappend="(${pageManager.currentPage == i%pageManager.PAGE_SCOPE} ? 'active':'') + (${i>pageManager.totalPage})? 'disabled':''" class="paginate_button page-item ">
                     <a th:href="@{/product/list(page=${i}, category=${pageManager.category}, search=${pageManager.search})}" th:text="${i}" class="page-link"></a>
                 </li>
                 <li th:classappend="(${pageManager.pageOffset + pageManager.PAGE_SCOPE > pageManager.totalPage} ? 'disabled ' : '')" class="paginate_button page-item next" id="data_table_next">

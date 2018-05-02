@@ -14,6 +14,7 @@ public class PageManager{
     private int totalPage;
     private String search;
     private String category;
+    public static final int maxProduct = 6;
     public static final int PAGE_SCOPE = 5;
 
     public void setCurrentPage(int page) {
@@ -24,8 +25,12 @@ public class PageManager{
         this.pageOffset = (page-1)/PAGE_SCOPE *PAGE_SCOPE;
     }
 
-    public void setTotalPage(int totalProducts){
-        this.totalPage = totalProducts/PAGE_SCOPE + 1;
+    public void setTotalPage(int maxProduct,int totalProducts){
+        if(totalProducts%maxProduct == 0){
+            this.totalPage = totalPage / maxProduct;
+        }else {
+            this.totalPage = totalProducts / maxProduct + 1;
+        }
     }
 
 }
