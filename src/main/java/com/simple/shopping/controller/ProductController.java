@@ -23,17 +23,17 @@ public class ProductController {
                               ModelMap modelMap){
         PageManager pageManager = new PageManager();
         Page<Product> products;
-
+        products = productService.getProducts(search,category, page);
         //데이터베이스에서 상품 리스트 가져오기
         // 한번에 화면에 출력되는 상품 수, 현재 페이지, 총 페이지 수, 앞으로 가기, 뒤로가기, 맨 앞으로 가기, 맨 뒤로 가기
         if("All".equals(category) && "".equals(search)){
-            products = productService.getProducts(page);
+//            products = productService.getProducts(search,category, page);
             pageManager.setTotalPage(productService.countAll());
         }else if ("All".equals(category) && !"".equals(search)){
-            products = productService.getProducts(search, category, page);
+//            products = productService.getProducts(search, category, page);
             pageManager.setTotalPage(productService.countAllByName(search));
         }else{
-            products = productService.getProducts(search, category, page);
+//            products = productService.getProducts(search, category, page);
             pageManager.setTotalPage(productService.countAllByCategoryAndName(search, category));
         }
         modelMap.addAttribute("products", products);
