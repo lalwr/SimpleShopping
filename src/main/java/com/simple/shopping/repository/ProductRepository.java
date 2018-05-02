@@ -20,13 +20,11 @@ public interface ProductRepository extends JpaQueryDslPredicateRepository<Produc
 
     public Page<Product> findAllBy(Pageable pageable);
 
-//    SELECT * FROM PRODUCT JOIN CATEGORY ON PRODUCT.CATEGORY_NO = CATEGORY.NO WHERE CATEGORY.NAME = 'Linux' AND PRODUCT.NAME ='sticker1';
-//    @Query(value = "SELECT * FROM PRODUCT p JOIN CATEGORY c ON p.CATEGORY_NO = c.NO WHERE (p.NAME = :name AND c.NAME = :category)", nativeQuery = true)
-    @Query(value = "SELECT * FROM PRODUCT p JOIN CATEGORY c ON p.category_no = c.no WHERE (p.name like concat('%',:search,'%') AND c.name = :category)", nativeQuery = true)
+    @Query("SELECT p, c FROM Product p LEFT JOIN p.category c WHERE p.name like concat('%',:search,'%') AND c.name = :category")
     public Page<Product> findProductsByCategoryAndName(@Param("search") String search, @Param("category") String category, Pageable pageable);
 
 
-    @Query(value = "SELECT * FROM PRODUCT p WHERE p.name like concat('%',:search,'%')", nativeQuery = true)
+    @Query("SELECT p FROM Product p WHERE p.name like concat('%',:search,'%')")
     public Page<Product> findProductsByName(@Param("search") String search, Pageable pageable);
 
     public Product findProductByNo(Long no);
