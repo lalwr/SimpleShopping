@@ -1,33 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <title>상품 상세보기</title>
 </head>
 <body>
+<br>
+<br>
+<br>
 <table>
     <thead>
     </thead>
     <tbody>
-    <tr th:if="${not #lists.isEmpty(product)}" th:each="product : ${product}">
-        <td><img th:src="@{'/static/images/products/'+${product.name}+'.jpg'}" width="100" height="100"></td>
-
-        <div><label  for="name">상품 이름</label>
-        <td id = "name"><a th:text="${product.name}"></a> </td>
-        </div>
-        <div>
-            <label for="no">상품 번호</label>
-        <td id="no" th:text="${product.no}"></td>
-        </div>
+    <tr>
+        <td><img th:src="@{'/static/images/products/' + ${product.name} +'.jpg'}" width="100" height="100"></td>
+        <td ><a th:text="${product.name}"></a> </td>
+        <td th:text="${product.no}"></td>
         <td th:text="${product.description}"></td>
         <td th:text="${product.price}"></td>
         <td th:text="${#temporals.format(product.regdate, 'yyyy/mm/dd HH:mm')}"></td>
     </tr>
     </tbody>
 
-        <input type="button" value="장바구니 담기">
-    <form action="/order">
-        <input type="button" value="주문하기">
+    <form th:action="@{'/shoplist'}" method="post" th:object="${product}">
+        <input type="hidden" th:field="${product.no}">
+        <input type="submit" value="장바구니 담기">
+    </form>
+
+    <form th:action="@{'/order/list'}" method="get" th:object="${product}">
+        <input type="hidden" th:field="${product.no}">
+        <input type="submit" value="주문하기">
     </form>
 </table>
 
