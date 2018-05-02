@@ -14,45 +14,32 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    @Autowired
     ProductRepository productRepository;
 
-    @Autowired
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public int countAllByName(String search) {
         return productRepository.countAllByName(search);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public int countAllByCategoryAndName(String search, String category) {
         return productRepository.countAllByCategoryAndName(search, category);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public int countAll() {
         return productRepository.countAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Product> getProducts(int page) {
-        return getProducts(null, null,page);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Page<Product> getProducts(String search, String category, int page) {
-        Page<Product> products=null;
+        Page<Product> products;
         PageRequest pageRequest = PageRequest.of(page - 1, 6,new Sort(Sort.Direction.ASC, "no"));
-        if(category == null){
-            category="All";
-        }
         if("All".equals(category) && (search == null || "".equals(search))) {
             products = productRepository.findAllBy(pageRequest);
         }else if("All".equals(category) && (search != null || !"".equals(search))){
@@ -60,15 +47,7 @@ public class ProductServiceImpl implements ProductService {
         }else{
             products = productRepository.findProductsByCategoryAndName(search, category,pageRequest);
         }
-
-
         return products;
-    }
-
-    @Override
-    @Transactional
-    public Product addProduct(Product product) {
-        return null;
     }
 
     @Override

@@ -34,7 +34,7 @@
         </thead>
         <tbody>
         <tr th:if="${not #lists.isEmpty(products)}" th:each="product : ${products}">
-            <td><a th:href="@{'/product/detail/' + ${product.no}}"><img th:src="@{'/static/images/'+${product.name}+'.jpg'}" width="200" height="200"></a></td>
+            <td><a th:href="@{'/product/detail/' + ${product.no}}"><img th:src="@{'/static/images/products/'+${product.name}+'.jpg'}" width="200" height="200"></a></td>
             <td th:text="${product.price}+'원'"></td>
         </tr>
         </tbody>
