@@ -58,19 +58,7 @@ public class ProductServiceImpl implements ProductService {
         }else if("All".equals(category) && (search != null || !"".equals(search))){
             products = productRepository.findProductsByName(search,pageRequest);
         }else{
-            switch (category){
-                case "Linux":
-                    products = productRepository.findProductsByCategoryAndName(search, "Linux",pageRequest);
-                    break;
-                case "Programming":
-                    products = productRepository.findProductsByCategoryAndName(search, "Programming",pageRequest);
-                    break;
-                case "Computer":
-                    products = productRepository.findProductsByCategoryAndName(search, "Computer",pageRequest);
-                    break;
-                case "ETC":
-                    products = productRepository.findProductsByCategoryAndName(search, "ETC",pageRequest);
-            }
+            products = productRepository.findProductsByCategoryAndName(search, category,pageRequest);
         }
 
 
