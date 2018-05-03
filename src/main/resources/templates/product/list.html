@@ -16,14 +16,19 @@
     <br>
     <div>
         <select id ="category">
-            <option>All</option>
-            <option>Linux</option>
-            <option>Programming</option>
-            <option>Computer</option>
-            <option>ETC</option>
+            <div th:if="${select == 'All'}"><option selected>All</option></div>
+            <div th:unless="${select == 'All'}"><option>All</option></div>
+            <div th:if="${select == 'Linux'}"><option selected>Linux</option></div>
+            <div th:unless="${select == 'Linux'}"><option>Linux</option></div>
+            <div th:if="${select == 'Programming'}"><option selected>Programming</option></div>
+            <div th:unless="${select == 'Programming'}"><option>Programming</option></div>
+            <div th:if="${select == 'Computer'}"><option selected>Computer</option></div>
+            <div th:unless="${select == 'Computer'}"><option>Computer</option></div>
+            <div th:if="${select == 'ETC'}"><option selected>ETC</option></div>
+            <div th:unless="${select == 'ETC'}"><option>ETC</option></div>
         </select>
-        <input type="search" placeholder="상품 검색" id="search"/>
-        <input type="submit" value="검색" onclick="search()"/>
+        <input type="search" placeholder="상품 검색" id="search" th:value="${search}"/>
+        <input type="button" value="검색" onclick="search()"/>
     </div>
 
     <table>
@@ -47,7 +52,7 @@
                 <li th:classappend="(${pageManager.pageOffset == 0} ? ' disabled ' : ' ')" class="paginate_button page-item previous" id="data_table_previous">
                     <a th:href="@{/product/list(page=${pageManager.pageOffset - pageManager.PAGE_SCOPE+1}, category=${pageManager.category}, search=${pageManager.search})}" th:text="prev" class="page-link"></a>
                 </li>
-                <li th:each="i : ${#numbers.sequence( {pageManager.pageOffset + 1}, {pageManager.pageOffset + pageManager.PAGE_SCOPE})}" th:classappend="(${pageManager.currentPage == i%pageManager.PAGE_SCOPE} ? 'active':'') + (${i>pageManager.totalPage})? 'disabled':''" class="paginate_button page-item ">
+                <li th:each="i : ${#numbers.sequence( {pageManager.pageOffset + 1}, {pageManager.pageOffset + pageManager.PAGE_SCOPE})}" th:classappend="(${pageManager.currentPage == i%pageManager.PAGE_SCOPE} ? 'active':'') + (${i > pageManager.totalPage}) ? 'disabled':''" class="paginate_button page-item ">
                     <a th:href="@{/product/list(page=${i}, category=${pageManager.category}, search=${pageManager.search})}" th:text="${i}" class="page-link"></a>
                 </li>
                 <li th:classappend="(${pageManager.pageOffset + pageManager.PAGE_SCOPE > pageManager.totalPage} ? 'disabled ' : '')" class="paginate_button page-item next" id="data_table_next">
