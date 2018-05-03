@@ -22,6 +22,13 @@ public class ProductController {
                               @RequestParam(name = "page", required = false, defaultValue = "1") int page,
                               ModelMap modelMap){
         PageManager pageManager = new PageManager();
+        pageManager.setCurrentPage(page);
+        pageManager.setPageOffset(page);
+        pageManager.setCategory(category);
+        pageManager.setSearch(search);
+
+        modelMap.addAttribute("pageManager", pageManager);
+
         Page<Product> products;
         products = productService.getProducts(search,category, page);
         if("All".equals(category) && "".equals(search)){
@@ -32,12 +39,9 @@ public class ProductController {
             pageManager.setTotalPage(PageManager.maxProduct, productService.countAllByCategoryAndName(search, category));
         }
         modelMap.addAttribute("products", products);
-        pageManager.setCurrentPage(page);
-        pageManager.setPageOffset(page);
-        pageManager.setCategory(category);
-        pageManager.setSearch(search);
-        modelMap.addAttribute("pageManager", pageManager);
 
+        modelMap.addAttribute("select", category);
+        modelMap.addAttribute("search", search);
         return "product/list";
     }
 
