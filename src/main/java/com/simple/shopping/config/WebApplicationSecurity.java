@@ -22,6 +22,7 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                 .antMatchers("/users/join").permitAll()
                 .antMatchers("/users/emailOverlap").permitAll()
                 .antMatchers("/users/**").hasRole("USER")
+                .antMatchers("/roles/**").hasRole("ADMIN")
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()

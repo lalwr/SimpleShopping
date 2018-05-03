@@ -25,8 +25,6 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
             User loginUser = userService.getUserByEmail(email);
             if(loginUser != null && "Y".equals(loginUser.getUse())){
                 request.setAttribute("loginUser", loginUser);
-            }else {
-                response.sendRedirect("/users/login");
             }
         }
         return true;
