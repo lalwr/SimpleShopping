@@ -1,7 +1,6 @@
 package com.simple.shopping;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,8 +26,8 @@ public class PageManager{
 
     public void setTotalPage(int maxProduct,int totalProducts){
         if(totalProducts%maxProduct == 0){
-            this.totalPage = totalPage / maxProduct;
-        }else {
+            this.totalPage = totalProducts / maxProduct;
+        }else{
             this.totalPage = totalProducts / maxProduct + 1;
         }
     }
