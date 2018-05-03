@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public int countAllByCategoryAndName(String search, String category) {
-        return productRepository.countAllByCategoryAndName(search, category);
+        return productRepository.countAllByCategoryAndName(category, search);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
         PageRequest pageRequest = PageRequest.of(page - 1, PageManager.maxProduct,new Sort(Sort.Direction.ASC, "no"));
         if("All".equals(category) && (search == null || "".equals(search))) {
             products = productRepository.findAllBy(pageRequest);
-        }else if("All".equals(category) && (search != null || !"".equals(search))){
+        }else if("All".equals(category)){
             products = productRepository.findProductsByName(search,pageRequest);
         }else{
             products = productRepository.findProductsByCategoryAndName(search, category,pageRequest);
