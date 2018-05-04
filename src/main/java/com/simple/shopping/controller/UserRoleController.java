@@ -30,12 +30,6 @@ public class UserRoleController {
         return "role/list";
     }
 
-
-    @GetMapping("role")
-    public String roleForm(){
-        return "role/role";
-    }
-
     @PostMapping
     @ResponseBody
     public String roleSave(@RequestParam(value = "userNo", required = true) Long userNo, @RequestParam(value ="roleName", required = true) String roleName){
