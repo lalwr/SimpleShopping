@@ -21,7 +21,18 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     @Transactional
-    public Long getUserRoleByRoleNameAndUserNo(UserRole userRole) {
-        return userRoleRepository.countUserRoleByRoleName(userRole);
+    public Long getUserRoleByRoleNameAndUserNo(Long userNo, String roleName) {
+        return userRoleRepository.countUserRoleByRoleNameAndUserNo(userNo, roleName);
+    }
+
+    @Override
+    @Transactional
+    public void deleteRoles(Long roleNo) {
+        userRoleRepository.deleteById(roleNo);
+    }
+
+    @Override
+    public Long getUserRoleByNo(Long roleNo) {
+        return userRoleRepository.countUserRoleByNo(roleNo);
     }
 }

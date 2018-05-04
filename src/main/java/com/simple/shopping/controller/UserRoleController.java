@@ -6,7 +6,6 @@ import com.simple.shopping.service.UserRoleService;
 import com.simple.shopping.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,12 +38,33 @@ public class UserRoleController {
 
     @PostMapping
     @ResponseBody
-    public String roleSave(UserRole userRole){
+    public String roleSave(@RequestParam(value = "userNo", required = true) Long userNo, @RequestParam(value ="roleName", required = true) String roleName){
 
         String result = "overlap";
 
-        if(userRoleService.getUserRoleByRoleNameAndUserNo(userRole) == 0){
+        Long cnt = userRoleService.getUserRoleByRoleNameAndUserNo(userNo, roleName);
+        if( cnt == 0){
+            UserRole userRole = new UserRole();
+            User user = new User();
+            user.setNo(userNo);
+            userRole.setUser(user);
+            userRole.setRoleName(roleName);
             userRoleService.addRoles(userRole);
+            result = "true";
+        }
+
+        return result;
+    }
+
+    @DeleteMapping
+    @ResponseBody
+    public String roleDelete(@RequestParam(value = "roleNo", required = true) Long roleNo){
+
+        String result = "noRole";
+
+        Long cnt = userRoleService.getUserRoleByNo(roleNo);
+        if( cnt != 0){
+            userRoleService.deleteRoles(roleNo);
             result = "true";
         }
 

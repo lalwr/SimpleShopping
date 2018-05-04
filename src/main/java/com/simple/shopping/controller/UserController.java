@@ -57,7 +57,7 @@ public class UserController {
     @PostMapping
     @RequestMapping("/emailOverlap")
     @ResponseBody
-    public String emailCheck(@RequestParam("email") String email){
+    public String emailCheck(@RequestParam(value = "email", required = true) String email){
 
         String overlap = "false";
 
@@ -72,7 +72,7 @@ public class UserController {
     @PostMapping
     @RequestMapping("/passwordCheck")
     @ResponseBody
-    public String passwordCheck(Principal principal, @RequestParam("email") String email, @RequestParam("password") String password){
+    public String passwordCheck(Principal principal, @RequestParam(value = "email", required = true) String email, @RequestParam(value = "password", required = true) String password){
 
         String passwordCheck = "false";
         User user = userService.getUserByEmail(principal.getName());
