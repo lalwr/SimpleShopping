@@ -18,4 +18,10 @@ public class UserRoleServiceImpl implements UserRoleService {
     public UserRole addRoles(UserRole userRole) {
         return userRoleRepository.save(userRole);
     }
+
+    @Override
+    @Transactional
+    public Long getUserRoleByRoleNameAndUserNo(UserRole userRole) {
+        return userRoleRepository.countUserRoleByRoleName(userRole);
+    }
 }

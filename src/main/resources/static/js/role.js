@@ -9,3 +9,21 @@ function roleSave(){
     }
 
 }
+function roleUser(userNo) {
+    $.ajax({
+       type : "POST",
+       url : "/admin/roles",
+       data : {
+           user : userNo,
+           roleName : $("select[name=roleName]").val()
+       },
+       success : function (data) {
+           if(data == "overlap"){
+               alert("이미 부여된 권한입니다")
+               return false;
+           }else if(data == "true"){
+               document.location.reload();
+           }
+       }
+    });
+}
