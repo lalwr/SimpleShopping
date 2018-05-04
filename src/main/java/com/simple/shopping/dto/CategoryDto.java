@@ -1,34 +1,18 @@
 package com.simple.shopping.dto;
 
+import com.simple.shopping.domain.Category;
+
 import java.util.List;
 
 public class CategoryDto {
-    private Long no;
-    private String name;
 
-    List<CategoryDto> ctgrs;
+    List<Category> categoryList;
 
-    public Long getNo() {
-        return no;
+    public List<Category> getCategoryList() {
+        return categoryList;
     }
 
-    public void setNo(Long no) {
-        this.no = no;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<CategoryDto> getCtgrs() {
-        return ctgrs;
-    }
-
-    public void setCtgrs(List<CategoryDto> ctgrs) {
-        this.ctgrs = ctgrs;
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
     }
 }

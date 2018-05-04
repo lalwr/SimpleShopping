@@ -9,14 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/admin/ctgr")
+@RequestMapping(path = "/admin/category")
 public class CategoryController {
 
     CategoryService categoryService;
-    UserService userService;
 
     @Autowired
     public CategoryController(CategoryService categoryService){
@@ -25,55 +25,55 @@ public class CategoryController {
 
     @GetMapping
     public String categoryForm(){
-
         return "admin/category/category_form";
     }
+    
+    @GetMapping(path = "/list")
+    public String categoryList(ModelMap model){
+        List<Category> categories = categoryService.getCategoryList();
+
+        model.addAttribute("categoryList", categories);
+
+        return "admin/category/category_list";
+    }
+
     @PostMapping
     public String addCategory(@ModelAttribute Category category){
         categoryService.addCategory(category);
-        return "redirect:/admin/ctgr/list";
+
+        return "redirect:/admin/category/list";
     }
 
     @PutMapping(path = "/list")
-    public String updateCategories(@ModelAttribute CategoryDto categoryDto){
-        for(CategoryDto category : categoryDto.getCtgrs()){
+    public String updateCategoryList(@ModelAttribute CategoryDto categoryDto){
+        List<Category> categoryList = new ArrayList<Category>();
+
+        for(Category category : categoryDto.getCategoryList()){
             if(category.getNo() != null){
-                Category ctgr = new Category();
-                ctgr.setNo(category.getNo());
-                ctgr.setName(category.getName());
-                categoryService.updateCategory(ctgr);
+                categoryList.add(category);
             }
-            System.out.println(category.getNo()+" : "+category.getName());
         }
-//        categoryService.addCategory(category1);
-        return "redirect:/admin/ctgr/list";
+
+        categoryService.updateCategoryList(categoryList);
+
+        return "redirect:/admin/category/list";
     }
 
     @DeleteMapping(path = "/list")
-    public String deleteCategories(@ModelAttribute CategoryDto categoryDto){
-        for(CategoryDto category : categoryDto.getCtgrs()){
+    public String deleteCategoryList(@ModelAttribute CategoryDto categoryDto){
+        List<Category> categoryList = new ArrayList<Category>();
+
+        for(Category category : categoryDto.getCategoryList()){
             if(category.getNo() != null){
-                Category ctgr = new Category();
-                ctgr.setNo(category.getNo());
-                categoryService.deleteCategory(ctgr);
+                categoryList.add(category);
             }
         }
-        return "redirect:/admin/ctgr/list";
+
+        categoryService.deleteCategoryList(categoryList);
+
+        return "redirect:/admin/category/list";
     }
 
-    @GetMapping(path = "/list")
-    public String categoryList(ModelMap model){
-        List<Category> categories = categoryService.getCategories();
 
-        model.addAttribute("ctgrs", categories);
-        return "admin/category/category_list";
-    }
-    @PostMapping(path = "/list")
-    public String postCategoryList(@RequestParam(name= "ctgrBox", required = false) List<String> checkList){
-        System.out.println("post called");
-        for(String check: checkList){
-            System.out.println(check);
-        }
-        return "admin/category/category_list";
-    }
+
 }
