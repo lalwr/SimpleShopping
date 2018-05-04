@@ -152,8 +152,12 @@ function join(){
         alert("password를 입력해주세요.");
         password.focus();
         return false;
-    }else if( password.value.length <= 5  && rePassword.value.length <= 5 ){
-        alert("password는 6자이상 가능합니다.");
+    }else if( !rePassword.value  ){
+        alert("Re password를 입력해주세요.");
+        rePassword.focus();
+        return false;
+    }else if( password.value.length <= 3  && rePassword.value.length <= 3 ){
+        alert("password는 4자이상 가능합니다.");
         password.focus();
         return false;
     }else if( password.value != rePassword.value ){
@@ -173,7 +177,7 @@ function join(){
         phone.focus();
         return false;
     }else if( !address.value  ){
-        alert("adddress를 입력해주세요.");
+        alert("address를 입력해주세요.");
         address.focus();
         return false;
     }else{

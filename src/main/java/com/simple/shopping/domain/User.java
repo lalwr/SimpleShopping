@@ -28,6 +28,7 @@ public class User implements Serializable{
     private String phone;
     private String password;
     private LocalDateTime regdate;
+    private String use;
 
     @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserRole> roles = new ArrayList<>();
