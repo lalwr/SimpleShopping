@@ -23,13 +23,10 @@
     <form th:action="@{/admin/ctgr/list}" action="#" method="post" id="modifyForm">
         <div style="text-align:center;margin:60px 0px 20px 0px;">
             <div th:if="${not #lists.isEmpty(ctgrs)}" th:each="ctgr, status: ${ctgrs}">
-                <input type="checkbox" th:name="${'ctgrs['+status.index+'].no'}" th:value="${ctgr.no}">
-                <input type="text" th:name="${'ctgrs['+status.index+'].name'}" th:value="${ctgr.name}">
-                <!--<input type="hidden" name="_method" value="put">-->
+                <input type="checkbox" th:name="${'categoryList['+status.index+'].no'}" th:value="${ctgr.no}">
+                <input type="text" th:name="${'categoryList['+status.index+'].name'}" th:value="${ctgr.name}">
             </div>
-            <!--<input type="checkbox" name="ctgrBox" value="1:Linux">-->
-            <!--<input type="checkbox" name="ctgrBox" value="2:Software">-->
-            <!--<input type="checkbox" name="ctgrBox" value="3:apple">-->
+
             <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="'submitByMethod(\'modifyForm\', \'PUT\');'">
                 <span data-feather="calendar"></span>
                 선택 수정

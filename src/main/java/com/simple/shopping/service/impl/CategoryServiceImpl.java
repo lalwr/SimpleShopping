@@ -28,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<Category> getCategories() {
+    public List<Category> getCategoryList() {
         return categoryRepository.findAll();
     }
 
@@ -44,5 +44,21 @@ public class CategoryServiceImpl implements CategoryService{
     @Transactional
     public void deleteCategory(Category ctgr) {
         categoryRepository.delete(ctgr);
+    }
+
+    @Override
+    @Transactional
+    public void updateCategoryList(List<Category> categoryList) {
+        for(Category category: categoryList){
+            updateCategory(category);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteCategoryList(List<Category> categoryList) {
+        for(Category category: categoryList){
+            deleteCategory(category);
+        }
     }
 }
