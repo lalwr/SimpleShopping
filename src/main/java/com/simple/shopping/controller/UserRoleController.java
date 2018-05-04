@@ -6,16 +6,14 @@ import com.simple.shopping.service.UserRoleService;
 import com.simple.shopping.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/roles")
+@RequestMapping("/admin/roles")
 public class UserRoleController {
 
     @Autowired
@@ -30,16 +28,27 @@ public class UserRoleController {
         List<User> userList = userService.getUsers();
         modelMap.addAttribute("userList" , userList);
 
+        return "role/list";
+    }
+
+
+    @GetMapping("role")
+    public String roleForm(){
         return "role/role";
     }
 
     @PostMapping
+    @ResponseBody
     public String roleSave(UserRole userRole){
-        userRoleService.addRoles(userRole);
 
-        return "redirect:/roles";
+        String result = "overlap";
+
+        if(userRoleService.getUserRoleByRoleNameAndUserNo(userRole) == 0){
+            userRoleService.addRoles(userRole);
+            result = "true";
+        }
+
+        return result;
     }
-
-
 
 }
