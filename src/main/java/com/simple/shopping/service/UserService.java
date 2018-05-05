@@ -8,4 +8,5 @@ public interface UserService {
     List<User> getUsers();
     User addUser(User user);
     User getUserByEmail(String email);
+    Long countByEmail(String email);
 }
