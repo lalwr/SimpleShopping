@@ -1,24 +1,23 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">Shopping</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   <a class="navbar-brand" href="#">Shopping</a>
 
     <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
-            </li>
-        </ul>
+         <ul class="navbar-nav mr-auto">
+             <li class="nav-item active">
+                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" href="#">Profile</a>
+             </li>
+         </ul>
 
-        <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link active" href="#">Sign Up</a>
-            <a class="nav-item nav-link active" href="#">Login</a>
-        </div>
-
-        <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
+         <div sec:authorize="!isAuthenticated()" class="my-2 my-lg-0">
+             <button type="button" class="btn btn-success" onclick="moveLogin()">로그인</button>
+             <button type="button" class="btn btn-info" onclick="moveJoin()">회원가입</button>
+         </div>
+         <div sec:authorize="isAuthenticated()" class="my-2 my-lg-0">
+             <span class="navbar-text" th:text="${loginUser.name} + '님 환영합니다.'"></span>
+             <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
+         </div>
+     </div>
 </nav>
