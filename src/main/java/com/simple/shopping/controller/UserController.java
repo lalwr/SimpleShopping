@@ -18,7 +18,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-
     @GetMapping(path = "/join")
     public String userJoin(){
         return "login/join";
@@ -54,8 +53,7 @@ public class UserController {
         return "users/user";
     }
 
-    @PostMapping
-    @RequestMapping("/emailOverlap")
+    @PostMapping("/emailOverlap")
     @ResponseBody
     public String emailCheck(@RequestParam(value = "email", required = true) String email){
 
@@ -69,8 +67,7 @@ public class UserController {
 
     }
 
-    @PostMapping
-    @RequestMapping("/passwordCheck")
+    @PostMapping("/passwordCheck")
     @ResponseBody
     public String passwordCheck(Principal principal, @RequestParam(value = "email", required = true) String email, @RequestParam(value = "password", required = true) String password){
 
@@ -84,8 +81,7 @@ public class UserController {
         return passwordCheck;
     }
 
-    @PutMapping
-    @RequestMapping("/update")
+    @PutMapping("/update")
     public String userUpdate(Principal principal, User user){
 
         User userUpdate = userService.getUserByEmail(principal.getName());
@@ -98,8 +94,7 @@ public class UserController {
         return "redirect:/users/user";
     }
 
-    @DeleteMapping
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
     public String userDelete(Principal principal){
 
         User userDelete = userService.getUserByEmail(principal.getName());

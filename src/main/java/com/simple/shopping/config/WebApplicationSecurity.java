@@ -16,7 +16,6 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                 .requestMatchers(new AntPathRequestMatcher("/**.html")).permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/css/**").permitAll()
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/users/login").permitAll()
                 .antMatchers("/users/join").permitAll()
