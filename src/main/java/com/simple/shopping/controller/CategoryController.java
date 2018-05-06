@@ -49,49 +49,25 @@ public class CategoryController {
     }
 
     @PutMapping(path="/list")
-    public void ajaxAddCategoryList(@RequestBody CategoryDto categoryDto
+    public String ajaxAddCategoryList(@RequestBody CategoryDto categoryDto
                             , HttpServletResponse response){
 
         categoryService.updateCategoryList(categoryDto.getCategoryList());
 
-        try{
-            PrintWriter pw = response.getWriter();
-
-            pw.write("success");
-        }catch(IOException ioe){
-            ioe.printStackTrace();
-        }
+        return "success";
 
     }
 
     @DeleteMapping(path = "/list")
-    public void ajaxDeleteCategoryList(@RequestBody CategoryDto categoryDto
+    @ResponseBody
+    public String ajaxDeleteCategoryList(@RequestBody CategoryDto categoryDto
                                     , HttpServletResponse response){
 
-        try{
-            PrintWriter pw = response.getWriter();
-
             categoryService.deleteCategoryList(categoryDto.getCategoryList());
-            pw.write("success");
-        }catch(IOException ioe){
-            ioe.printStackTrace();
-        }
+
+        return"success";
 
     }
 
-//    @DeleteMapping(path = "/list")
-//    public void ajaxDeleteCategoryList(@RequestParam(name="param") String param,
-//             HttpServletResponse response){
-//        System.out.println("delete called");
-//        System.out.println(param);
-//
-//    }
-//    @PostMapping(path = "/list")
-//    public void postDeleteCategoryList(@RequestParam(name="param") String param,
-//                                       HttpServletResponse response){
-//        System.out.println("post called");
-//        System.out.println(param);
-//
-//    }
 
 }
