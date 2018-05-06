@@ -31,19 +31,26 @@ function submitWithJson(method, checkName, attr, paramName, items){
             categoryList.push(category);
         }
     }
-    if(checkedOne==false){return;}
-    categoryInfo[paramName] = categoryList;
 
+    if(checkedOne==false){
+        alert("선택된 항목이 없습니다");
+        return;
+    }else{
+        categoryInfo[paramName] = categoryList;
 
-    $.ajax({
-        type : method,
-        url : context+'admin/category/list',
-        contentType : 'application/json; charset=UTF-8',
-        data : JSON.stringify(categoryInfo),
-        dataType : 'text',
-        success: function(data){
-            document.location.reload();
-        }
-    });
+        $.ajax({
+            type : method,
+            url : context+'admin/category/list',
+            contentType : 'application/json; charset=UTF-8',
+            data : JSON.stringify(categoryInfo),
+            dataType : 'text',
+            success: function(data){
+                if(data=="success"){
+                    document.location.reload();
+                }
+            }
+        });
+    }
+
 
 }

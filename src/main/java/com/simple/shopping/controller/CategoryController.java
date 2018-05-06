@@ -49,6 +49,7 @@ public class CategoryController {
     }
 
     @PutMapping(path="/list")
+    @ResponseBody
     public String ajaxAddCategoryList(@RequestBody CategoryDto categoryDto
                             , HttpServletResponse response){
 
