@@ -4,7 +4,7 @@ import com.simple.shopping.domain.Category;
 
 import java.util.List;
 
-public class CategoryDto {
+public class CategoryDto{
 
     List<Category> categoryList;
 

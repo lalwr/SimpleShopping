@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,41 +42,56 @@ public class CategoryController {
 
     @PostMapping
     public String addCategory(@ModelAttribute Category category){
+
         categoryService.addCategory(category);
 
         return "redirect:/admin/category/list";
     }
 
-    @PutMapping(path = "/list")
-    public String updateCategoryList(@ModelAttribute CategoryDto categoryDto){
-        List<Category> categoryList = new ArrayList<Category>();
+    @PutMapping(path="/list")
+    public void ajaxAddCategoryList(@RequestBody CategoryDto categoryDto
+                            , HttpServletResponse response){
 
-        for(Category category : categoryDto.getCategoryList()){
-            if(category.getNo() != null){
-                categoryList.add(category);
-            }
+        categoryService.updateCategoryList(categoryDto.getCategoryList());
+
+        try{
+            PrintWriter pw = response.getWriter();
+
+            pw.write("success");
+        }catch(IOException ioe){
+            ioe.printStackTrace();
         }
 
-        categoryService.updateCategoryList(categoryList);
-
-        return "redirect:/admin/category/list";
     }
 
     @DeleteMapping(path = "/list")
-    public String deleteCategoryList(@ModelAttribute CategoryDto categoryDto){
-        List<Category> categoryList = new ArrayList<Category>();
+    public void ajaxDeleteCategoryList(@RequestBody CategoryDto categoryDto
+                                    , HttpServletResponse response){
 
-        for(Category category : categoryDto.getCategoryList()){
-            if(category.getNo() != null){
-                categoryList.add(category);
-            }
+        try{
+            PrintWriter pw = response.getWriter();
+
+            categoryService.deleteCategoryList(categoryDto.getCategoryList());
+            pw.write("success");
+        }catch(IOException ioe){
+            ioe.printStackTrace();
         }
 
-        categoryService.deleteCategoryList(categoryList);
-
-        return "redirect:/admin/category/list";
     }
 
-
+//    @DeleteMapping(path = "/list")
+//    public void ajaxDeleteCategoryList(@RequestParam(name="param") String param,
+//             HttpServletResponse response){
+//        System.out.println("delete called");
+//        System.out.println(param);
+//
+//    }
+//    @PostMapping(path = "/list")
+//    public void postDeleteCategoryList(@RequestParam(name="param") String param,
+//                                       HttpServletResponse response){
+//        System.out.println("post called");
+//        System.out.println(param);
+//
+//    }
 
 }
