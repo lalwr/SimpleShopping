@@ -5,6 +5,7 @@ insert into user_roles(id, user_id, role_name) values (1, 1, 'USER');
 insert into user_roles(id, user_id, role_name) values (2, 2, 'ADMIN');
 insert into user_roles(id, user_id, role_name) values (3, 3, 'USER');
 
+insert into category(no, name, use) values(null, 'All', 'Y');
 insert into category(no, name, use) values(null, 'Linux', 'Y');
 insert into category(no, name, use) values(null, 'Programming', 'Y');
 insert into category(no, name, use) values(null, 'Computer', 'Y');
