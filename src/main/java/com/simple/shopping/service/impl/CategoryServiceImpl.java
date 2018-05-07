@@ -29,7 +29,8 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     @Transactional(readOnly = true)
     public List<Category> getCategoryList() {
-        return categoryRepository.findAll();
+        String use = "Y";
+        return categoryRepository.findAllByUse(use);
     }
 
     @Override
@@ -43,7 +44,9 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     @Transactional
     public void deleteCategory(Category ctgr) {
-        categoryRepository.delete(ctgr);
+        Category categoryToUpdate = categoryRepository.getOne(ctgr.getNo());
+        categoryToUpdate.setUse("N");
+        categoryRepository.save(categoryToUpdate);
     }
 
     @Override

@@ -1,3 +1,4 @@
+
 function submitByMethod(formId, method){
     var eMethod = document.createElement('input');
     eMethod.setAttribute('type', 'hidden');
@@ -37,10 +38,10 @@ function submitWithJson(method, checkName, attr, paramName, items){
         return;
     }else{
         categoryInfo[paramName] = categoryList;
-
+        var contextPath = '/';
         $.ajax({
             type : method,
-            url : context+'admin/category/list',
+            url : contextPath+'admin/category/list',
             contentType : 'application/json; charset=UTF-8',
             data : JSON.stringify(categoryInfo),
             dataType : 'text',
@@ -54,3 +55,4 @@ function submitWithJson(method, checkName, attr, paramName, items){
 
 
 }
+
