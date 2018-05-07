@@ -10,8 +10,6 @@ import org.springframework.core.Ordered;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.*;
 
-
-@EnableWebMvc
 @SpringBootApplication
 public class ShoppingApplication implements WebMvcConfigurer{
 
