@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,8 +51,8 @@ public class CategoryController {
 
     @PutMapping(path="/list")
     @ResponseBody
-    public String ajaxAddCategoryList(@RequestBody CategoryDto categoryDto
-                            , HttpServletResponse response){
+    public String ajaxUpdateCategoryList(@RequestBody CategoryDto categoryDto
+                            ){
 
         categoryService.updateCategoryList(categoryDto.getCategoryList());
 
@@ -62,7 +63,7 @@ public class CategoryController {
     @DeleteMapping(path = "/list")
     @ResponseBody
     public String ajaxDeleteCategoryList(@RequestBody CategoryDto categoryDto
-                                    , HttpServletResponse response){
+                                    ){
 
             categoryService.deleteCategoryList(categoryDto.getCategoryList());
 
