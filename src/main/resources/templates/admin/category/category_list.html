@@ -3,6 +3,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layout/main_layout">
 
 <th:block layout:fragment="html_head">
+    <script th:inline="javascript">
+        var context = /*[[@{/}]]*/ '/';
+    </script>
+    <script th:src="@{/static/js/admin.js}"></script>
 
     <title>카테고리 목록보기</title>
 </th:block>
@@ -34,9 +38,5 @@
         </div>
     </form>
 
-    <script th:inline="javascript">
-        var context = /*[[@{/}]]*/ '/';
-    </script>
-    <script th:src="@{/static/js/admin.js}"></script>
 </th:block>
 </html>
