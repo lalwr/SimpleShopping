@@ -23,10 +23,10 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
         if(authentication != null){
             String email = authentication.getName();
             User loginUser = userService.getUserByEmail(email);
-            if(loginUser != null){
+            if(loginUser != null && "Y".equals(loginUser.getUse())){
                 request.setAttribute("loginUser", loginUser);
             }
         }
         return true;
-    }
+        }
 }

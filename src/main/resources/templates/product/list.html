@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
+
+<th:block layout:fragment="html_head">
+    <title>게시판 목록보기</title>
+</th:block>
+
+<th:block layout:fragment="body_main">
+    <script>
+        function search(){
+            location.href="/product/list?search="+document.getElementById("search").value+"&category="+document.getElementById("category").value;
+        }
+    </script>
+    <br>
+    <br>
+    <br>
+    <div>
+        <select id ="category">
+            <div th:if="${select == 'All'}"><option selected>All</option></div>
+            <div th:unless="${select == 'All'}"><option>All</option></div>
+            <div th:if="${select == 'Linux'}"><option selected>Linux</option></div>
+            <div th:unless="${select == 'Linux'}"><option>Linux</option></div>
+            <div th:if="${select == 'Programming'}"><option selected>Programming</option></div>
+            <div th:unless="${select == 'Programming'}"><option>Programming</option></div>
+            <div th:if="${select == 'Computer'}"><option selected>Computer</option></div>
+            <div th:unless="${select == 'Computer'}"><option>Computer</option></div>
+            <div th:if="${select == 'ETC'}"><option selected>ETC</option></div>
+            <div th:unless="${select == 'ETC'}"><option>ETC</option></div>
+        </select>
+        <input type="search" placeholder="상품 검색" id="search" th:value="${search}"/>
+        <input type="button" value="검색" onclick="search()"/>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>상품 리스트</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${not #lists.isEmpty(products)}" th:each="product : ${products}">
+            <td><a th:href="@{'/product/detail/' + ${product.no}}"><img th:src="@{'/static/images/products/'+${product.name}+'.jpg'}" width="200" height="200"></a></td>
+            <td th:text="${product.price}+'원'"></td>
+        </tr>
+        </tbody>
+
+
+    </table>
+    <div class="col-sm-12 col-md-7">
+        <div class="dataTables_paginate paging_simple_numbers" id="data_table_paginate">
+            <ul class = "pagination">
+                <li th:classappend="(${pageManager.pageOffset == 0} ? ' disabled ' : ' ')" class="paginate_button page-item previous" id="data_table_previous">
+                    <a th:href="@{/product/list(page=${pageManager.pageOffset - pageManager.PAGE_SCOPE+1}, category=${pageManager.category}, search=${pageManager.search})}" th:text="prev" class="page-link"></a>
+                </li>
+                <li th:each="i : ${#numbers.sequence( {pageManager.pageOffset + 1}, {pageManager.pageOffset + pageManager.PAGE_SCOPE})}" th:classappend="(${pageManager.currentPage == i%pageManager.PAGE_SCOPE} ? 'active':'') + (${i > pageManager.totalPage}) ? 'disabled':''" class="paginate_button page-item ">
+                    <a th:href="@{/product/list(page=${i}, category=${pageManager.category}, search=${pageManager.search})}" th:text="${i}" class="page-link"></a>
+                </li>
+                <li th:classappend="(${pageManager.pageOffset + pageManager.PAGE_SCOPE > pageManager.totalPage} ? 'disabled ' : '')" class="paginate_button page-item next" id="data_table_next">
+                    <a th:href="@{/product/list(page=${pageManager.pageOffset + pageManager.PAGE_SCOPE+1}, category=${pageManager.category}, search=${pageManager.search})}" th:text="next" class="page-link"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</th:block>
+</html>
