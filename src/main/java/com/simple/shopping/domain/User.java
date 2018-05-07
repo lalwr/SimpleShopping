@@ -1,5 +1,6 @@
 package com.simple.shopping.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +29,7 @@ public class User implements Serializable{
     private String phone;
     private String password;
     private LocalDateTime regdate;
-    private String use;
+    private String use = "Y";
 
     @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserRole> roles = new ArrayList<>();
@@ -62,5 +63,15 @@ public class User implements Serializable{
         }
     }
 
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JsonManagedReference
+    private List<UserConnection> userConnections = new ArrayList<>();
+
+    public void addUserConnection(UserConnection userConnection){
+        this.userConnections.add(userConnection);
+        if(userConnection.getUser() != this){
+            userConnection.setUser(this);
+        }
+    }
 
 }
