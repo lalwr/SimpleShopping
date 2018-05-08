@@ -7,11 +7,10 @@ import org.springframework.security.web.authentication.rememberme.PersistentReme
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
 
 @Component
-public class SimpleBoardTokenRepositoryImpl implements PersistentTokenRepository {
+public class ShoppingTokenRepositoryImpl implements PersistentTokenRepository {
 
     @Autowired
     PersistentLoginsRepository persistentLoginsRepository;
