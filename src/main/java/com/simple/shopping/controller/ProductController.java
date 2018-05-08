@@ -2,6 +2,7 @@ package com.simple.shopping.controller;
 
 import com.simple.shopping.PageManager;
 import com.simple.shopping.domain.Product;
+import com.simple.shopping.service.CategoryService;
 import com.simple.shopping.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,9 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    CategoryService categoryService;
 
     @GetMapping(path = "/list")
     public String productList(@RequestParam(name = "category", required = false, defaultValue = "All") String category,
@@ -39,6 +43,8 @@ public class ProductController {
             pageManager.setTotalPage(PageManager.maxProduct, productService.countAllByCategoryAndName(search, category));
         }
         modelMap.addAttribute("products", products);
+
+        modelMap.addAttribute("categories", categoryService.getCategories());
 
         modelMap.addAttribute("select", category);
         modelMap.addAttribute("search", search);
