@@ -36,6 +36,8 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
         http
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").and()
             .authorizeRequests()
+                .requestMatchers(new AntPathRequestMatcher("/**.html")).permitAll()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/users/login").permitAll()
                 .antMatchers("/users/join").permitAll()
                 .antMatchers("/users/emailOverlap").permitAll()

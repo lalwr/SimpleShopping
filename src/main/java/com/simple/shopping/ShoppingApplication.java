@@ -4,6 +4,10 @@ import com.simple.shopping.interceptor.LoginCheckInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.*;
 
 @SpringBootApplication
@@ -31,6 +35,16 @@ public class ShoppingApplication implements WebMvcConfigurer{
 		System.out.println("========================================================");
 	}
 
+	@Bean
+	public FilterRegistrationBean httpMethodFilterRegistration(){
+		FilterRegistrationBean registration = new FilterRegistrationBean();
+		registration.setFilter(new HiddenHttpMethodFilter());
+		registration.addUrlPatterns("/*");
+		registration.setName("httpMethodFilter");
+		registration.setOrder(Ordered.HIGHEST_PRECEDENCE+1);
+		return registration;
+	}
+
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addRedirectViewController("/", "/users/login");
@@ -40,4 +54,5 @@ public class ShoppingApplication implements WebMvcConfigurer{
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(loginCheckInterceptor);
 	}
+  
 }
