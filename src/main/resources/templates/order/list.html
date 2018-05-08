@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 현황</title>
+</head>
+<body>
+주문 현황
+<table>
+    <tbody>
+    <tr th:if="${not #lists.isEmpty(product)}" th:each="product : ${products}">
+        <td><img th:src="@{'/static/images/products/'+${product.name}+'.jpg'}" width="100" height="100"></td>
+        <td ><a th:text="${product.name}"></a> </td>
+        <td th:text="${product.no}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${#temporals.format(product.regdate, 'yyyy/mm/dd HH:mm')}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
