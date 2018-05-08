@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -38,6 +39,8 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                 .antMatchers("/users/login").permitAll()
                 .antMatchers("/users/join").permitAll()
                 .antMatchers("/users/emailOverlap").permitAll()
+                .antMatchers(HttpMethod.GET,"/product/**").permitAll()
+                .antMatchers("/product/**").hasRole("USER")
                 .antMatchers("/users/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/h2-console/**").permitAll()

@@ -100,5 +100,7 @@ dependencies {
 //    runtime('mysql:mysql-connector-java')
 	compile('org.projectlombok:lombok')
 
+	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

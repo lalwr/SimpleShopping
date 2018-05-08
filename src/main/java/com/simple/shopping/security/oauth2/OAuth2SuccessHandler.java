@@ -145,7 +145,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler
                 joinUser.getRoles().forEach(role -> list.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName())));
 
                 LoginUserInfo userDetails = new LoginUserInfo(joinUser.getEmail(), joinUser.getPassword(), list);
-                userDetails.setNo(user.getNo());
+                userDetails.setNo(joinUser.getNo());
                 userDetails.setName(joinUser.getName());
                 userDetails.setUse(joinUser.getUse());
 

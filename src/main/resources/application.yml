@@ -27,6 +27,17 @@ spring:
       enabled: true
 #    http://localhost:8080/h2-console
 
+#logging color
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+
+logging:
+  level:
+    org:
+      hibernate:TRACE
+
 # 페이스북
 facebook:
   client:
@@ -40,6 +51,9 @@ facebook:
      scope: email
   resource:
      userInfoUri: https://graph.facebook.com/me?fields=email,name,id
+logging:
+  config:
+  exception-conversion-word:
 
 
 #spring:
