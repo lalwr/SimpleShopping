@@ -5,10 +5,11 @@ insert into user_roles(id, user_id, role_name) values (1, 1, 'USER');
 insert into user_roles(id, user_id, role_name) values (2, 2, 'ADMIN');
 insert into user_roles(id, user_id, role_name) values (3, 3, 'USER');
 
-insert into category(no, name) values(null, 'Linux');
-insert into category(no, name) values(null, 'Programming');
-insert into category(no, name) values(null, 'Computer');
-insert into category(no, name) values(null, 'ETC');
+insert into category(no, name, use) values(null, 'All', 'Y');
+insert into category(no, name, use) values(null, 'Linux', 'Y');
+insert into category(no, name, use) values(null, 'Programming', 'Y');
+insert into category(no, name, use) values(null, 'Computer', 'Y');
+insert into category(no, name, use) values(null, 'ETC', 'Y');
 
 insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker1', 1500, 1, now(), '1', '상품설명', null);
 insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker2', 1500, 1, now(), '1', '상품설명', null);
