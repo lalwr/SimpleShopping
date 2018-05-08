@@ -1,14 +1,23 @@
 package com.simple.shopping.config;
 
+import com.simple.shopping.security.oauth2.AlreadyLoginCheckFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.servlet.Filter;
 
 @Configuration
 public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
+
+    @Autowired
+    ApplicationContext context;
 
     /*
     permitAll()의 경우는 인증 검사가 수행되긴 한다. static resource의 경우는 아예 인증을 무시하게 하는 것이 불필요한 sql이 실행안되게 할 수 있다.
@@ -25,7 +34,7 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").and()
-                .authorizeRequests()
+            .authorizeRequests()
                 .antMatchers("/users/login").permitAll()
                 .antMatchers("/users/join").permitAll()
                 .antMatchers("/users/emailOverlap").permitAll()
@@ -38,12 +47,17 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
 //                .ignoringAntMatchers("/h2-console/**")
                 .and().headers().frameOptions().disable()
 //                .and().formLogin() //시큐리티 로그인 사용
-                .and().
-                    formLogin()
-                    .loginProcessingUrl("/users/login")
-                    .loginPage("/users/login").usernameParameter("id").passwordParameter("password").defaultSuccessUrl("/users/user")
+                .and()
+                    .formLogin()
+                        .loginProcessingUrl("/users/login")
+                        .loginPage("/users/login").usernameParameter("id").passwordParameter("password")
+                        .defaultSuccessUrl("/users/user")
 //                .and().rememberMe().tokenRepository(simpleBoardTokenRepositoryImpl).rememberMeParameter("remember-me").tokenValiditySeconds(1209600)
-                .and().logout().permitAll();
+                .and().logout().permitAll()
+                .and()
+                    .addFilterBefore(new AlreadyLoginCheckFilter(), BasicAuthenticationFilter.class)
+                    .addFilterBefore((Filter)context.getBean("sso.filter"), BasicAuthenticationFilter.class);
+
     }
 
 }

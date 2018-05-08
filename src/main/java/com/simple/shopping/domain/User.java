@@ -32,7 +32,7 @@ public class User implements Serializable{
     @JsonIgnore
     private String password;
     private LocalDateTime regdate;
-    private String use;
+    private String use = "Y";
 
     @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
@@ -77,6 +77,5 @@ public class User implements Serializable{
             userConnection.setUser(this);
         }
     }
-
 
 }
