@@ -1,5 +1,6 @@
 package com.simple.shopping.config;
 
+import com.simple.shopping.security.ShoppingTokenRepositoryImpl;
 import com.simple.shopping.security.oauth2.AlreadyLoginCheckFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -16,6 +17,9 @@ import javax.servlet.Filter;
 
 @Configuration
 public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
+
+    @Autowired
+    ShoppingTokenRepositoryImpl shoppingTokenRepositoryImpl;
 
     @Autowired
     ApplicationContext context;
@@ -57,7 +61,7 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                         .loginProcessingUrl("/users/login")
                         .loginPage("/users/login").usernameParameter("id").passwordParameter("password")
                         .defaultSuccessUrl("/users/user")
-//                .and().rememberMe().tokenRepository(simpleBoardTokenRepositoryImpl).rememberMeParameter("remember-me").tokenValiditySeconds(1209600)
+                .and().rememberMe().tokenRepository(shoppingTokenRepositoryImpl).rememberMeParameter("remember-me").tokenValiditySeconds(1209600)
                 .and().logout().permitAll()
                 .and()
                     .addFilterBefore(new AlreadyLoginCheckFilter(), BasicAuthenticationFilter.class)
