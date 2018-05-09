@@ -58,14 +58,6 @@
                                         <input type="text" class="form-control form-control-lg rounded-0" id="address" name="address" required="" th:field="*{address}">
                                         <small class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></small>
                                     </div>
-                                    <div>
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="">
-                                            <span class="custom-control-indicator"></span>
-                                            <span class="custom-control-description small text-dark">Remember me on this computer</span>
-                                        </label>
-                                    </div>
-                                    <i class="fab fa-facebook"></i>
                                     <div class="form-group row">
                                         <div class="col-sm-10">
                                             <a th:href="@{/sign-in/facebook}">facebook 가입 및 로그인</a>
