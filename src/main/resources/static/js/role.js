@@ -34,12 +34,12 @@ function roleAddUser(userNo) {
         });
     }
 }
-function roleDeleteUser(roleNo) {
+/*function roleDeleteUser(roleNo) {
     if(!confirm("권한을 삭제하시겠습니까?")){
         return false;
     }else{
         $.ajax({
-            type: 'POST',
+            type : "POST",
             url : "/admin/roles",
             data : {
                 roleNo : roleNo,
@@ -52,6 +52,31 @@ function roleDeleteUser(roleNo) {
                 }else if(data == "true"){
                     document.location.reload();
                 }
+            },
+            error : function (data) {
+                console.log(data);
+            }
+        });
+    }
+
+}*/
+function roleDeleteUser(roleNo) {
+    if(!confirm("권한을 삭제하시겠습니까?")){
+        return false;
+    }else{
+        $.ajax({
+            type : "DELETE",
+            url : "/admin/roles/" + roleNo,
+            success : function (data) {
+                if(data == "noRole"){
+                    alert("부여되지 않은 권한입니다")
+                    return false;
+                }else if(data == "true"){
+                    document.location.reload();
+                }
+            },
+            error : function (data) {
+                console.log(data);
             }
         });
     }

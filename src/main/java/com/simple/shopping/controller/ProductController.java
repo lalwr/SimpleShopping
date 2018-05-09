@@ -44,7 +44,7 @@ public class ProductController {
         }
         modelMap.addAttribute("products", products);
 
-        modelMap.addAttribute("categories", categoryService.getCategories());
+        modelMap.addAttribute("categories", categoryService.getCategoryList());
 
         modelMap.addAttribute("select", category);
         modelMap.addAttribute("search", search);

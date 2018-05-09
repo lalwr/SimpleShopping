@@ -1,5 +1,8 @@
 package com.simple.shopping.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,11 +29,13 @@ public class User implements Serializable{
     private String email;
     private String address;
     private String phone;
+    @JsonIgnore
     private String password;
     private LocalDateTime regdate;
-    private String use;
+    private String use = "Y";
 
     @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<UserRole> roles = new ArrayList<>();
 
     // 헬퍼 메소드. User에 UserRole을 추가할때 사용한다.
@@ -62,5 +67,15 @@ public class User implements Serializable{
         }
     }
 
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JsonManagedReference
+    private List<UserConnection> userConnections = new ArrayList<>();
+
+    public void addUserConnection(UserConnection userConnection){
+        this.userConnections.add(userConnection);
+        if(userConnection.getUser() != this){
+            userConnection.setUser(this);
+        }
+    }
 
 }

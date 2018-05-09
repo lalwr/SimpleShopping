@@ -1,6 +1,8 @@
 package com.simple.shopping.service.impl;
 
 import com.simple.shopping.domain.User;
+import com.simple.shopping.domain.UserConnection;
+import com.simple.shopping.repository.UserConnectionRepository;
 import com.simple.shopping.repository.UserRepository;
 import com.simple.shopping.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserConnectionRepository userConnectionRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -38,6 +43,19 @@ public class UserServiceImpl implements UserService{
     @Transactional(readOnly = true)
     public Long countByEmail(String email) {
         return userRepository.countByEmail(email);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public User getSocialUser(String type, String providerUserId){
+        User user = userRepository.getSocialUser(type, providerUserId);
+        return user;
+    }
+
+    @Override
+    @Transactional
+    public UserConnection addUserConnection(UserConnection userConnection) {
+        return userConnectionRepository.save(userConnection);
     }
 
 }

@@ -60,5 +60,4 @@ public class Product {
             category.getProducts().add(this);
         }
     }
-
 }
