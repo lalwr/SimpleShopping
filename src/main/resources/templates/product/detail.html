@@ -25,20 +25,20 @@
             <td ><a th:text="*{name}"></a> </td>
             <td th:text="*{description}"></td>
             <td th:text="*{price} + '원'"></td>
-            <td><input id="amount" type="number" value="1" min="1" name="amount"/></td>
+            <td><input id="productAmount" type="number" value="1" min="1" name="amount"/></td>
             </tbody>
         </div>
 
-        <form action="/cart" method="post" th:object="${product}">
+        <form id="addCart" action="/cart" method="post" th:object="${product}">
             <input type="hidden" th:value="*{no}" name="productNo"/>
-            <input type="hidden" id="cartAmount" name="amount"/>
-            <input type="submit" class="btn btn-primary" value="장바구니 담기" onmouseover="addCart()">
+            <input type="hidden" id="cartAmount" name="productAmount"/>
+            <input type="button" class="btn btn-primary" value="장바구니 담기" onclick="addCart()">
         </form>
 
-        <form th:action="@{'/order/list'}" method="get" th:object="${product}">
+        <form id="addOrderProduct" th:action="@{'/order/single'}" method="get" th:object="${product}">
             <input type="hidden" th:value="*{no}" name="productNo"/>
-            <input type="hidden" id="orderAmount" name="amount"/>
-            <input type="submit" class="btn btn-secondary" value="주문하기" onmouseover="addCart()">
+            <input type="hidden" id="orderAmount" name="productAmount"/>
+            <input type="button" class="btn btn-secondary" value="주문하기" onclick="addOrderProduct()">
         </form>
     </table>
 

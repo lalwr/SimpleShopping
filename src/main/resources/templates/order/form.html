@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
+<th:block layout:fragment="html_head">
+    <title>주문 하기</title>
+</th:block>
+
+<th:block layout:fragment="body_main">
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th th:width="300" style="font-size: x-large" scope="col">상품 이미지</th>
+                <th th:width="300" style="font-size: x-large" scope="col">상품명</th>
+                <th th:width="300" style="font-size: x-large" scope="col">주문 수량</th>
+                <th th:width="300" style="font-size: x-large" scope="col">판매 가격</th>
+            </tr>
+            </thead>
+            <div>
+                <tbody>
+                <tr th:each="cart : ${carts}">
+                    <td><img th:src="@{'/static/images/products/' + ${cart.product.name} +'.jpg'}" width="200" height="200"></td>
+                    <td style="font-size: x-large" th:text="${cart.product.name}"></td>
+                    <td style="font-size: x-large" th:text="${cart.amount}"></td>
+                    <td style="font-size: x-large" th:text="${cart.product.price * cart.amount}+'원'"></td>
+                </tr>
+                </tbody>
+            </div>
+        </table>
+        <div style="font-size: x-large" id="totalPrice" class="text-lg-center font-weight-bold" th:text="'금액 합계 : ' + ${totalPrice} + ' 원'"></div>
+    </div>
+
+    <div class="container">
+        <div style="font-size: xx-large" class="font-weight-bold">배송지 정보</div>
+        <form action="/order" method="post">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">이름</span>
+                </div>
+                <input class="form-control" type="text" placeholder="주문자 성명" name="userName" th:value="${user.name}">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">주소</span>
+                </div>
+                <input class="form-control" type="text" placeholder="배송받을 주소" name="userAddress" th:value="${user.address}">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">연락처</span>
+                </div>
+                <input class="form-control" type="text" placeholder="연락처" name="userPhone" th:value="${user.phone}">
+            </div>
+            <div>
+                <input class="btn btn-primary btn-lg btn-block" type="submit" value="결제하기">
+            </div>
+        </form>
+
+
+    </div>
+</th:block>
+<body>
+</html>

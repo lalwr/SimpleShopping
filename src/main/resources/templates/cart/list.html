@@ -23,17 +23,17 @@
                 <tr th:each="cart : ${carts}">
                     <td><img th:src="@{'/static/images/products/' + ${cart.product.name} +'.jpg'}" width="200" height="200"></td>
                     <td style="font-size: x-large" th:text="${cart.product.name}" id="cartName"></td>
-                    <td style="font-size: x-large"><input th:id="${cart.product.name}" class="col-md-5" type="number" th:value="${cart.amount}" min="1" onchange="updateCart(this.id)"/></td>
+                    <td style="font-size: x-large"><input th:id="${cart.product.no}" class="col-md-5" type="number" th:value="${cart.amount}" min="1" onchange="updateCart(this.id)"/></td>
                     <td style="font-size: x-large" th:text="${cart.product.price * cart.amount}+'원'"></td>
                     <td style="font-size: x-large">
                         <form action="/cart" method="post">
-                            <input type="hidden" name="productName" th:value="${cart.product.name}"/>
-                            <input type="hidden" name="productAmount" th:id="${cart.product.name}+'Amount'"/>
+                            <input type="hidden" name="productNo" th:value="${cart.product.no}"/>
+                            <input type="hidden" name="productAmount" th:id="${cart.product.no}+'Amount'"/>
                             <input type="hidden" name="_method" value="put"/>
                             <input class="btn btn-primary" type="submit" th:value="수정하기"/>
                         </form>
                         <form action="/cart" method="post">
-                            <input type="hidden" name="productName" th:value="${cart.product.name}"/>
+                            <input type="hidden" name="productNo" th:value="${cart.product.no}"/>
                             <input type="hidden" name="_method" value="delete"/>
                             <input class="btn btn-secondary" type="submit" th:value="삭제하기"/>
                         </form>
@@ -41,9 +41,10 @@
                 </tr>
                 </tbody>
             </div>
-            <div style="font-size: xx-large" id="totalPrice" class="text-lg-right font-weight-bold" th:text="'금액 합계 : ' + ${totalPrice} + ' 원'"></div>
         </table>
-        <form action="/order">
+        <div style="font-size: x-large" id="totalPrice" class="text-lg-center font-weight-bold" th:text="'금액 합계 : ' + ${totalPrice} + ' 원'"></div>
+        <br>
+        <form action="/order/carts" method="get">
             <input class="btn btn-primary btn-lg btn-block" type="submit" value="주문하기">
         </form>
     </div>

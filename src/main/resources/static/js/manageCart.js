@@ -1,6 +1,11 @@
 function addCart(){
-    document.getElementById("cartAmount").value = document.getElementById("amount").value;
-    document.getElementById("orderAmount").value = document.getElementById("amount").value;
+    document.getElementById("cartAmount").value = document.getElementById("productAmount").value;
+    document.getElementById("addCart").submit();
+}
+
+function addOrderProduct(){
+    document.getElementById("orderAmount").value = document.getElementById("productAmount").value;
+    document.getElementById("addOrderProduct").submit();
 }
 
 function updateCart(product){

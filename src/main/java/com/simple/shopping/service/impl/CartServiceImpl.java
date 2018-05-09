@@ -26,28 +26,52 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Cart> getCartbyUserNo(Long userNo) {
-        return cartRepository.findCartByUserNo(userNo);
+    public List<Cart> getCartsbyUserNo(Long userNo) {
+        return cartRepository.findCartsByUserNo(userNo);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Cart getCartbyUserNoAndProductNo(Long userNo, Long productNo) {
+        return cartRepository.findCartByUserNoAndProductNo(userNo, productNo);
     }
 
     @Override
     @Transactional
     public Cart addCart(String email, Long productNo, int amount) {
-        List<Cart> carts = getCartbyUserNo(userRepository.findUserByEmail(email).getNo());
-        for(Cart c : carts){
-            if(c.getProduct() == productRepository.findProductByNo(productNo)){
-                Cart cart = c;
-                cart.setAmount(c.getAmount() + amount);
-                Cart savedCart = cartRepository.save(cart);
-                return savedCart;
-            }
+        Cart cart = cartRepository.findCartByUserNoAndProductNo(userRepository.findUserByEmail(email).getNo(), productNo);
+        if(cart != null){
+            cart.setAmount(cart.getAmount() + amount);
+            Cart savedCart = cartRepository.save(cart);
+            return savedCart;
+        }else{
+            cart = new Cart();
+            cart.setUser(userRepository.findUserByEmail(email));
+            cart.setProduct(productRepository.findProductByNo(productNo));
+            cart.setAmount(amount);
+            Cart savedCart = cartRepository.save(cart);
+            return savedCart;
         }
-        Cart cart = new Cart();
-        cart.setUser(userRepository.findUserByEmail(email));
-        cart.setProduct(productRepository.findProductByNo(productNo));
-        cart.setAmount(amount);
-        Cart savedCart = cartRepository.save(cart);
-        return savedCart;
+
+    }
+
+    @Override
+    @Transactional
+    public void updateCart(String email, Long productNo, int productAmount){
+        Cart cart = cartRepository.findCartByUserNoAndProductNo(userRepository.findUserByEmail(email).getNo(), productNo);
+        if(cart != null){
+            cart.setAmount(productAmount);
+            cartRepository.save(cart);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteCart(String email, Long productNo){
+        Cart cart = cartRepository.findCartByUserNoAndProductNo(userRepository.findUserByEmail(email).getNo(), productNo);
+        if(cart != null){
+            cartRepository.delete(cart);
+        }
     }
 
     @Override
@@ -60,24 +84,4 @@ public class CartServiceImpl implements CartService {
             return new Long(0);
         }
     }
-
-    public void updateCart(String email, String productName, int productAmount){
-        List<Cart> carts = getCartbyUserNo(userRepository.findUserByEmail(email).getNo());
-        for(Cart c : carts){
-            if(c.getProduct().getName().equals(productName)){
-                c.setAmount(productAmount);
-                cartRepository.save(c);
-            }
-        }
-    }
-
-    public void deleteCart(String email, String productName){
-        List<Cart> carts = getCartbyUserNo(userRepository.findUserByEmail(email).getNo());
-        for(Cart c : carts){
-            if(c.getProduct().getName().equals(productName)){
-                cartRepository.delete(c);
-            }
-        }
-    }
-
 }
