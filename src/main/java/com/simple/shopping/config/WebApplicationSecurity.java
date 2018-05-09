@@ -5,6 +5,7 @@ import com.simple.shopping.security.oauth2.AlreadyLoginCheckFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -60,13 +61,29 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                     .formLogin()
                         .loginProcessingUrl("/users/login")
                         .loginPage("/users/login").usernameParameter("id").passwordParameter("password")
-                        .defaultSuccessUrl("/users/user")
+                        .successHandler(customAuthenticationSuccessHandler())
+                        .failureHandler(customAuthenticationFailureHandler())
                 .and().rememberMe().tokenRepository(shoppingTokenRepositoryImpl).rememberMeParameter("remember-me").tokenValiditySeconds(1209600)
                 .and().logout().permitAll()
                 .and()
                     .addFilterBefore(new AlreadyLoginCheckFilter(), BasicAuthenticationFilter.class)
                     .addFilterBefore((Filter)context.getBean("sso.filter"), BasicAuthenticationFilter.class);
 
+    }
+
+    @Bean
+    public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler(){
+        CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler = new CustomAuthenticationSuccessHandler();
+        customAuthenticationSuccessHandler.setDefaultUrl("/users/user");
+        customAuthenticationSuccessHandler.setTargetUrlParameter("loginRedirect");
+        customAuthenticationSuccessHandler.setUseReferer(true);
+        return customAuthenticationSuccessHandler;
+    }
+
+    @Bean
+    public CustomAuthenticationFailureHandler customAuthenticationFailureHandler(){
+        CustomAuthenticationFailureHandler customAuthenticationFailureHandler = new CustomAuthenticationFailureHandler();
+        return customAuthenticationFailureHandler;
     }
 
 }
