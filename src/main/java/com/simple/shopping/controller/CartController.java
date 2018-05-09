@@ -28,7 +28,6 @@ public class CartController {
     @GetMapping
     public String cartList(Principal principal,
                            ModelMap modelMap){
-        //유저의 carts에 들어있는 상품리스트를 가져온다.
         Long userNo = userService.getUserByEmail(principal.getName()).getNo();
         List<Cart> carts = cartService.getCartbyUserNo(userNo);
         modelMap.addAttribute("carts", carts);
@@ -42,8 +41,6 @@ public class CartController {
     public String addCart(Principal principal,
                           @RequestParam("productNo") Long productNo,
                           @RequestParam("amount") int amount){
-        //해당 유저의 carts에 상품을 추가한다.
-
         Cart cart = cartService.addCart(principal.getName(), productNo, amount);
         return "redirect:/cart";
     }

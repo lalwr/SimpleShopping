@@ -3,6 +3,6 @@ function addCart(){
     document.getElementById("orderAmount").value = document.getElementById("amount").value;
 }
 
-function updateCart(){
-    document.getElementById("productAmount").value=document.getElementById("cartAmount").value;
+function updateCart(product){
+    document.getElementById(product+'Amount').value = document.getElementById(product).value;
 }
