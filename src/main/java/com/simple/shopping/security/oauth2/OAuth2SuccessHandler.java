@@ -58,7 +58,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler
             // 기존 인증을 바꿉니다.
             // 이전 강의의 일반 로그인과 동일한 방식으로 로그인한 것으로 간주하여 처리합니다.
             // 기존 인증이 날아가기 때문에 OAUTH ROLE은 증발하며, USER ROLE 이 적용됩니다.
-            List<String> invalidUrls = Arrays.asList("/users/joinform");
+            List<String> invalidUrls = Arrays.asList("/users/join");
             final String finalReferer = referer;
             boolean find =
                     invalidUrls.stream().anyMatch(url -> {
@@ -153,7 +153,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler
                         (
                                 userDetails, null, list)
                 );
-                res.sendRedirect(req.getContextPath() + "/users/welcome");
+                res.sendRedirect(req.getContextPath() + "/users/user");
                 return;
             } // if end
         }
