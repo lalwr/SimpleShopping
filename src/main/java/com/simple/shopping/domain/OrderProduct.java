@@ -16,7 +16,7 @@ public class OrderProduct {
 
     private int amount;
 
-    private String status;
+//    private String status;
 
     @ManyToOne
     @JoinColumn(name = "bill_no")

@@ -29,7 +29,7 @@ public class CartController {
     public String cartList(Principal principal,
                            ModelMap modelMap){
         Long userNo = userService.getUserByEmail(principal.getName()).getNo();
-        List<Cart> carts = cartService.getCartbyUserNo(userNo);
+        List<Cart> carts = cartService.getCartsbyUserNo(userNo);
         modelMap.addAttribute("carts", carts);
 
         Long totalPrice = cartService.getTotalPrice(userNo);
@@ -40,23 +40,24 @@ public class CartController {
     @PostMapping
     public String addCart(Principal principal,
                           @RequestParam("productNo") Long productNo,
-                          @RequestParam("amount") int amount){
-        Cart cart = cartService.addCart(principal.getName(), productNo, amount);
+                          @RequestParam("productAmount") int productAmount){
+
+        cartService.addCart(principal.getName(), productNo, productAmount);
         return "redirect:/cart";
     }
 
     @PutMapping
     public String updateCart(Principal principal,
-                             @RequestParam(name = "productName") String productName,
+                             @RequestParam(name = "productNo") Long productNo,
                              @RequestParam(name = "productAmount") int productAmount){
-        cartService.updateCart(principal.getName(), productName, productAmount);
+        cartService.updateCart(principal.getName(), productNo, productAmount);
         return "redirect:/cart";
     }
 
     @DeleteMapping
     public String deleteCart(Principal principal,
-                             @RequestParam(name = "productName") String productName){
-        cartService.deleteCart(principal.getName(), productName);
+                             @RequestParam(name = "productNo") Long productNo){
+        cartService.deleteCart(principal.getName(), productNo);
         return "redirect:/cart";
     }
 }
