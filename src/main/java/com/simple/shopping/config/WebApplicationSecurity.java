@@ -66,7 +66,7 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                 .and().rememberMe().tokenRepository(shoppingTokenRepositoryImpl).rememberMeParameter("remember-me").tokenValiditySeconds(1209600)
                 .and().logout().permitAll()
                 .and()
-                    .addFilterBefore(new AlreadyLoginCheckFilter(), BasicAuthenticationFilter.class)
+                    .addFilterBefore(new AlreadyLoginCheckFilter(), BasicAuthenticationFilter.class) //BasicAuthenticationFilter : HTTP 기본 인증 헤더를 감시하고 이를 처리함
                     .addFilterBefore((Filter)context.getBean("sso.filter"), BasicAuthenticationFilter.class);
 
     }
