@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Product getProductByNo(Long no) {
         return productRepository.findProductByNo(no);
     }
