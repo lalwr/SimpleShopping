@@ -25,7 +25,8 @@
             <div>
                 <tbody>
                 <tr th:each="cart : ${carts}">
-                    <td><img th:src="@{'/static/images/products/' + ${cart.product.name} +'.jpg'}" width="200" height="200"></td>
+                    <td><img th:src="@{'/static/images/products/ubuntu.jpg'}" width="200" height="200"></td>
+                    <!--<td><img th:src="@{'/static/images/products/' + ${cart.product.name} +'.jpg'}" width="200" height="200"></td>-->
                     <td style="font-size: x-large" th:text="${cart.product.name}"></td>
                     <td style="font-size: x-large" th:text="${cart.amount}"></td>
                     <td style="font-size: x-large" th:text="${cart.product.price * cart.amount}+'원'"></td>

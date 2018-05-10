@@ -18,7 +18,8 @@
             <div>
                 <tbody>
                 <tr th:each="op : ${orderProducts}">
-                    <td><img th:src="@{'/static/images/products/' + ${op.product.name} +'.jpg'}" width="200" height="200"></td>
+                    <td><img th:src="@{'/static/images/products/ubuntu.jpg'}" width="200" height="200"></td>
+                    <!--<td><img th:src="@{'/static/images/products/' + ${op.product.name} +'.jpg'}" width="200" height="200"></td>-->
                     <td style="font-size: x-large" th:text="${op.product.name}"></td>
                     <td style="font-size: x-large" th:text="${op.amount}"/></td>
                     <td style="font-size: x-large" th:text="${op.product.price * op.amount}+'원'"></td>
