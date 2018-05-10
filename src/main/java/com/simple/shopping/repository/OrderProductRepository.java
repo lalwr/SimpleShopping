@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface OrderProductRepository extends JpaQueryDslPredicateRepository<OrderProduct, Long> {
 
-//                OrderProduct : amount, status, bill, product
-//                Bill : name, address, phone, regdate, user, List<OrderProduct>
     @Query("SELECT sum(op.product.price*op.amount) FROM OrderProduct op JOIN op.bill WHERE op.bill.no = :billNo")
     public Long totalPrice(@Param("billNo") Long billNo);
 
