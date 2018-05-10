@@ -50,10 +50,9 @@ public class UserRoleController {
         return result;
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{roleNo}")
     @ResponseBody
-    public String roleDelete(@RequestParam(value = "roleNo", required = true) Long roleNo){
-
+    public String roleDelete(@PathVariable("roleNo") Long roleNo){
         String result = "noRole";
 
         Long cnt = userRoleService.getUserRoleByNo(roleNo);
@@ -64,5 +63,6 @@ public class UserRoleController {
 
         return result;
     }
+
 
 }
