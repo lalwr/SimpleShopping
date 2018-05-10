@@ -89,6 +89,8 @@ public class BillController {
         modelMap.addAttribute("totalPrice", totalPrice);
 
         modelMap.addAttribute("user", user);
+
+        cartService.cleanCart();
         return "/order/form";
     }
 
