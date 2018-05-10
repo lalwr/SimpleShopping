@@ -1,9 +1,6 @@
 package com.simple.shopping.controller;
 
-import com.simple.shopping.domain.Bill;
-import com.simple.shopping.domain.Cart;
-import com.simple.shopping.domain.OrderProduct;
-import com.simple.shopping.domain.User;
+import com.simple.shopping.domain.*;
 import com.simple.shopping.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,14 +63,18 @@ public class BillController {
         billService.addBill(bill);
 
         for(Cart cart : carts){
-            OrderProduct orderProduct = new OrderProduct();
-            orderProduct.setProduct(cart.getProduct());
-            orderProduct.setAmount(cart.getAmount());
-            orderProduct.setBill(bill);
-            bill.addOrderProduct(orderProduct);
-            orderProductService.addOrderProduct(orderProduct);
+            if(cart.getProduct().getAmount()>10) {
+                OrderProduct orderProduct = new OrderProduct();
+                orderProduct.setProduct(cart.getProduct());
+                orderProduct.setAmount(cart.getAmount());
+                orderProduct.setBill(bill);
+                bill.addOrderProduct(orderProduct);
+                orderProductService.addOrderProduct(orderProduct);
+                cart.getProduct().setAmount(cart.getProduct().getAmount()-cart.getAmount());
+            }
         }
         cartService.cleanCart();
+
         return "redirect:/order";
     }
 
@@ -83,6 +84,11 @@ public class BillController {
 
         User user = userService.getUserByEmail(principal.getName());
         List<Cart> carts = cartService.getCartsbyUserNo(user.getNo());
+        for(Cart cart : carts){
+            if(cart.getProduct().getAmount()<10) {
+                cartService.deleteCart(cart.getUser().getEmail(), cart.getProduct().getNo());
+            }
+        }
         modelMap.addAttribute("carts", carts);
 
         Long totalPrice = cartService.getTotalPrice(user.getNo());
@@ -98,7 +104,9 @@ public class BillController {
                               @RequestParam(name = "productNo") Long productNo,
                               @RequestParam(name = "productAmount") int productAmount){
 
-        cartService.addCart(principal.getName(),productNo,productAmount);
+        if(productService.getProductByNo(productNo).getAmount()>10) {
+            cartService.addCart(principal.getName(), productNo, productAmount);
+        }
 
         return "redirect:/order/carts";
     }

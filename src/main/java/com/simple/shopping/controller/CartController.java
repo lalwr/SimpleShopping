@@ -41,8 +41,9 @@ public class CartController {
     public String addCart(Principal principal,
                           @RequestParam("productNo") Long productNo,
                           @RequestParam("productAmount") int productAmount){
-
-        cartService.addCart(principal.getName(), productNo, productAmount);
+        if(productAmount <= productService.getProductByNo(productNo).getAmount()-10) {
+            cartService.addCart(principal.getName(), productNo, productAmount);
+        }
         return "redirect:/cart";
     }
 
@@ -50,7 +51,9 @@ public class CartController {
     public String updateCart(Principal principal,
                              @RequestParam(name = "productNo") Long productNo,
                              @RequestParam(name = "productAmount") int productAmount){
-        cartService.updateCart(principal.getName(), productNo, productAmount);
+        if(productAmount < productService.getProductByNo(productNo).getAmount()-10) {
+            cartService.updateCart(principal.getName(), productNo, productAmount);
+        }
         return "redirect:/cart";
     }
 
