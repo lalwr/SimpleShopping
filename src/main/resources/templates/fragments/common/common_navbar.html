@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-   <a class="navbar-brand" href="#">Shopping</a>
+   <a class="navbar-brand" th:href="@{/product/list}">Shopping</a>
 
     <div class="collapse navbar-collapse">
          <ul class="navbar-nav mr-auto">
@@ -8,6 +8,9 @@
              </li>
              <li class="nav-item">
                  <a class="nav-link" href="/users/user">Profile</a>
+             </li>
+             <li class="nav-item" sec:authorize="isAuthenticated()" sec:access="hasRole('ROLE_ADMIN')">
+                 <a class="nav-link" th:href="@{/admin/roles}">Roles</a>
              </li>
          </ul>
 

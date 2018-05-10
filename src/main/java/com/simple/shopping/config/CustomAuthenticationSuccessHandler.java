@@ -148,7 +148,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                     result = 2;
                 } else {
                     String refererUrl = request.getHeader("REFERER");
-                    if (useReferer && StringUtils.hasText(refererUrl)) {
+                    if (useReferer && StringUtils.hasText(refererUrl) && !refererUrl.contains("/users/login")) {
                         result = 3;
                     } else {
                         result = 0;

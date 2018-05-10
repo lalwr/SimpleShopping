@@ -9,7 +9,6 @@ buildscript {
 		maven {
 			url "https://plugins.gradle.org/m2/"
 		}
-		maven { url "https://repo.spring.io/snapshot" }
 		jcenter()
 	}
 	dependencies {
@@ -101,6 +100,10 @@ dependencies {
 	compile('org.projectlombok:lombok')
 
 	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
+
+	compile('org.springframework.boot:spring-boot-starter-websocket')
+	compile group: 'org.webjars', name: 'sockjs-client', version: '1.0.2'
+	compile group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3'
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
