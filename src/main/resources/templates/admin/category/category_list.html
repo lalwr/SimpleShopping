@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layout/main_layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
 
 <th:block layout:fragment="html_head">
     <script th:src="@{/static/js/admin.js}"></script>
@@ -9,31 +9,55 @@
 </th:block>
 
 <th:block layout:fragment="body_main">
-    <div style="margin-top: 40px"></div>
-    <form th:action="@{/admin/category}" action="#" method="post" id="addForm">
-        <div class="form-group" style="text-align:center;">
-            <input type="text" class="form-control" id="ctgrName"
-                   aria-describedby="categoryHelp" placeholder="카테고리 명" name="name"
-                    style="width: 20%;display:inline-block;">
-            <button type="submit" class="btn btn-sm btn-outline-secondary" >
-                추가
-            </button>
-        </div>
-    </form>
-    <form th:action="@{/admin/category/list}" action="#" method="post" id="modifyForm">
-        <div style="text-align:center;margin:60px 0px 20px 0px;">
-            <div th:if="${not #lists.isEmpty(categoryList)}" th:each="ctgr, status: ${categoryList}">
-                <input type="checkbox" th:name="no" th:value="${ctgr.no}" th:data-idx = "${status.index}">
-                <input type="text" th:name="name" th:value="${ctgr.name}" th:id="'name.'+${status.index}">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center mb-4">카테고리 관리</h2>
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <form th:action="@{/admin/category}" action="#" method="post" id="addForm">
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="ctgrName"
+                                       aria-describedby="categoryHelp" placeholder="카테고리 명" name="name"
+                                       style="width: 20%;display:inline-block;">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-outline-secondary" >추가</button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <form th:action="@{/admin/category/list}" action="#" method="post" id="modifyForm">
+                            <div style="text-align:center;margin:20px 0px 20px 0px;" >
+                                <div th:if="${not #lists.isEmpty(categoryList)}" th:each="ctgr, status: ${categoryList}">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <input type="checkbox" th:name="no" th:value="${ctgr.no}" th:data-idx = "${status.index}">
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" th:name="name" th:value="${ctgr.name}" th:id="'name.'+${status.index}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="|submitWithJson('PUT', 'no', 'data-idx', 'categoryList', ['name']);|">
+                                    선택 수정
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="|submitWithJson('DELETE', 'no', 'data-idx', 'categoryList', ['name']);|">
+                                    선택 삭제
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--/row-->
             </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="'submitWithJson(\'PUT\', \'no\', \'data-idx\', \'categoryList\', [\'name\']);'">
-                선택 수정
-            </button>
-            <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="'submitWithJson(\'DELETE\', \'no\', \'data-idx\', \'categoryList\', [\'name\']);'">
-                선택 삭제
-            </button>
+            <!--/col-->
         </div>
-    </form>
+        <!--/row-->
+    </div>
+    <!--/container-->
 
 
 
