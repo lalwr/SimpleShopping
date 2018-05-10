@@ -73,7 +73,7 @@ public class BillController {
             bill.addOrderProduct(orderProduct);
             orderProductService.addOrderProduct(orderProduct);
         }
-
+        cartService.cleanCart();
         return "redirect:/order";
     }
 
@@ -90,7 +90,6 @@ public class BillController {
 
         modelMap.addAttribute("user", user);
 
-        cartService.cleanCart();
         return "/order/form";
     }
 
