@@ -9,15 +9,21 @@
              <li class="nav-item">
                  <a class="nav-link" href="#">Profile</a>
              </li>
+             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                 <a class="nav-link" th:href="@{/admin/category/list}">상품카테고리관리</a>
+             </li>
          </ul>
+
 
          <div sec:authorize="!isAuthenticated()" class="my-2 my-lg-0">
              <button type="button" class="btn btn-success" onclick="moveLogin()">로그인</button>
              <button type="button" class="btn btn-info" onclick="moveJoin()">회원가입</button>
          </div>
          <div sec:authorize="isAuthenticated()" class="my-2 my-lg-0">
-             <span class="navbar-text" th:text="${loginUser.name} + '님 환영합니다.'"></span>
+             <!--<span class="navbar-text" th:text="${loginUser.name} + '님 환영합니다.'"></span>-->
              <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
+             <tr th:if="${not #lists.isEmpty(products)}" th:each="product : ${products}">
          </div>
+
      </div>
 </nav>
