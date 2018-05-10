@@ -16,7 +16,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         if(loginId != null){
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/users/already-social-join");
         }else{
-            e.printStackTrace();
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/users/login");
         }
     }
 }
