@@ -32,6 +32,14 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
             User loginUser = userService.getUserByEmail(loginUserInfo.getEmail());
             request.setAttribute("loginUser", loginUser);
         }
-        return true;
+
+        //refer 설정
+        String refer = request.getHeader("refer");
+        String uri = request.getRequestURI();
+        if("/users/login".equals(uri)){
+            uri = refer;
         }
+        request.setAttribute("loginRedirect", uri);
+        return true;
+    }
 }

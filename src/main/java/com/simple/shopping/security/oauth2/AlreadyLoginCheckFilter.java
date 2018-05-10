@@ -23,7 +23,7 @@ public class AlreadyLoginCheckFilter implements Filter {
                 servletRequest.setAttribute("alreadyLoginId", currentPrincipalName);
             }
         }
-        filterChain.doFilter(servletRequest, servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse); //다음 필터로 요청과 응답 전달
     }
 
     @Override
