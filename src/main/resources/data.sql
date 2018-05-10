@@ -11,11 +11,12 @@ insert into category(no, name, use) values(null, 'Linux', 'Y');
 insert into category(no, name, use) values(null, 'Programming', 'Y');
 insert into category(no, name, use) values(null, 'Computer', 'Y');
 insert into category(no, name, use) values(null, 'ETC', 'Y');
+insert into category(no, name, use) values(null, 'TEST', '');
 
 insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker1', 1500, 1, now(), '1', '상품설명', null);
 insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker2', 1500, 1, now(), '1', '상품설명', null);
 insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker3', 1500, 1, now(), '1', '상품설명', null);
-insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker4', 1500, 1, now(), '1', '상품설명', null);
+insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker4', 1500, 1, now(), '2', '상품설명', null);
 insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker5', 1500, 1, now(), '2', '상품설명', null);
 insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker6', 1500, 1, now(), '2', '상품설명', null);
 insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker7', 1500, 1, now(), '2', '상품설명', null);
@@ -28,3 +29,4 @@ insert into product(no, name, price, amount, regdate, category_no, description, 
 insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker14', 1500, 1, now(), '4', '상품설명', null);
 insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker15', 1500, 1, now(), '4', '상품설명', null);
 insert into product(no, name, price, amount, regdate, category_no, description, image_path) values (null, 'sticker16', 1500, 1, now(), '4', '상품설명', null);
+

@@ -18,6 +18,10 @@
          <div sec:authorize="isAuthenticated()" class="my-2 my-lg-0">
              <span class="navbar-text" th:text="${loginUser.name} + '님 환영합니다.'"></span>
              <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
+             <tr th:if="${not #lists.isEmpty(products)}" th:each="product : ${products}">
+             <span th:if="not #lists.isEmpty(loginUser.roles)" th:each="role : ${loginUser.roles}">
+                 <span th:if="${role=='ADMIN'}">ADMIN</span>
+             </span>
          </div>
      </div>
 </nav>

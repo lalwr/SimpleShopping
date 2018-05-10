@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layout/main_layout">
+
+<th:block layout:fragment="html_head">
+
+    <title>상품 목록보기</title>
+</th:block>
+
+<th:block layout:fragment="body_main">
+    <div style="margin-top: 40px"></div>
+    <form th:action="@{/admin/product/list}" method="post">
+        <div class="container">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th width="10%">id</th>
+                    <th>제목</th>
+                    <th width="15%">작성자</th>
+                    <th width="10%">조회수</th>
+                    <th width="15%">작성일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${not #lists.isEmpty(list)}" th:each="board : ${list}">
+                    <td th:text="${board.id}"></td>
+                    <td><a th:href="@{'/boards/' + ${board.id}}" th:text="${board.title}"></a> </td>
+                    <td th:text="${board.user.name}"></td>
+                    <td th:text="${board.readCount}"></td>
+                    <td th:text="${#temporals.format(board.regdate, 'yyyy/mm/dd HH:mm')}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-3">
+                    <div class="dataTables_info" id="data_table_info" role="status" aria-live="polite">
+                        Showing 1 to 10 of 57 entries
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="data_table_paginate">
+                        <ul class="pagination">
+                            <li class="paginate_button page-item previous disabled" id="data_table_previous">
+                                <a href="#" aria-controls="data_table" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                            </li>
+                            <li th:each="i : ${ #numbers.sequence( {pagination.startPage}, {pagination.endPage} ) }"
+                                th:classappend="( ${ i == pagination.curPage } ? ' active ': '') + ( ${ i > pagination.totalPage} ? ' disabled ' : '')"
+                                class="paginate_button page-item">
+                                <a href="#" aria-controls="data_table" tabindex="0" class="page-link" th:text="${i}"></a>
+                            </li>
+                            <li class="paginate_button page-item next" id="data_table_next">
+                                <a href="#" aria-controls="data_table" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <div class="dataTables_info" id="data_table_control_btn">
+                        <a class="btn btn-primary btn-middle" th:href="@{/admin/product}">상품추가</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    <script th:src="@{/static/js/admin.js}"></script>
+</th:block>
+</html>

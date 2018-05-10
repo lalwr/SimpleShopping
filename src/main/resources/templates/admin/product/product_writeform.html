@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layout/main_layout">
+
+<th:block layout:fragment="html_head">
+
+    <title>상품 목록보기</title>
+</th:block>
+
+<th:block layout:fragment="body_main">
+    <div style="margin-top: 40px"></div>
+    <form th:action="@{/admin/product}" action="#" method="post" id="addForm" th:object="${product}">
+        <div class="form-group" style="text-align:center;">
+            <table>
+                <tbody>
+                    <th><label for="name">상품명</label></th>
+                    <td><input type="text" class="form-control" th:value= "${write != null}? *{name}"
+                               id="name" name="name">
+                    </td>
+                    <th><label for="amount">수량</label></th>
+                    <td><input type="text" class="form-control" th:value= "${write != null}? *{amount}"
+                               id="amount" name="amount">
+                    </td>
+                    <th><label for="price">가격</label></th>
+                    <td><input type="text" class="form-control" th:value= "${write != null}? *{price}"
+                               id="price" name="price">
+                    </td>
+                </tbody>
+
+
+                <!--<input type="number" class="form-control" id="amount"-->
+                       <!--aria-describedby="categoryHelp" placeholder="카테고리 명" name="amount"-->
+                       <!--style="width: 20%;display:inline-block;">-->
+            </table>
+            <button type="submit" class="btn btn-sm btn-outline-secondary" >
+                추가
+            </button>
+        </div>
+    </form>
+
+    <script th:src="@{/static/js/admin.js}"></script>
+</th:block>
+</html>

@@ -2,20 +2,16 @@ package com.simple.shopping.controller;
 
 import com.simple.shopping.domain.User;
 import com.simple.shopping.domain.UserRole;
-import com.simple.shopping.dto.UserJoinForm;
 import com.simple.shopping.service.UserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.BindResult;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @Controller
@@ -26,37 +22,17 @@ public class UserController {
     UserService userService;
 
     @GetMapping(path = "/join")
-    public String userJoin(UserJoinForm userJoinForm, ModelMap modelMap){
-        User user = new User();
-        modelMap.addAttribute("user", user);
+    public String userJoin(){
         return "login/join";
     }
 
     @PostMapping(path = "/join")
-    public String join(@Valid UserJoinForm userJoinForm, BindingResult bindingResult){
-
-        if(bindingResult.hasErrors()){
-            return "/login/join";
-        }
-
-        if(!userJoinForm.getPassword().equals(userJoinForm.getRePassword())){
-            FieldError fieldError = new FieldError("userJoinForm", "rePassword", "암호가 일치하지 않습니다");
-            bindingResult.addError(fieldError);
-            return "login/join";
-        }
-
-        User userByEmail = userService.getUserByEmail(userJoinForm.getEmail());
-        if(userByEmail != null){
-            FieldError fieldError = new FieldError("userJoinForm", "email", "이미 존재하는 email입니다.");
-            bindingResult.addError(fieldError);
-            return "login/join";
-        }
-
-        User user = new User();
-        BeanUtils.copyProperties(userJoinForm, user);
+    public String join(@ModelAttribute User user, HttpServletRequest request){
 
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        user.setUse("Y");
 
         UserRole userRole = new UserRole();
         userRole.setRoleName("USER");

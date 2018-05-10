@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: devel
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -27,33 +27,16 @@ spring:
       enabled: true
 #    http://localhost:8080/h2-console
 
-#logging color
+---
 spring:
-  output:
-    ansi:
-      enabled: ALWAYS
+  profiles: devel
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
 
-logging:
-  level:
-    org:
-      hibernate:TRACE
 
-# 페이스북
-facebook:
-  client:
-     clientId: 746000202255574
-     clientSecret: 1a9be60fbfc44a15324acf1ebf121ed1
-     accessTokenUri: https://graph.facebook.com/oauth/access_token
-     userAuthorizationUri: https://www.facebook.com/dialog/oauth
-     tokenName: oauth_token
-     authenticationScheme: query
-     clientAuthenticationScheme: form
-     scope: email
-  resource:
-     userInfoUri: https://graph.facebook.com/me?fields=email,name,id
-logging:
-  config:
-  exception-conversion-word:
 
 
 #spring:
