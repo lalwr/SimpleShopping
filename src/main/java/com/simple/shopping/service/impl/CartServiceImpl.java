@@ -84,4 +84,10 @@ public class CartServiceImpl implements CartService {
             return new Long(0);
         }
     }
+
+    @Override
+    @Transactional
+    public void cleanCart(){
+        cartRepository.deleteAll();
+    }
 }
