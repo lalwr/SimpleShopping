@@ -8,23 +8,25 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th th:width="250" style="font-size: x-large" scope="col">주문 번호</th>
-                <th th:width="250" style="font-size: x-large" scope="col">주문자 성함</th>
-                <th th:width="400" style="font-size: x-large" scope="col">배송지 주소</th>
-                <th th:width="250" style="font-size: x-large" scope="col">연락처</th>
-                <th th:width="400" style="font-size: x-large" scope="col">주문 일시</th>
-                <th th:width="250" style="font-size: x-large" scope="col">주문현황</th>
+                <th th:width="250" style="font-size: large" scope="col">주문 번호</th>
+                <th th:width="250" style="font-size: large" scope="col">주문자 성함</th>
+                <th th:width="250" style="font-size: large" scope="col">수신자 성함</th>
+                <th th:width="300" style="font-size: large" scope="col">배송지 주소</th>
+                <th th:width="250" style="font-size: large" scope="col">연락처</th>
+                <th th:width="400" style="font-size: large" scope="col">주문 일시</th>
+                <th th:width="250" style="font-size: large" scope="col">주문현황</th>
             </tr>
             </thead>
             <div>
                 <tbody>
                 <tr th:if="${not #lists.isEmpty(bills)}" th:each="bill : ${bills}">
                     <td><a th:href="@{'/order/detail/'+${bill.no}}" th:text="${bill.no}"></a></td>
-                    <td style="font-size: x-large" th:text="${bill.name}"></td>
-                    <td style="font-size: x-large" th:text="${bill.address}"></td>
-                    <td style="font-size: x-large" th:text="${bill.phone}"></td>
-                    <td style="font-size: x-large" th:text="${#temporals.format(bill.regdate, 'yyyy/mm/dd HH:mm')}"></td>
-                    <td style="font-size: x-large" th:text="${bill.status}"></td>
+                    <td style="font-size: large" th:text="${bill.name}"></td>
+                    <td style="font-size: large" th:text="${user.name}"></td>
+                    <td style="font-size: large" th:text="${bill.address}"></td>
+                    <td style="font-size: large" th:text="${bill.phone}"></td>
+                    <td style="font-size: large" th:text="${#temporals.format(bill.regdate, 'yyyy/MM/dd HH:mm')}"></td>
+                    <td style="font-size: large" th:text="${bill.status}"></td>
                 </tr>
                 </tbody>
             </div>
