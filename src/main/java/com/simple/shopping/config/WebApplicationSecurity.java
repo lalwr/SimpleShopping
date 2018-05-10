@@ -60,7 +60,7 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                     .formLogin()
                         .loginProcessingUrl("/users/login")
                         .loginPage("/users/login").usernameParameter("id").passwordParameter("password")
-                        .defaultSuccessUrl("/users/user")
+                        .defaultSuccessUrl("/product/list")
                 .and().rememberMe().tokenRepository(shoppingTokenRepositoryImpl).rememberMeParameter("remember-me").tokenValiditySeconds(1209600)
                 .and().logout().permitAll()
                 .and()
