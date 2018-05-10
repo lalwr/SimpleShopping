@@ -41,6 +41,7 @@ public class BillController {
         User user = userService.getUserByEmail(principal.getName());
         List<Bill> bills = billService.getBillsByUserNo(user.getNo());
 
+        modelMap.addAttribute("user", user);
         modelMap.addAttribute("bills", bills);
         return "order/list";
     }
@@ -49,30 +50,28 @@ public class BillController {
     @PostMapping
     public String cartToOrder(Principal principal,
                               @RequestParam(name = "userName") String userName,
-                              @RequestParam(name = "userAddress") String useraddress,
+                              @RequestParam(name = "userAddress") String userAddress,
                               @RequestParam(name = "userPhone") String userPhone){
         User user = userService.getUserByEmail(principal.getName());
         List<Cart> carts = cartService.getCartsbyUserNo(user.getNo());
         List<OrderProduct> orderProducts = new ArrayList<>();
         Bill bill = new Bill();
-        bill.setName(user.getName());
+        bill.setName(userName);
         bill.setRegdate(LocalDateTime.now());
-        bill.setPhone(user.getPhone());
+        bill.setPhone(userPhone);
         bill.setOrderProducts(orderProducts);
-        bill.setAddress(user.getAddress());
+        bill.setAddress(userAddress);
         bill.setUser(user);
         bill.setStatus("주문 확인");
-        Bill savedBill = billService.addBill(bill);
+        billService.addBill(bill);
 
         for(Cart cart : carts){
             OrderProduct orderProduct = new OrderProduct();
             orderProduct.setProduct(cart.getProduct());
             orderProduct.setAmount(cart.getAmount());
-//            orderProduct.setStatus("주문 확인");
             orderProduct.setBill(bill);
             bill.addOrderProduct(orderProduct);
-            OrderProduct savedOrderProduct = orderProductService.addOrderProduct(orderProduct);
-            orderProducts.add(savedOrderProduct);
+            orderProductService.addOrderProduct(orderProduct);
         }
 
         return "redirect:/order";

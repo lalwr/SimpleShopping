@@ -16,11 +16,13 @@ public class OrderProdudctServiceImpl implements OrderProductService {
     OrderProductRepository orderProductRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<OrderProduct> getOrderProductsbyBillNo(Long billNo) {
         return orderProductRepository.findOrderProductsByBillNo(billNo);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public OrderProduct getOrderProductByBillNoAndProductNo(Long billNo, Long productNo) {
         return orderProductRepository.findOrderProductByBillNoAndProductNo(billNo, productNo);
     }
@@ -37,6 +39,7 @@ public class OrderProdudctServiceImpl implements OrderProductService {
     }
 
     @Override
+    @Transactional
     public OrderProduct addOrderProduct(OrderProduct orderProduct){
         OrderProduct savedOrderProduct = orderProductRepository.save(orderProduct);
         return savedOrderProduct;

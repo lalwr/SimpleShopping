@@ -7,6 +7,7 @@ import com.simple.shopping.repository.BillRepository;
 import com.simple.shopping.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,16 +19,19 @@ public class BillServiceImpl implements BillService {
     BillRepository billRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bill> getBillsByUserNo(Long userNo) {
         return billRepository.findBillsByUserNo(userNo);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Bill getBillByNo(Long no) {
         return billRepository.findBillByNo(no);
     }
 
     @Override
+    @Transactional
     public Bill addBill(Bill bill){
         Bill savedBill = billRepository.save(bill);
         return savedBill;
