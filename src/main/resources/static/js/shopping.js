@@ -7,6 +7,6 @@ function moveJoin(){
 function logout() {
     window.location.href = "/logout";
 }
-function socialLogin() {
-    window.location.href = "/sign-in/facebook";
+function facebookLogin() {
+    location.href = "/sign-in/facebook";
 }
