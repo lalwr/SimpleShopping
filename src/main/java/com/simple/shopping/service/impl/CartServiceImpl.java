@@ -87,8 +87,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public void cleanCart(String email){
-        List<Cart> carts = cartRepository.findCartsByUserNo(userRepository.findUserByEmail(email).getNo());
+    public void cleanCart(Long userNo){
+        List<Cart> carts = cartRepository.findCartsByUserNo(userNo);
         for(Cart cart : carts) {
             cartRepository.delete(cart);
         }
