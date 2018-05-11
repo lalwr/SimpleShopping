@@ -50,6 +50,7 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                 .antMatchers("/product/**").hasRole("USER")
                 .antMatchers("/users/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/chatrooms/**").hasRole("USER")
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()
