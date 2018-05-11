@@ -39,10 +39,10 @@ public class ChatController {
     }
 
     @GetMapping
-    public String charRooms(ModelMap modelMap){
+    public String chatRooms(ModelMap modelMap){
 
         List<ChatRoom> list = chatService.getChatRooms();
-        modelMap.put("list", list);
+        modelMap.addAttribute("list", list);
 
         return "chat/chatRooms";
     }
