@@ -46,6 +46,9 @@ public class UserController {
     @GetMapping(path = "/login")
     public String login() { return "login/login"; }
 
+    @PostMapping(path = "/login")
+    public String loginFail() { return "login/login"; }
+
     @GetMapping(path = "/user")
     public String user(Principal principal, ModelMap modelMap) {
 

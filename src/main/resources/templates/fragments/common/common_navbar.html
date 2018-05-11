@@ -1,29 +1,21 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-   <a class="navbar-brand" th:href="@{/product/list}">Shopping</a>
+   <a class="navbar-brand" th:href="@{/product/list}"><i class="fas fa-shipping-fast fa-3x"></i></a>
 
     <div class="collapse navbar-collapse">
          <ul class="navbar-nav mr-auto">
-             <li class="nav-item active">
-                 <a class="nav-link" href="/product/list">Home <span class="sr-only">(current)</span></a>
-             </li>
              <li class="nav-item">
-                 <a class="nav-link" href="/users/user">Profile</a>
-             </li>
-             <li class="nav-item" sec:authorize="isAuthenticated()" sec:access="hasRole('ROLE_ADMIN')">
-                 <a class="nav-link" th:href="@{/admin/roles}">Roles</a>
-             </li>
-             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                 <a class="nav-link" th:href="@{/admin/category/list}">상품카테고리관리</a>
+                 <a class="nav-link" href=""></a>
              </li>
          </ul>
 
 
          <div sec:authorize="!isAuthenticated()" class="my-2 my-lg-0">
-             <button type="button" class="btn btn-success" onclick="moveLogin()">로그인</button>
-             <button type="button" class="btn btn-info" onclick="moveJoin()">회원가입</button>
+             <button type="button" class="btn btn-dark" onclick="location.href='/sign-in/facebook'"><i class="fab fa-facebook fa-2x"></i></button>
+             <button type="button" class="btn btn-dark" onclick="moveLogin()"><i class="fas fa-user fa-2x"></i></button>
+             <button type="button" class="btn btn-dark" onclick="moveJoin()"><i class="fas fa-sign-in-alt fa-2x"></i></i></button>
          </div>
          <div sec:authorize="isAuthenticated()" class="my-2 my-lg-0">
-             <!--<span class="navbar-text" th:text="${loginUser.name} + '님 환영합니다.'"></span>-->
+             <span class="navbar-text" th:text="${loginUser.name} + '님 환영합니다.'"></span>
              <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
              <tr th:if="${not #lists.isEmpty(products)}" th:each="product : ${products}">
          </div>
