@@ -42,8 +42,6 @@ public class BillController {
         modelMap.addAttribute("bills", bills);
         return "order/list";
     }
-//                OrderProduct : amount, status, bill, product
-//                Bill : name, address, phone, regdate, user, List<OrderProduct>
     @PostMapping
     public String cartToOrder(Principal principal,
                               @RequestParam(name = "userName") String userName,
@@ -78,7 +76,7 @@ public class BillController {
                     return "redirect:cart/list";
                 }
             }
-            cartService.cleanCart(user.getEmail());
+            cartService.cleanCart(user.getNo());
 
             return "redirect:/order";
         }else{
