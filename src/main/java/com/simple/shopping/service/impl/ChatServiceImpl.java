@@ -22,16 +22,19 @@ public class ChatServiceImpl implements ChatService{
     ChatUserRepository chatUserRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<ChatRoom> getChatRooms() {
         return chatRoomRepository.findAll();
     }
 
     @Override
+    @Transactional
     public void addChatRoom(ChatRoom chatRoom) {
         chatRoomRepository.save(chatRoom);
     }
 
     @Override
+    @Transactional
     public void addChatUser(ChatUser chatUser) {
         chatUserRepository.save(chatUser);
     }
