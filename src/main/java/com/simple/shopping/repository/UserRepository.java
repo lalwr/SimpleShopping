@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 public interface UserRepository extends JpaQueryDslPredicateRepository<User, Long> {
 
     public User findUserByEmail(String email);
+    @Query("SELECT u FROM User u WHERE u.use = 'Y' AND u.email = :email ")
+    public User findUserByEmailAndUse(@Param("email")String email);
     public Long countByEmail(String email);
     @Query("SELECT uc.user FROM UserConnection uc WHERE uc.providerId = :type and uc.providerUserId = :providerUserId")
     public User getSocialUser(@Param("type") String type, @Param("providerUserId") String providerUserId);
