@@ -32,16 +32,8 @@ function loadProductStock(product){
 function updateCart(product) {
     document.getElementById(product + 'Amount').value = document.getElementById(product).value;
     if (productStock < document.getElementById(product).value) {
-        console.log(document.getElementById(product).value);
-        console.log(document.getElementById(product + 'Amount').value);
-        console.log(product);
-        console.log(productStock);
         alert("상품 재고 : " + productStock + '개');
     }else{
-        console.log(document.getElementById(product).value);
-        console.log(document.getElementById(product + 'Amount').value);
-        console.log(product);
-        console.log(productStock);
         document.getElementById(product+"putCart").submit();
     }
 }
@@ -60,7 +52,7 @@ function finalCheckStock(product){
                 checkParam.push(false);
             }
 
-            if(checkParam.length == document.querySelectorAll("input[name=buttontest]").length) {
+            if(checkParam.length === document.querySelectorAll("input[name=buttontest]").length) {
                 document.getElementById("ordercheck").value = finalCheck(checkParam);
                 document.getElementById("orderProduct").submit();
             }
@@ -69,14 +61,13 @@ function finalCheckStock(product){
 }
 function finalCheck(checkParam) {
     for(i=0; i< document.querySelectorAll("input[name=buttontest]").length; i++){
-        if(checkParam[i] == false)
+        if(checkParam[i] === false)
             return false
     }
     return true;
 }
 
 function check(){
-    console.log(document.querySelectorAll("input[name=buttontest]").length);
     for(i = 0; i<document.querySelectorAll("input[name=buttontest]").length; i++) {
         document.querySelectorAll("input[name=buttontest]")[i].click();
     }
