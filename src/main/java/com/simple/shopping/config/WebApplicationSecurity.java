@@ -76,7 +76,7 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
     @Bean
     public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler(){
         CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler = new CustomAuthenticationSuccessHandler();
-        customAuthenticationSuccessHandler.setDefaultUrl("/users/user");
+        customAuthenticationSuccessHandler.setDefaultUrl("/product/list");
         customAuthenticationSuccessHandler.setTargetUrlParameter("loginRedirect");
         customAuthenticationSuccessHandler.setUseReferer(true);
         return customAuthenticationSuccessHandler;

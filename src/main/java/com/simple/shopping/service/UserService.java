@@ -9,6 +9,7 @@ public interface UserService {
     List<User> getUsers();
     User addUser(User user);
     User getUserByEmail(String email);
+    User getUserByEmailAndUse(String email);
     Long countByEmail(String email);
 
     public User getSocialUser(String type, String providerUserId);
