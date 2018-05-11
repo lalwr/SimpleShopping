@@ -6,7 +6,7 @@
              <li class="nav-item">
                  <a class="nav-link" href="/product/list">상품</a>
              </li>
-             <li class="nav-item">
+             <li class="nav-item" sec:authorize="isAuthenticated()">
                  <a class="nav-link" href="/users/user">프로필</a>
              </li>
              <li class="nav-item" sec:authorize="isAuthenticated()">
@@ -15,7 +15,10 @@
              <li class="nav-item" sec:authorize="isAuthenticated()">
                  <a class="nav-link" th:href="@{/order}">주문목록</a>
              </li>
-             <li class="nav-item" sec:authorize="isAuthenticated()" sec:access="hasRole('ROLE_ADMIN')">
+             <li class="nav-item" sec:authorize="isAuthenticated()">
+                 <a class="nav-link" th:href="@{/chatrooms}">채팅</a>
+             </li>
+             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                  <a class="nav-link" th:href="@{/admin/roles}">권한관리</a>
              </li>
              <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
@@ -25,11 +28,12 @@
 
 
          <div sec:authorize="!isAuthenticated()" class="my-2 my-lg-0">
+             <button type="button" class="btn btn-success" onclick="socialLogin()">소셜로그인</button>
              <button type="button" class="btn btn-success" onclick="moveLogin()">로그인</button>
              <button type="button" class="btn btn-info" onclick="moveJoin()">회원가입</button>
          </div>
          <div sec:authorize="isAuthenticated()" class="my-2 my-lg-0">
-             <!--<span class="navbar-text" th:text="${loginUser.name} + '님 환영합니다.'"></span>-->
+             <span class="navbar-text" th:text="${loginUser.name} + '님 환영합니다.'"></span>
              <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
              <tr th:if="${not #lists.isEmpty(products)}" th:each="product : ${products}">
          </div>
