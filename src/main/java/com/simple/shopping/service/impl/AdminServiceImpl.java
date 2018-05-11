@@ -1,5 +1,6 @@
 package com.simple.shopping.service.impl;
 
+import com.simple.shopping.PageManager;
 import com.simple.shopping.domain.Product;
 import com.simple.shopping.dto.Pagination;
 import com.simple.shopping.repository.AdminRepository;
@@ -29,11 +30,17 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    @Transactional
-    public Page<Product> getProductList(int page, String searchType, String searchStr){
-//        Pageable pageable = PageRequest.of(pagination.getCurPage()-1, pagination.getCountPerPage(), new Sort(Sort.Direction.DESC, "no"));
-//        Page<Product> productList = adminRepository.findAllByCategoryName("Linux", pageable);
+    @Transactional(readOnly = true)
+    public Page<Product> getProductList(Pagination pagination, String searchType, String searchStr){
+        Pageable pageable = PageRequest.of(pagination.getCurPage()-1, pagination.getCountPerPage(), new Sort(Sort.Direction.DESC, "no"));
+        Page<Product> productList = adminRepository.getProductList(pagination.getSearchType(), pagination.getSearchStr(), pageable);
 
-        return null;
+        return productList;
+    }
+
+    @Override
+    @Transactional
+    public Product findProduct(Long no) {
+        return adminRepository.findProductByNo(no);
     }
 }

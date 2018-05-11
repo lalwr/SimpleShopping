@@ -10,7 +10,7 @@ function submitByMethod(formId, method){
     form.submit();
 }
 
-function submitWithJson(method, checkName, attr, paramName, items){
+function submitWithJson(method, checkName, data, paramName, items, sendUrl){
     var categoryInfo = new Object();
     var categoryList = new Array();
     var checks = document.getElementsByName(checkName);
@@ -21,7 +21,7 @@ function submitWithJson(method, checkName, attr, paramName, items){
 
         if(check.checked == true){
             checkedOne = true;
-            var idx = check.getAttribute(attr);
+            var idx = check.getAttribute(data);
             var category = new Object();
             category[checkName] = check.value;
 
@@ -41,7 +41,7 @@ function submitWithJson(method, checkName, attr, paramName, items){
         var contextPath = '/';
         $.ajax({
             type : method,
-            url : contextPath+'admin/category/list',
+            url : contextPath+sendUrl,
             contentType : 'application/json; charset=UTF-8',
             data : JSON.stringify(categoryInfo),
             dataType : 'text',

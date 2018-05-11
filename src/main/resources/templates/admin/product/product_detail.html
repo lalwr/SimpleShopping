@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layout/main_layout">
+
+<th:block layout:fragment="html_head">
+
+    <title>상품 보기</title>
+</th:block>
+
+<th:block layout:fragment="body_main">
+    <div style="margin-top: 40px"></div>
+    <form th:action="@{/admin/product}" method="post" id="productForm">
+        <div class="container">
+
+            <div class="row">
+                <h2 class="text-center mb-4">상품 관리</h2>
+                <div class="col-sm-12 col-md-7">
+                    <div th:object="${product}">
+                        <form>
+                            <div class="form-group">
+                                <label for="name">상품명: </label>
+                                <input type="text" class="form-control" id="name"
+                                       placeholder="상품명" name="name" th:value="*{name}">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="amount">갯수: </label>
+                                    <input type="number" class="form-control" id="amount"
+                                           placeholder="0" name="amount" th:value="*{amount}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="price">가격: </label>
+                                    <input type="number" class="form-control" id="price"
+                                           placeholder="0" name="price" th:value="*{price}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="categoryNo">카테고리</label>
+                                <select id="categoryNo" name="category.no" class="form-control">
+                                    <option th:if="${not #lists.isEmpty(categoryList)}" th:each="category : ${categoryList}"
+                                            th:value="${category.no}" th:text="${category.name}" th:selected="(${category.no} == *{category.no})"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="image">이미지: </label>
+                                <div th:if="*{imagePath != null && imagePath != ''}"><img class="rounded mx-auto d-block" th:src="@{imagePath}" width="300" height="300"></div>
+                                <input th:unless="*{imagePath != null && imagePath != ''}" type="file" class="form-control" id="image" name="imagePath">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">설명: </label>
+                                <textarea cols="70" rows="5" id="description" name="description"
+                                    th:inline="text">[[*{description}]]</textarea>
+                            </div>
+                            <input type="hidden" name="write" value="2">
+                            <div th:switch="${write}">
+                                <button th:case="${null}" type="submit" class="btn btn-primary">등록</button>
+                                <button th:case="1" type="submit" class="btn btn-primary">수정</button>
+                                <button th:case="2" type="button" class="btn btn-primary" onclick="submitByMethod('productForm', 'PUT')">수정</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    <script th:src="@{/static/js/admin.js}"></script>
+</th:block>
+</html>

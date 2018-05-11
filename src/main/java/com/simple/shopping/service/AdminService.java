@@ -7,5 +7,6 @@ import org.springframework.data.domain.Page;
 
 public interface AdminService {
     Product addProduct(Product product);
-    Page<Product> getProductList(int page, String searchType, String searchStr);
+    Page<Product> getProductList(Pagination pagination, String searchType, String searchStr);
+    Product findProduct(Long no);
 }

@@ -28,7 +28,7 @@ public class Product {
 
     private int price;
 
-    private LocalDateTime regdate;
+    private LocalDateTime regdate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<OrderProduct> orderProducts = new ArrayList<>();
