@@ -4,7 +4,7 @@ function setConnected(connected) {
 }
 
 function showMessage(message) {
-    console.log(message);
+    //console.log(message);
 
     $("#chatArea").append(message.name + ' : ' + message.message + '\n');
 
@@ -19,11 +19,11 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
-        console.log('Connected: ' + frame);
+        //console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/rooms/' + chatRoomId, function (chatMessage) {
-            console.log('=-------------------------');
-            console.log(chatMessage);
-            console.log('=-------------------------');
+            //console.log('=-------------------------');
+            //console.log(chatMessage);
+            //console.log('=-------------------------');
             showMessage(JSON.parse(chatMessage.body));
         });
     });
@@ -34,7 +34,7 @@ function disconnect() {
         stompClient.disconnect();
     }
     setConnected(false);
-    console.log("Disconnected");
+    //console.log("Disconnected");
 }
 
 function send() {
