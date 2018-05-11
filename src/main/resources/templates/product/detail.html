@@ -23,26 +23,28 @@
             <td class="text-center" th:text="*{no}"></td>
             <td class="text-center"><img th:src="@{'/static/images/products/ubuntu.jpg'}" width="250" height="250"></td>
             <!--<td class="text-center"><img th:src="@{'/static/images/products/' + *{name} +'.jpg'}" width="250" height="250"></td>-->
-            <td class="text-center"><a th:text="Ubuntu"></a> </td>
+            <td class="text-center"><a th:text="*{name}"></a> </td>
             <!--<td class="text-center"><a th:text="*{name}"></a> </td>-->
             <td class="text-center" th:text="*{description}"></td>
             <td class="text-center" th:text="*{price} + '원'"></td>
-            <td class="text-center"><input id="productAmount" type="number" value="1" min="1" th:max="*{amount}-10" name="amount"/></td>
+            <td th:if="*{amount}>0" class="text-center"><input id="productAmount" type="number" value="1" min="1" th:max="*{amount}" name="amount"/></td>
+            <td th:unless="*{amount}>0" th:text="품절" class="text-center"></td>
+
             </tbody>
         </div>
 
         <form id="addCart" action="/cart" method="post" th:object="${product}">
             <input type="hidden" th:value="*{no}" name="productNo"/>
             <input type="hidden" id="cartAmount" name="productAmount"/>
-            <input th:if="${product.amount > 10}" type="button" class="btn btn-primary" value="장바구니 담기" onclick="addCart()">
-            <input th:unless="${product.amount > 10}" type="button" class="btn btn-primary" value="장바구니 담기" disabled>
+            <input th:if="*{amount > 0}" type="button" class="btn btn-primary" value="장바구니 담기" th:onclick="|addCart(*{amount})|">
+            <input th:unless="*{amount > 0}" type="button" class="btn btn-primary" value="장바구니 담기" disabled>
         </form>
 
         <form id="addOrderProduct" th:action="@{'/order/single'}" method="get" th:object="${product}">
             <input type="hidden" th:value="*{no}" name="productNo"/>
             <input type="hidden" id="orderAmount" name="productAmount"/>
-            <input th:if="${product.amount > 10}" type="button" class="btn btn-secondary" value="주문하기" onclick="addOrderProduct()">
-            <input th:unless="${product.amount > 10}" type="button" class="btn btn-secondary" value="주문하기" disabled>
+            <input th:if="*{amount > 0}" type="button" class="btn btn-secondary" value="주문하기" th:onclick="|addOrderProduct(*{amount})|">
+            <input th:unless="*{amount > 0}" type="button" class="btn btn-secondary" value="주문하기" disabled>
         </form>
     </table>
 

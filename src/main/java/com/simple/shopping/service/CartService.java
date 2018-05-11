@@ -12,5 +12,5 @@ public interface CartService {
     public Cart addCart(String email, Long productNo, int amount);
     public void updateCart(String email, Long productNo, int productAmount);
     public void deleteCart(String email, Long productNo);
-    public void cleanCart();
+    public void cleanCart(String email);
 }
