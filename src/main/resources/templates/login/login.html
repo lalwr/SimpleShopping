@@ -23,7 +23,8 @@
                                 <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST" th:action="@{/users/login}"action="#">
                                     <div class="form-group">
                                         <label for="id">ID</label>
-                                        <input type="text" class="form-control form-control-lg rounded-0" name="id" id="id" required="" >
+                                        <input type="text" class="form-control form-control-lg rounded-0" name="id" id="id" th:value="${loginId}" >
+                                        <small class="text-danger" th:text="${eMessage}"></small>
                                     </div>
                                     <div class="form-group">
                                         <label>Password</label>
@@ -31,7 +32,7 @@
                                     </div>
                                     <div>
                                         <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="" ame="remember-me">
+                                            <input type="checkbox" class="" name="remember-me">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description small text-dark">Remember me on this computer</span>
                                         </label>

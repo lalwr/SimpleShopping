@@ -40,6 +40,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User getUserByEmailAndUse(String email) {
+        return userRepository.findUserByEmailAndUse(email);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Long countByEmail(String email) {
         return userRepository.countByEmail(email);
