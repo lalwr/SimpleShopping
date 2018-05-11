@@ -35,7 +35,7 @@ public class ChatController {
         //해당 방에 입장한 사람일 경우만 실행
         User user = userService.getUserByEmail(principal.getName());
         message.setName(user.getName());
-        this.template.convertAndSend("/topic/romms/"+chatRoomId, message);
+        this.template.convertAndSend("/topic/rooms/"+chatRoomId, message);
     }
 
     @GetMapping
@@ -44,7 +44,7 @@ public class ChatController {
         List<ChatRoom> list = chatService.getChatRooms();
         modelMap.put("list", list);
 
-        return "chat/chatrooms";
+        return "chat/chatRooms";
     }
 
     @GetMapping(path = "/{id}")
@@ -71,7 +71,7 @@ public class ChatController {
         }
 
         modelMap.addAttribute("chatRoom", chatRoom);
-        return "chat/chatroom";
+        return "chat/chatRoom";
     }
 
     @PostMapping
@@ -90,7 +90,7 @@ public class ChatController {
 
     @GetMapping("/createform")
     public String create(){
-        return "chat/createform";
+        return "chat/chatForm";
     }
 
 
