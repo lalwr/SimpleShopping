@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
+
+<th:block layout:fragment="html_head">
+    <title>방 만들기 폼</title>
+</th:block>
+
+<th:block layout:fragment="body_main">
+
+    <div class="jumbotron">
+        <h1>방만들기 폼</h1>
+    </div>
+
+    <div class="container">
+        <tbody>
+        <form method="post" th:action="@{/chatrooms}">
+            <tr>
+                <th>제목: </th>
+                <td><input type="text" placeholder="제목을 입력하세요." name="title" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" id="saveBtn" value="등록" class="btn btn-primary btn-small"/>
+                    <input type="reset" id="resetBtn" value="reset" class="btn btn-outline-dark btn-small"/>
+                    <a class="btn btn-outline-dark btn-small" th:href="@{/chatrooms}">목록보기</a>
+                </td>
+            </tr>
+        </form>
+        </tbody>
+
+    </div>
+</th:block>
+</html>
