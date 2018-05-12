@@ -42,50 +42,57 @@ public class BillController {
         modelMap.addAttribute("bills", bills);
         return "order/list";
     }
-//                OrderProduct : amount, status, bill, product
-//                Bill : name, address, phone, regdate, user, List<OrderProduct>
+
     @PostMapping
     public String cartToOrder(Principal principal,
                               @RequestParam(name = "userName") String userName,
                               @RequestParam(name = "userAddress") String userAddress,
                               @RequestParam(name = "userPhone") String userPhone){
         User user = userService.getUserByEmail(principal.getName());
-        List<Cart> carts = cartService.getCartsbyUserNo(user.getNo());
-        List<OrderProduct> orderProducts = new ArrayList<>();
-        Bill bill = new Bill();
-        bill.setName(userName);
-        bill.setRegdate(LocalDateTime.now());
-        bill.setPhone(userPhone);
-        bill.setOrderProducts(orderProducts);
-        bill.setAddress(userAddress);
-        bill.setUser(user);
-        bill.setStatus("주문 확인");
-        billService.addBill(bill);
+        Long totalPrice = cartService.getTotalPrice(user.getNo());
+        if(totalPrice != 0) {
+            List<Cart> carts = cartService.getCartsbyUserNo(user.getNo());
+            List<OrderProduct> orderProducts = new ArrayList<>();
+            Bill bill = new Bill();
+            bill.setName(userName);
+            bill.setRegdate(LocalDateTime.now());
+            bill.setPhone(userPhone);
+            bill.setOrderProducts(orderProducts);
+            bill.setAddress(userAddress);
+            bill.setUser(user);
+            bill.setStatus("주문 확인");
+            billService.addBill(bill);
 
-        for(Cart cart : carts){
-            if(cart.getProduct().getAmount()>10) {
-                OrderProduct orderProduct = new OrderProduct();
-                orderProduct.setProduct(cart.getProduct());
-                orderProduct.setAmount(cart.getAmount());
-                orderProduct.setBill(bill);
-                bill.addOrderProduct(orderProduct);
-                orderProductService.addOrderProduct(orderProduct);
-                cart.getProduct().setAmount(cart.getProduct().getAmount()-cart.getAmount());
+            for (Cart cart : carts) {
+                int productStock = cart.getProduct().getAmount();
+                if (cart.getAmount() <= productStock) {
+                    OrderProduct orderProduct = new OrderProduct();
+                    orderProduct.setProduct(cart.getProduct());
+                    orderProduct.setAmount(cart.getAmount());
+                    orderProduct.setBill(bill);
+                    bill.addOrderProduct(orderProduct);
+                    orderProductService.addOrderProduct(orderProduct);
+                    cart.getProduct().setAmount(cart.getProduct().getAmount() - cart.getAmount());
+                } else {
+                    return "redirect:cart/list";
+                }
             }
-        }
-        cartService.cleanCart();
+            cartService.cleanCart(user.getNo());
 
-        return "redirect:/order";
+            return "redirect:/order";
+        }else{
+            return "redirect:/product/list";
+        }
     }
 
     @GetMapping(path = "/carts")
     public String cartsOrder(Principal principal,
                            ModelMap modelMap){
-
         User user = userService.getUserByEmail(principal.getName());
         List<Cart> carts = cartService.getCartsbyUserNo(user.getNo());
         for(Cart cart : carts){
-            if(cart.getProduct().getAmount()<10) {
+            int productStock = cart.getProduct().getAmount();
+            if(productStock == 0) {
                 cartService.deleteCart(cart.getUser().getEmail(), cart.getProduct().getNo());
             }
         }
@@ -104,10 +111,10 @@ public class BillController {
                               @RequestParam(name = "productNo") Long productNo,
                               @RequestParam(name = "productAmount") int productAmount){
 
-        if(productService.getProductByNo(productNo).getAmount()>10) {
+        int productStock = productService.getProductByNo(productNo).getAmount();
+        if(productAmount <= productStock) {
             cartService.addCart(principal.getName(), productNo, productAmount);
         }
-
         return "redirect:/order/carts";
     }
 

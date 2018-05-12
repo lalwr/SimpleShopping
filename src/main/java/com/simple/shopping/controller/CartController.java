@@ -37,11 +37,28 @@ public class CartController {
         return "cart/list";
     }
 
+    @GetMapping("/productStock/{productNo}")
+    @ResponseBody
+    public Long productStock(@PathVariable Long productNo){
+        Long productStock = new Long(productService.getProductByNo(productNo).getAmount());
+        return productStock;
+    }
+
+    @GetMapping("/orderable")
+    public String orderable(@RequestParam(name = "ordercheck") boolean check){
+        if(check){
+            return "redirect:/order/carts";
+        }else{
+            return "redirect:/cart";
+        }
+    }
+
     @PostMapping
     public String addCart(Principal principal,
                           @RequestParam("productNo") Long productNo,
                           @RequestParam("productAmount") int productAmount){
-        if(productAmount <= productService.getProductByNo(productNo).getAmount()-10) {
+        int productStock = productService.getProductByNo(productNo).getAmount();
+        if (productAmount <= productStock && productStock > 0) {
             cartService.addCart(principal.getName(), productNo, productAmount);
         }
         return "redirect:/cart";
@@ -51,7 +68,8 @@ public class CartController {
     public String updateCart(Principal principal,
                              @RequestParam(name = "productNo") Long productNo,
                              @RequestParam(name = "productAmount") int productAmount){
-        if(productAmount < productService.getProductByNo(productNo).getAmount()-10) {
+        int productStock = productService.getProductByNo(productNo).getAmount();
+        if(productAmount <= productStock) {
             cartService.updateCart(principal.getName(), productNo, productAmount);
         }
         return "redirect:/cart";

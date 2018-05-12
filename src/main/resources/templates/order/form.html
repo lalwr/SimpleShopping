@@ -39,7 +39,7 @@
 
     <div class="container">
         <div style="font-size: xx-large" class="font-weight-bold">배송지 정보</div>
-        <form action="/order" method="post">
+        <form id="send" action="/order" method="post">
             <div class="form-group mb-3">
                 <div class="form-group-prepend">
                     <label>수신자 성명</label>
@@ -61,11 +61,10 @@
                 <input class="form-control" type="text" placeholder="연락처" name="userPhone" th:value="${user.phone}">
             </div>
             <div>
-                <input class="btn btn-primary btn-lg btn-block" type="submit" value="결제하기">
+                <input th:if="(${totalPrice}==0)" class="btn btn-primary btn-lg btn-block" type="button" value="결제하기" disabled>
+                <input th:unless="(${totalPrice}==0)" class="btn btn-primary btn-lg btn-block" type="button" value="결제하기" onclick="document.getElementById('send').submit()">
             </div>
         </form>
-
-
     </div>
 </th:block>
 <body>
