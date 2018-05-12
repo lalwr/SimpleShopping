@@ -10,7 +10,7 @@ function submitByMethod(formId, method){
     form.submit();
 }
 
-function submitWithJson(method, checkName, attr, paramName, items){
+function submitWithJson(method, checkName, attr, paramName, items, sendUrl){
     var categoryInfo = new Object();
     var categoryList = new Array();
     var checks = document.getElementsByName(checkName);
@@ -41,18 +41,22 @@ function submitWithJson(method, checkName, attr, paramName, items){
         var contextPath = '/';
         $.ajax({
             type : method,
-            url : contextPath+'admin/category/list',
+            url : contextPath+sendUrl,
             contentType : 'application/json; charset=UTF-8',
             data : JSON.stringify(categoryInfo),
             dataType : 'text',
             success: function(data){
-                if(data=="success"){
-                    document.location.reload();
+                if(data!="success"){
+                    alert(data);
                 }
+                document.location.reload();
             }
         });
     }
-
-
 }
 
+function alertMessage(message){
+    if(message != '' && message != null){
+        alert(message);
+    }
+}

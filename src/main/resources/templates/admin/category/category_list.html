@@ -4,7 +4,14 @@
 
 <th:block layout:fragment="html_head">
     <script th:src="@{/static/js/admin.js}"></script>
-
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function(){
+            var message = /*[[${message}]]*/ null;
+            alertMessage(message);
+        });
+        /*]]>*/
+    </script>
     <title>카테고리 목록보기</title>
 </th:block>
 
@@ -41,10 +48,10 @@
                                 </div>
                             </div>
                             <div style="text-align: right;">
-                                <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="|submitWithJson('PUT', 'no', 'data-idx', 'categoryList', ['name']);|">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="|submitWithJson('PUT', 'no', 'data-idx', 'categoryList', ['name'],'admin/category/list');|">
                                     선택 수정
                                 </button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="|submitWithJson('DELETE', 'no', 'data-idx', 'categoryList', ['name']);|">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="|submitWithJson('DELETE', 'no', 'data-idx', 'categoryList', ['name'], 'admin/category/list');|">
                                     선택 삭제
                                 </button>
                             </div>
