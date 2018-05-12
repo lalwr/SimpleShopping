@@ -24,12 +24,10 @@
             <td class="text-center"><img th:src="@{'/static/images/products/ubuntu.jpg'}" width="250" height="250"></td>
             <!--<td class="text-center"><img th:src="@{'/static/images/products/' + *{name} +'.jpg'}" width="250" height="250"></td>-->
             <td class="text-center"><a th:text="*{name}"></a> </td>
-            <!--<td class="text-center"><a th:text="*{name}"></a> </td>-->
             <td class="text-center" th:text="*{description}"></td>
             <td class="text-center" th:text="*{price} + '원'"></td>
             <td th:if="*{amount}>0" class="text-center"><input id="productAmount" type="number" value="1" min="1" th:max="*{amount}" name="amount"/></td>
             <td th:unless="*{amount}>0" th:text="품절" class="text-center"></td>
-
             </tbody>
         </div>
 

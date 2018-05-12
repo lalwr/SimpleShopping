@@ -26,7 +26,15 @@ public class LoginUserDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user  = userService.getUserByEmail(username);
+        User user  = userService.getUserByEmailAndUse(username);
+
+        if(user == null){
+            throw new UsernameNotFoundException(username + " not found");
+        }
+        if(user.getPassword() == null || "".equals(user.getPassword())){
+            NotSocialLoginContext.setEmail(username);
+            throw new UsernameNotFoundException("소셜계정으로 가입된 계정입니다.");
+        }
 
         if(user == null){
             throw new UsernameNotFoundException(username + " not found");

@@ -42,6 +42,7 @@ public class BillController {
         modelMap.addAttribute("bills", bills);
         return "order/list";
     }
+
     @PostMapping
     public String cartToOrder(Principal principal,
                               @RequestParam(name = "userName") String userName,
