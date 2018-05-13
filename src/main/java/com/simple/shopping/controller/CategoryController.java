@@ -31,7 +31,7 @@ public class CategoryController {
     }
     
     @GetMapping(path = "/list")
-    public String categoryList(ModelMap model, HttpServletRequest request, RedirectAttributes redirectAttributes){
+    public String categoryList(HttpServletRequest request, ModelMap model){
         List<Category> categories = categoryService.getCategoryList();
         Map flashMap = RequestContextUtils.getInputFlashMap(request);
 
