@@ -11,6 +11,4 @@ public interface CategoryService {
     void deleteCategory(Category ctgr);
     void updateCategoryList(List<Category> categoryList);
     void deleteCategoryList(List<Category> categoryList);
-    String checkDuplicateCategory(Category ctgr);
-    String checkDuplicateCategoryList(List<Category> categoryList);
 }

@@ -6,7 +6,6 @@ import com.simple.shopping.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -64,34 +63,5 @@ public class CategoryServiceImpl implements CategoryService{
         for(Category category: categoryList){
             deleteCategory(category);
         }
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public String checkDuplicateCategory(Category ctgr) {
-        String message = "";
-
-        if(categoryRepository.countCategoryByName(ctgr.getName()) > 0){
-            message = ctgr.getName();
-        }
-
-        return message;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public String checkDuplicateCategoryList(List<Category> categoryList) {
-        String message = "";
-        String comma = ", ";
-
-        for(Category category: categoryList){
-            String result = checkDuplicateCategory(category);
-            message += ( "".equals(result) ) ? "" : result+comma;
-        }
-        if( !"".equals(message) ){
-            message = message.substring(0 , message.lastIndexOf(comma)) + " 는 중복된 카테고리입니다.";
-        }
-
-        return message;
     }
 }
