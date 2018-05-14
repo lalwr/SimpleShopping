@@ -16,20 +16,20 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th th:width="300" style="font-size: x-large" scope="col">상품 이미지</th>
-                <th th:width="300" style="font-size: x-large" scope="col">상품명</th>
-                <th th:width="300" style="font-size: x-large" scope="col">주문 수량</th>
-                <th th:width="300" style="font-size: x-large" scope="col">판매 가격</th>
+                <th class="text-center" th:width="300" style="font-size: x-large" scope="col">상품 이미지</th>
+                <th class="text-center" th:width="300" style="font-size: x-large" scope="col">상품명</th>
+                <th class="text-center" th:width="300" style="font-size: x-large" scope="col">주문 수량</th>
+                <th class="text-center" th:width="300" style="font-size: x-large" scope="col">판매 가격</th>
             </tr>
             </thead>
             <div>
                 <tbody>
                 <tr th:each="cart : ${carts}">
-                    <td><img th:src="@{'/static/images/products/ubuntu.jpg'}" width="200" height="200"></td>
+                    <td class="text-center"><img th:src="@{'/static/images/products/ubuntu.jpg'}" width="200" height="200"></td>
                     <!--<td><img th:src="@{'/static/images/products/' + ${cart.product.name} +'.jpg'}" width="200" height="200"></td>-->
-                    <td style="font-size: x-large" th:text="${cart.product.name}"></td>
-                    <td style="font-size: x-large" th:text="${cart.amount}"></td>
-                    <td style="font-size: x-large" th:text="${cart.product.price * cart.amount}+'원'"></td>
+                    <td class="text-center" style="font-size: x-large" th:text="${cart.product.name}"></td>
+                    <td class="text-center" style="font-size: x-large" th:text="${cart.amount}"></td>
+                    <td class="text-center" style="font-size: x-large" th:text="${cart.product.price * cart.amount}+'원'"></td>
                 </tr>
                 </tbody>
             </div>
@@ -41,7 +41,7 @@
         <div style="font-size: xx-large" class="font-weight-bold">배송지 정보</div>
         <form id="send" action="/order" method="post">
             <div class="form-group mb-3">
-                <div class="form-group-prepend">
+                <div class="form-group-prepend text">
                     <label>수신자 성명</label>
                 </div>
                 <input class="form-control" type="text" placeholder="주문자 성명" name="userName" th:value="${user.name}">
