@@ -1,7 +1,6 @@
 package com.simple.shopping.controller;
 
 import com.simple.shopping.domain.Cart;
-import com.simple.shopping.domain.Product;
 import com.simple.shopping.service.CartService;
 import com.simple.shopping.service.ProductService;
 import com.simple.shopping.service.UserService;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/cart")
