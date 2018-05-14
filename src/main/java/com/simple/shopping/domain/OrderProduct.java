@@ -14,6 +14,12 @@ public class OrderProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
 
+    private String imagePath;
+
+    private String name;
+
+    private int price;
+
     private int amount;
 
 //    private String status;

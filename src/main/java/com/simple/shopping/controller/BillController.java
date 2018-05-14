@@ -68,7 +68,10 @@ public class BillController {
                 if (cart.getAmount() <= productStock) {
                     OrderProduct orderProduct = new OrderProduct();
                     orderProduct.setProduct(cart.getProduct());
+                    orderProduct.setImagePath(cart.getProduct().getImagePath());
+                    orderProduct.setName(cart.getProduct().getName());
                     orderProduct.setAmount(cart.getAmount());
+                    orderProduct.setPrice(cart.getProduct().getPrice());
                     orderProduct.setBill(bill);
                     bill.addOrderProduct(orderProduct);
                     orderProductService.addOrderProduct(orderProduct);
