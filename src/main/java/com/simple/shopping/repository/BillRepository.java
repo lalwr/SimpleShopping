@@ -12,6 +12,9 @@ public interface BillRepository extends JpaQueryDslPredicateRepository<Bill, Lon
     @Query("SELECT b From Bill b JOIN b.user WHERE b.user.no = :userNo")
     public List<Bill> findBillsByUserNo(@Param("userNo") Long userNo);
 
+    @Query("SELECT b FROM Bill b where b.phone = :phone")
+    public List<Bill> findBillsByPhone(@Param("phone") String phone);
+
     @Query("SELECT b FROM Bill b WHERE b.no = :no")
     public Bill findBillByNo(@Param("no") Long no);
 
