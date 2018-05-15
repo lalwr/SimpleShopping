@@ -2,12 +2,12 @@ version: '3'
 services:
   app:
     restart: always
-    image: springio/shopping:1.0-SNAPSHOT
+    image: lalwrj/spring-boot2-shopping:1.0-SNAPSHOT
     environment:
       SPRING_PROFILES_ACTIVE: local
     restart: always
     ports:
-    - "9090:8080"
+    - 9090:8080
 
   nginx:
    image: nginx:1.13
@@ -21,3 +21,7 @@ services:
     - app
    links:
     - app
+
+networks:
+  custom-driver-1:
+    driver: bridge

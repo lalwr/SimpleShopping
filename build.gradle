@@ -56,9 +56,13 @@ repositories {
 	mavenCentral()
 }
 
-group = 'examples.boot'
-group = 'springio'
+jar {
+	baseName = 'lalwrj/spring-boot2-shopping' // 계정명/docker이미지이름
+	version = '1.0-SNAPSHOT' //태그
+}
+
 version = '1.0-SNAPSHOT'
+
 sourceCompatibility = 1.8
 
 project.afterEvaluate {
@@ -112,7 +116,7 @@ dependencies {
 }
 
 task buildDocker(type: Docker, dependsOn: build) {
-	push = false
+	push = false //true : docker hub에 업로드 , false : 업로드 안함
 	applicationName = jar.baseName
 	dockerfile = file('src/main/docker/Dockerfile')
 	doFirst {

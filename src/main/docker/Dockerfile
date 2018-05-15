@@ -1,4 +1,4 @@
-FROM lalwrj/oraclejava8
+FROM lalwrj/oraclejava8:0.1
 VOLUME /tmp
 ADD shopping-1.0-SNAPSHOT.jar /app.jar
 RUN bash -c 'touch /app.jar'
