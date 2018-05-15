@@ -47,7 +47,6 @@ public class WebApplicationSecurity extends WebSecurityConfigurerAdapter{
                 .antMatchers("/users/join").permitAll()
                 .antMatchers("/users/emailOverlap").permitAll()
                 .antMatchers("/cart/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/order").hasRole("USER")
                 .antMatchers("/order/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/product/**").permitAll()
                 .antMatchers("/product/**").hasRole("USER")

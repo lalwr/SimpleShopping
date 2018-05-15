@@ -35,7 +35,6 @@
                         </form>
 
                         <form id="deleteCart" action="/cart" method="post">
-
                             <input type="hidden" name="productNo" th:value="${cart.product.no}"/>
                             <input type="hidden" name="_method" value="delete"/>
                             <input class="btn btn-secondary" type="submit" th:value="삭제하기"/>

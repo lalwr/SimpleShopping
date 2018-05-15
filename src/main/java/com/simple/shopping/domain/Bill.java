@@ -20,6 +20,7 @@ public class Bill {
     private String name;
     private String address;
     private String phone;
+    private String password;
     private String status;
     private LocalDateTime regdate;
 

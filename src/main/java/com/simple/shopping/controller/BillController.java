@@ -53,15 +53,16 @@ public class BillController {
                               @RequestParam(name = "userName") String userName,
                               @RequestParam(name = "userAddress") String userAddress,
                               @RequestParam(name = "userPhone") String userPhone,
-                              @RequestParam(name = "userEmail", required = false) String userEmail){
+                              @RequestParam(name = "password", required = false) String password){
         if(principal == null){
-            session.setAttribute("email", userEmail);
+            session.setAttribute("password", password);
             List<Cart> carts = (List<Cart>)session.getAttribute("carts");
             List<OrderProduct> orderProducts = new ArrayList<>();
             Bill bill = new Bill();
             bill.setName(userName);
             bill.setRegdate(LocalDateTime.now());
             bill.setPhone(userPhone);
+            bill.setPassword(password);
             bill.setOrderProducts(orderProducts);
             bill.setAddress(userAddress);
             bill.setStatus("주문 확인");
@@ -145,8 +146,14 @@ public class BillController {
 
     @GetMapping(path = "/unsigned")
     public String orderListUnsigned(@RequestParam(name = "userPhone") String phone,
+                                    @RequestParam(name = "password") String password,
                                     ModelMap modelMap){
-        List<Bill> bills = billService.getBillsByPhone(phone);
+        List<Bill> bills = new ArrayList<>();
+        for(Bill bill : billService.getBillsByPhone(phone)){
+            if(bill.getPassword().equals(password)){
+                bills.add(bill);
+            }
+        }
         modelMap.addAttribute("bills", bills);
 
         return "order/listUnsigned";
@@ -214,6 +221,11 @@ public class BillController {
         if(principal == null){
             HttpSession session = request.getSession();
             List<Cart> carts = (List<Cart>)session.getAttribute("carts");
+            if(carts == null){
+                carts = new ArrayList<>();
+                session.setAttribute("carts", carts);
+                carts = (List<Cart>)session.getAttribute("carts");
+            }
             if(carts.size() == 0){
                 Cart cart = new Cart();
                 cart.setAmount(productAmount);
@@ -221,18 +233,16 @@ public class BillController {
                 carts.add(cart);
                 session.setAttribute("carts", carts);
             }else{
-                if (carts != null) {
-                    for (Cart cart : carts) {
-                        if (cart.getProduct().getNo().equals(productNo)){
-                            cart.setAmount(cart.getAmount() + productAmount);
-                            return "redirect:/order/carts";
-                        }
+                for (Cart cart : carts) {
+                    if (cart.getProduct().getNo().equals(productNo)){
+                        cart.setAmount(cart.getAmount() + productAmount);
+                        return "redirect:/order/carts";
                     }
-                    Cart cart = new Cart();
-                    cart.setAmount(productAmount);
-                    cart.setProduct(productService.getProductByNo(productNo));
-                    carts.add(cart);
                 }
+                Cart cart = new Cart();
+                cart.setAmount(productAmount);
+                cart.setProduct(productService.getProductByNo(productNo));
+                carts.add(cart);
             }
             return "redirect:/order/carts";
         }else {
