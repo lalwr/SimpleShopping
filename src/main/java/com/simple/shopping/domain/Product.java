@@ -60,4 +60,14 @@ public class Product {
             category.getProducts().add(this);
         }
     }
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")
+    private ProductImage productImage;
+
+    public void setProductImage(ProductImage productImage){
+        this.productImage = productImage;
+        if(productImage.getProduct() != this){
+            productImage.setProduct(this);
+        }
+    }
 }

@@ -14,51 +14,57 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th width="10%">id</th>
-                    <th>제목</th>
-                    <th width="15%">작성자</th>
-                    <th width="10%">조회수</th>
-                    <th width="15%">작성일</th>
+                    <th width="10%"><input type="checkbox" name="checkAll" id="checkAll"></th>
+                    <th width="10%">no</th>
+                    <th>상품명</th>
+                    <th width="10%">갯수</th>
+                    <th width="15%">가격</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:if="${not #lists.isEmpty(list)}" th:each="board : ${list}">
-                    <td th:text="${board.id}"></td>
-                    <td><a th:href="@{'/boards/' + ${board.id}}" th:text="${board.title}"></a> </td>
-                    <td th:text="${board.user.name}"></td>
-                    <td th:text="${board.readCount}"></td>
-                    <td th:text="${#temporals.format(board.regdate, 'yyyy/mm/dd HH:mm')}"></td>
-                </tr>
+                    <tr th:if="${not #lists.isEmpty(productList)}" th:each="product, status : ${productList}">
+                        <td><input type="checkbox" name="check" th:value="${product.no}" th:data-idx="${status.index}"></td>
+                        <td th:text="${product.no}" th:value="${product.no}" th:id="'no.'+${status.index}" th:data-a="1"></td>
+                        <td><a th:href="@{'/admin/product?no='+${product.no}+'&write=1'}" th:text="${product.name}"></a> </td>
+                        <td th:text="${product.amount}"></td>
+                        <td th:text="${product.price}"></td>
+                    </tr>
                 </tbody>
             </table>
 
             <div class="row">
                 <div class="col-sm-12 col-md-3">
-                    <div class="dataTables_info" id="data_table_info" role="status" aria-live="polite">
-                        Showing 1 to 10 of 57 entries
-                    </div>
                 </div>
                 <div class="col-sm-12 col-md-7">
                     <div class="dataTables_paginate paging_simple_numbers" id="data_table_paginate">
                         <ul class="pagination">
-                            <li class="paginate_button page-item previous disabled" id="data_table_previous">
-                                <a href="#" aria-controls="data_table" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                            <li class="paginate_button page-item previous" id="data_table_first"
+                                th:classappend="(${pagination.curPage <= pagination.buttonCount} ? ' disabled ' : '' )">
+                                <a th:href="@{'/admin/product/list?page=1&searchType='+${pagination.searchType}+'&searchStr='+${pagination.searchStr}}" aria-controls="data_table" data-dt-idx="0" tabindex="0" class="page-link">&lt;&lt;</a>
+                            </li>
+                            <li class="paginate_button page-item previous" id="data_table_previous"
+                                th:classappend="(${pagination.curPage - pagination.buttonCount < 1} ? ' disabled ' : ' ' )">
+                                <a th:href="@{'/admin/product/list?page=' + ${pagination.prevPage} +'&searchType='+${pagination.searchType}+'&searchStr='+${pagination.searchStr}}" aria-controls="data_table" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
                             </li>
                             <li th:each="i : ${ #numbers.sequence( {pagination.startPage}, {pagination.endPage} ) }"
                                 th:classappend="( ${ i == pagination.curPage } ? ' active ': '') + ( ${ i > pagination.totalPage} ? ' disabled ' : '')"
                                 class="paginate_button page-item">
-                                <a href="#" aria-controls="data_table" tabindex="0" class="page-link" th:text="${i}"></a>
+                                <a th:href="@{'/admin/product/list?page=' + ${i} +'&searchType='+${pagination.searchType}+'&searchStr='+${pagination.searchStr}}" aria-controls="data_table" tabindex="0" class="page-link" th:text="${i}"></a>
                             </li>
-                            <li class="paginate_button page-item next" id="data_table_next">
-                                <a href="#" aria-controls="data_table" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                            <li class="paginate_button page-item next" id="data_table_next"
+                                th:classappend="(${pagination.startPage+pagination.buttonCount > pagination.totalPage} ? ' disabled ' : '')">
+                                <a th:href="@{'/admin/product/list?page=' + ${pagination.nextPage} +'&searchType='+${pagination.searchType}+'&searchStr='+${pagination.searchStr}}" aria-controls="data_table" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                            </li>
+                            <li class="paginate_button page-item next" id="data_table_last"
+                                th:classappend="(${pagination.startPage+pagination.buttonCount > pagination.totalPage} ? ' disabled ' : '')">
+                                <a th:href="@{'/admin/product/list?page=' + ${pagination.totalPage} +'&searchType='+${pagination.searchType}+'&searchStr='+${pagination.searchStr}}" aria-controls="data_table" data-dt-idx="7" tabindex="0" class="page-link">&gt;&gt;</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-2">
-                    <div class="dataTables_info" id="data_table_control_btn">
-                        <a class="btn btn-primary btn-middle" th:href="@{/admin/product}">상품추가</a>
-                    </div>
+                <div style="text-align: right;">
+                        <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/product}">상품추가</a>
+                        <a class="btn btn-sm btn-outline-secondary" th:onclick="|submitWithJson('DELETE', 'check', 'data-idx', 'productList', ['no'], 'admin/product/list');|">선택삭제</a>
                 </div>
             </div>
 

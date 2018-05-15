@@ -12,4 +12,5 @@ public interface AdminRepository extends JpaQueryDslPredicateRepository<Product,
     @Query("SELECT p FROM Product p JOIN p.category c WHERE c.name=:category")
     Page<Product> findProductsByCondition(String category, Pageable pageable);
     Product findProductByNo(Long no);
+    void deleteProductByNo(Long no);
 }

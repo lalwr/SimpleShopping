@@ -13,7 +13,7 @@ public class Pagination {
     private long totalCount;
     private long totalPage;
     private Integer curPage=1;
-    private Integer countPerPage = 3;
+    private Integer countPerPage = 5;
     private Integer buttonCount = 6;
 
     public Pagination(Integer curPage, String searchType, String searchStr){

@@ -27,7 +27,7 @@ function submitWithJson(method, checkName, data, paramName, items, sendUrl){
 
             for(var j=0, itemSize = items.length ; j < itemSize ; j++ ){
                 var item = document.getElementById(items[j]+'.'+idx);
-                category[items[j]] = item.value;
+                category[items[j]] = item.getAttribute("value");
             }
             categoryList.push(category);
         }

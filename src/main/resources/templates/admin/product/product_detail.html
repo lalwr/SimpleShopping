@@ -9,7 +9,7 @@
 
 <th:block layout:fragment="body_main">
     <div style="margin-top: 40px"></div>
-    <form th:action="@{/admin/product}" method="post" id="productForm">
+    <form th:action="@{/admin/product}" method="post" id="productForm" enctype="multipart/form-data">
         <div class="container">
 
             <div class="row">
@@ -38,13 +38,15 @@
                                 <label for="categoryNo">카테고리</label>
                                 <select id="categoryNo" name="category.no" class="form-control">
                                     <option th:if="${not #lists.isEmpty(categoryList)}" th:each="category : ${categoryList}"
-                                            th:value="${category.no}" th:text="${category.name}" th:selected="(${category.no} == *{category.no})"></option>
+                                            th:value="${category.no}" th:text="${category.name}" th:selected="(*{category} != null and ${category.no} == ${product.category.no})"></option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="image">이미지: </label>
-                                <div th:if="*{imagePath != null && imagePath != ''}"><img class="rounded mx-auto d-block" th:src="@{imagePath}" width="300" height="300"></div>
-                                <input th:unless="*{imagePath != null && imagePath != ''}" type="file" class="form-control" id="image" name="imagePath">
+                                <div th:if="*{productImage!=null and productImage.imagePath != null and productImage.imagePath != ''}">
+                                    <img class="rounded mx-auto d-block" src="file://C:/images/products/maven2.png" width="300" height="300">
+                                </div>
+                                <input th:unless="*{productImage!=null and productImage.imagePath != null && productImage.imagePath != ''}" type="file" class="form-control" id="image" name="file">
                             </div>
                             <div class="form-group">
                                 <label for="description">설명: </label>
