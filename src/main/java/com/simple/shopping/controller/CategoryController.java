@@ -48,9 +48,10 @@ public class CategoryController {
         String message = categoryService.checkDuplicateCategory(category);
         if("".equals(message)){
             categoryService.addCategory(category);
+        }else{
+            message+= " 는 중복된 카테고리입니다.";
         }
-
-        message = ( "".equals(message) ) ? "" : message+" 는 중복된 카테고리입니다.";
+        
         redirectAttributes.addFlashAttribute("message", message);
 
         return "redirect:/admin/category/list";
