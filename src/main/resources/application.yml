@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: devel
+    active: local
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -27,17 +27,16 @@ spring:
       enabled: true
 #    http://localhost:8080/h2-console
 
----
+#logging color
 spring:
-  profiles: devel
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      enabled: true
+  output:
+    ansi:
+      enabled: ALWAYS
 
-
-
+logging:
+  level:
+    org:
+      hibernate:TRACE
 
 #spring:
 #  datasource:

@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface CategoryRepository extends JpaQueryDslPredicateRepository<Category, Long> {
     List<Category> findAllByUse(String use);
+    int countCategoryByName(String name);
 }
