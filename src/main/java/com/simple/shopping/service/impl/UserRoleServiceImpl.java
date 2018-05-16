@@ -32,6 +32,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Long getUserRoleByNo(Long roleNo) {
         return userRoleRepository.countUserRoleByNo(roleNo);
     }
