@@ -4,7 +4,14 @@
 
 <th:block layout:fragment="html_head">
     <script th:src="@{/static/js/admin.js}"></script>
-
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function(){
+            var message = /*[[${message}]]*/ null;
+            alertMessage(message);
+        });
+        /*]]>*/
+    </script>
     <title>카테고리 목록보기</title>
 </th:block>
 
