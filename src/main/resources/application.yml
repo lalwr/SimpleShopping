@@ -38,6 +38,7 @@ logging:
     org:
       hibernate:TRACE
 
+filepath: /images/products/
 #spring:
 #  datasource:
 #    url: jdbc:h2:mem:mydb
