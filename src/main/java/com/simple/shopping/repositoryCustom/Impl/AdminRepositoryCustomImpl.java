@@ -19,28 +19,28 @@ public class AdminRepositoryCustomImpl extends QuerydslRepositorySupport impleme
     }
 
     /*
-     * Param
+     * Paramf
      * searchType: categoryName
      * searchStr:
      * Return
      * Page<Product>
      */
     @Override
-    public Page<Product> getProductList(String searchType, String searchStr, Pageable pageable){
+    public Page<Product> getProductList(Long categoryNo, String searchType, String searchStr, Pageable pageable){
         QProduct product = QProduct.product;
         JPQLQuery query = from(product);
 
         if(searchType != null){
             switch(searchType){
-                case "categoryName":
-                    query.where(product.category.name.eq(searchStr));
-                    break;
                 case "productName":
                     query.where(product.name.contains(searchStr));
                     break;
                 default:
                     break;
             }
+        }
+        if(categoryNo != null && categoryNo != 0L){
+            query.where(product.category.no.eq(categoryNo));
         }
 
 

@@ -5,5 +5,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface AdminRepositoryCustom {
-    Page<Product> getProductList(String searchType, String searchStr, Pageable pageable);
+    Page<Product> getProductList(Long categoryNo, String searchType, String searchStr, Pageable pageable);
 }

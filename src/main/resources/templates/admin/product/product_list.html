@@ -9,8 +9,32 @@
 
 <th:block layout:fragment="body_main">
     <div style="margin-top: 40px"></div>
-    <form th:action="@{/admin/product/list}" method="post">
+    <form th:action="@{/admin/product/list}" method="get">
         <div class="container">
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <select name="categoryNo" class="custom-select">
+                        <option value="0">카테고리</option>
+                        <option th:value="${category.no}" th:text="${category.name}" th:if="${not #lists.isEmpty(categoryList)}"
+                                th:each="category:${categoryList}" th:selected="${category.no == categoryNo}"></option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <select name="searchType" class="custom-select">
+                        <option value="productName">상품명</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <input type="text" name="searchStr" class="form-control">
+                </div>
+                <div class="form-group col-md-1">
+                    <button type="submit" class="btn btn-md btn-outline-secondary">검색</button>
+                </div>
+            </div>
+
+
+
+            <div style="height: 10px;"></div>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -24,8 +48,10 @@
                 <tbody>
                     <tr th:if="${not #lists.isEmpty(productList)}" th:each="product, status : ${productList}">
                         <td><input type="checkbox" name="check" th:value="${product.no}" th:data-idx="${status.index}"></td>
-                        <td th:text="${product.no}" th:value="${product.no}" th:id="'no.'+${status.index}" th:data-a="1"></td>
-                        <td><a th:href="@{'/admin/product?no='+${product.no}+'&write=1'}" th:text="${product.name}"></a> </td>
+                        <td th:text="${product.no}" th:value="${product.no}" th:id="'no.'+${status.index}"></td>
+                        <td><a th:href="@{'/admin/product?no='+${product.no}+'&write=1'+'&categoryNo='+${categoryNo !=null ? categoryNo:'' }
+                        +'&searchType='+${pagination.searchType !=null ? pagination.searchType:'' }
+                        +'&searchStr='+${pagination.searchStr !=null ? pagination.searchStr:'' } }" th:text="${product.name}"></a> </td>
                         <td th:text="${product.amount}"></td>
                         <td th:text="${product.price}"></td>
                     </tr>
@@ -40,31 +66,41 @@
                         <ul class="pagination">
                             <li class="paginate_button page-item previous" id="data_table_first"
                                 th:classappend="(${pagination.curPage <= pagination.buttonCount} ? ' disabled ' : '' )">
-                                <a th:href="@{'/admin/product/list?page=1&searchType='+${pagination.searchType}+'&searchStr='+${pagination.searchStr}}" aria-controls="data_table" data-dt-idx="0" tabindex="0" class="page-link">&lt;&lt;</a>
+                                <a th:href="@{'/admin/product/list?page=1'+'&categoryNo='+${categoryNo !=null ? categoryNo:'' }
+                                    +'&searchType='+${pagination.searchType !=null ? pagination.searchType:'' }
+                                    +'&searchStr='+${pagination.searchStr !=null ? pagination.searchStr:'' }}" class="page-link">&lt;&lt;</a>
                             </li>
                             <li class="paginate_button page-item previous" id="data_table_previous"
                                 th:classappend="(${pagination.curPage - pagination.buttonCount < 1} ? ' disabled ' : ' ' )">
-                                <a th:href="@{'/admin/product/list?page=' + ${pagination.prevPage} +'&searchType='+${pagination.searchType}+'&searchStr='+${pagination.searchStr}}" aria-controls="data_table" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                                <a th:href="@{'/admin/product/list?page=' + ${pagination.prevPage} +'&categoryNo='+${categoryNo !=null ? categoryNo:'' }
+                                    +'&searchType='+${pagination.searchType !=null ? pagination.searchType:'' }
+                                    +'&searchStr='+${pagination.searchStr !=null ? pagination.searchStr:'' }}" class="page-link">Previous</a>
                             </li>
                             <li th:each="i : ${ #numbers.sequence( {pagination.startPage}, {pagination.endPage} ) }"
                                 th:classappend="( ${ i == pagination.curPage } ? ' active ': '') + ( ${ i > pagination.totalPage} ? ' disabled ' : '')"
                                 class="paginate_button page-item">
-                                <a th:href="@{'/admin/product/list?page=' + ${i} +'&searchType='+${pagination.searchType}+'&searchStr='+${pagination.searchStr}}" aria-controls="data_table" tabindex="0" class="page-link" th:text="${i}"></a>
+                                <a th:href="@{'/admin/product/list?page=' + ${i} +'&categoryNo='+${categoryNo !=null ? categoryNo:'' }
+                                    +'&searchType='+${pagination.searchType !=null ? pagination.searchType:'' }
+                                    +'&searchStr='+${pagination.searchStr !=null ? pagination.searchStr:'' }}" aria-controls="data_table" tabindex="0" class="page-link" th:text="${i}"></a>
                             </li>
                             <li class="paginate_button page-item next" id="data_table_next"
                                 th:classappend="(${pagination.startPage+pagination.buttonCount > pagination.totalPage} ? ' disabled ' : '')">
-                                <a th:href="@{'/admin/product/list?page=' + ${pagination.nextPage} +'&searchType='+${pagination.searchType}+'&searchStr='+${pagination.searchStr}}" aria-controls="data_table" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                                <a th:href="@{'/admin/product/list?page=' + ${pagination.nextPage} +'&categoryNo='+${categoryNo !=null ? categoryNo:'' }
+                                    +'&searchType='+${pagination.searchType !=null ? pagination.searchType:'' }
+                                    +'&searchStr='+${pagination.searchStr !=null ? pagination.searchStr:'' }}" class="page-link">Next</a>
                             </li>
                             <li class="paginate_button page-item next" id="data_table_last"
                                 th:classappend="(${pagination.startPage+pagination.buttonCount > pagination.totalPage} ? ' disabled ' : '')">
-                                <a th:href="@{'/admin/product/list?page=' + ${pagination.totalPage} +'&searchType='+${pagination.searchType}+'&searchStr='+${pagination.searchStr}}" aria-controls="data_table" data-dt-idx="7" tabindex="0" class="page-link">&gt;&gt;</a>
+                                <a th:href="@{'/admin/product/list?page=' + ${pagination.totalPage} +'&categoryNo='+${categoryNo !=null ? categoryNo:'' }
+                                    +'&searchType='+${pagination.searchType !=null ? pagination.searchType:'' }
+                                    +'&searchStr='+${pagination.searchStr !=null ? pagination.searchStr:'' }}" class="page-link">&gt;&gt;</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div style="text-align: right;">
-                        <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/product}">상품추가</a>
-                        <a class="btn btn-sm btn-outline-secondary" th:onclick="|submitWithJson('DELETE', 'check', 'data-idx', 'productList', ['no'], 'admin/product/list');|">선택삭제</a>
+                        <a class="btn btn-md btn-outline-secondary" th:href="@{/admin/product}">상품추가</a>
+                        <a class="btn btn-md btn-outline-secondary" th:onclick="|submitWithJson('DELETE', 'check', 'data-idx', 'productList', ['no'], 'admin/product/list');|">선택삭제</a>
                 </div>
             </div>
 

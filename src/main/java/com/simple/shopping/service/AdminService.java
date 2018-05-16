@@ -7,14 +7,15 @@ import com.simple.shopping.dto.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.List;
 
 public interface AdminService {
     Product addProduct(Product product);
-    Page<Product> getProductList(Pagination pagination, String searchType, String searchStr);
+    Page<Product> getProductList(Pagination pagination, Long categoryNo);
     Product findProduct(Long no);
     void deleteProductByNo(Long no);
     void deleteProductList(List<Product> productList);
-    ProductImage saveProductImage(MultipartFile multipartFile);
+
 }

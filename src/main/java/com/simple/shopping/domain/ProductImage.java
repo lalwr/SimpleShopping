@@ -15,11 +15,13 @@ public class ProductImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
     private String originFileName;
-    private String savePath;
+    private String path;
     private String saveName;
+    private String contentType;
+    private Long size;
 
     public String getImagePath(){
-        return savePath + saveName;
+        return path + saveName;
     }
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_no")

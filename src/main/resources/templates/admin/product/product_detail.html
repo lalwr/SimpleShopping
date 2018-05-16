@@ -44,7 +44,7 @@
                             <div class="form-group">
                                 <label for="image">이미지: </label>
                                 <div th:if="*{productImage!=null and productImage.imagePath != null and productImage.imagePath != ''}">
-                                    <img class="rounded mx-auto d-block" src="file://C:/images/products/maven2.png" width="300" height="300">
+                                    <img class="rounded mx-auto d-block" th:src="'/admin/product/image/'+*{productImage.no}" width="300" height="300">
                                 </div>
                                 <input th:unless="*{productImage!=null and productImage.imagePath != null && productImage.imagePath != ''}" type="file" class="form-control" id="image" name="file">
                             </div>

@@ -16,10 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,9 +42,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Product> getProductList(Pagination pagination, String searchType, String searchStr){
+    public Page<Product> getProductList(Pagination pagination, Long categoryNo){
         Pageable pageable = PageRequest.of(pagination.getCurPage()-1, pagination.getCountPerPage(), new Sort(Sort.Direction.DESC, "no"));
-        Page<Product> productList = adminRepository.getProductList(pagination.getSearchType(), pagination.getSearchStr(), pageable);
+        Page<Product> productList = adminRepository.getProductList(categoryNo, pagination.getSearchType(), pagination.getSearchStr(), pageable);
 
         return productList;
     }
@@ -70,35 +69,4 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
-    @Override
-    public ProductImage saveProductImage(MultipartFile multipartFile) {
-        ProductImage productImage = new ProductImage();
-        UUID uuid = UUID.randomUUID();
-        LocalDateTime localDateTime = LocalDateTime.now();
-        StringBuilder sb = new StringBuilder();
-        String dir = "/images/products/";
-        productImage.setOriginFileName(multipartFile.getOriginalFilename());
-        productImage.setSaveName(uuid.toString());
-        productImage.setSavePath(dir);
-
-        String filePath = dir+productImage.getSaveName();
-        File file = new File(dir);
-        byte[] fileBuffer = new byte[1024];
-        int length = 0;
-
-        if(!file.exists()){
-            file.mkdirs();
-        }
-
-        try(    InputStream is = multipartFile.getInputStream();
-                FileOutputStream fos = new FileOutputStream(filePath);){
-            while( (length = is.read()) != -1){
-                fos.write(fileBuffer, 0, length);
-            }
-            fos.flush();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return productImage;
-    }
 }
