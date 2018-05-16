@@ -28,7 +28,7 @@ public class Product {
 
     private int price;
 
-    private LocalDateTime regdate;
+    private LocalDateTime regdate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<OrderProduct> orderProducts = new ArrayList<>();
@@ -58,6 +58,16 @@ public class Product {
         this.category = category;
         if(!category.getProducts().contains(this)){
             category.getProducts().add(this);
+        }
+    }
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")
+    private ProductImage productImage;
+
+    public void setProductImage(ProductImage productImage){
+        this.productImage = productImage;
+        if(productImage.getProduct() != this){
+            productImage.setProduct(this);
         }
     }
 }
