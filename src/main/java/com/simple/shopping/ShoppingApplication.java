@@ -51,9 +51,9 @@ public class ShoppingApplication implements WebMvcConfigurer{
 		registry.addRedirectViewController("/", "/users/login");
 	}
 
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(loginCheckInterceptor);
-//	}
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(loginCheckInterceptor);
+	}
   
 }
