@@ -26,4 +26,11 @@ public class ProductImage {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_no")
     Product product;
+
+    public void setProduct(Product product){
+        this.product = product;
+        if(product.getProductImage() != this){
+            product.setProductImage(this);
+        }
+    }
 }
