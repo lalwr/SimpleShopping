@@ -6,9 +6,8 @@ buildscript {
 	}
 	repositories {
 		mavenCentral()
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
+		maven { url "https://plugins.gradle.org/m2/" }
+
 		jcenter()
 	}
 	dependencies {
@@ -54,6 +53,7 @@ sourceSets {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://repo.spring.io/snapshot' }
 }
 
 jar {
@@ -91,9 +91,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.3.0'
-    compile 'org.springframework.boot:spring-boot-starter-security'
-	//compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.2.RELEASE'
-    compile group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.0.1.RELEASE'
+	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.1.BUILD-SNAPSHOT'
 	compile("com.querydsl:querydsl-sql-spatial:${querydslVersion}")
 	compile("com.querydsl:querydsl-jpa:${querydslVersion}")
 	compile("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5")
@@ -105,8 +105,7 @@ dependencies {
 	runtime('com.h2database:h2:1.4.197')
 //    runtime('mysql:mysql-connector-java')
 	compile('org.projectlombok:lombok')
-
-	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 	compile('org.springframework.boot:spring-boot-starter-websocket')
 	compile group: 'org.webjars', name: 'sockjs-client', version: '1.0.2'
