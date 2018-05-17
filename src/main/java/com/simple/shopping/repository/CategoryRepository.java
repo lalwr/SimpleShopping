@@ -2,6 +2,7 @@ package com.simple.shopping.repository;
 
 import com.simple.shopping.base.JpaQueryDslPredicateRepository;
 import com.simple.shopping.domain.Category;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
