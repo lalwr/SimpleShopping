@@ -38,11 +38,6 @@ logging:
     org:
       hibernate:TRACE
 
-logging:
-  config:
-  exception-conversion-word:
-
-
 #spring:
 #  datasource:
 #    url: jdbc:h2:mem:mydb

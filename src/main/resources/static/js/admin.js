@@ -46,13 +46,17 @@ function submitWithJson(method, checkName, attr, paramName, items){
             data : JSON.stringify(categoryInfo),
             dataType : 'text',
             success: function(data){
-                if(data=="success"){
-                    document.location.reload();
+                if(data!="success"){
+                    alert(data);
                 }
+                document.location.reload();
             }
         });
     }
-
-
 }
 
+function alertMessage(message){
+    if(message != '' && message != null){
+        alert(message);
+    }
+}
