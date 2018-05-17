@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.*;
 @SpringBootApplication
 public class ShoppingApplication implements WebMvcConfigurer{
 
-	@Autowired
+	@Autowired(required = false)
 	LoginCheckInterceptor loginCheckInterceptor;
 
 	public static void main(String[] args) {
