@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -54,6 +55,7 @@ public class CartController {
                     cartService.addCart(principal.getName(), productNo, productAmount);
                 }
             }
+            sessionCart.clear();
             List<Cart> carts = cartService.getCartsbyUserNo(userNo);
             modelMap.addAttribute("carts", carts);
 
@@ -66,7 +68,7 @@ public class CartController {
     @GetMapping("/productStock/{productNo}")
     @ResponseBody
     public Long productStock(@PathVariable Long productNo){
-        Long productStock = new Long(productService.getProductByNo(productNo).getAmount());
+        Long productStock = Long.valueOf(productService.getProductByNo(productNo).getAmount());
         return productStock;
     }
 
@@ -93,8 +95,7 @@ public class CartController {
         }
 
         if(principal == null){
-
-            if(  carts.size() == 0){
+            if(carts.size() == 0){
                 Cart cart = new Cart();
                 int productStock = productService.getProductByNo(productNo).getAmount();
                 if (productAmount <= productStock && productStock > 0) {
@@ -103,23 +104,23 @@ public class CartController {
                     carts.add(cart);
                 }
             }else{
-                if(carts != null) {
-                    for (Cart cart : carts) {
-                        if (cart.getProduct().getNo().equals(productNo)) {
-                            int productStock = productService.getProductByNo(productNo).getAmount();
-                            if (productAmount + cart.getAmount() <= productStock && productStock > 0) {
-                                cart.setProduct(productService.getProductByNo(productNo));
-                                cart.setAmount(cart.getAmount() + productAmount);
-                            }
-                        } else {
-                            int productStock = productService.getProductByNo(productNo).getAmount();
-                            if (productAmount <= productStock && productStock > 0) {
-                                cart.setProduct(productService.getProductByNo(productNo));
-                                cart.setAmount(productAmount);
-                                carts.add(cart);
-                            }
+                Iterator cartIter = carts.iterator();
+                while(cartIter.hasNext()){
+                    Cart cart = (Cart)cartIter.next();
+                    if(cart.getProduct().getNo().equals(productNo)){
+                        int productStock = productService.getProductByNo(productNo).getAmount();
+                        if (productAmount + cart.getAmount() <= productStock && productStock > 0) {
+                            cart.setAmount(cart.getAmount() + productAmount);
+                            return "redirect:/cart";
                         }
                     }
+                }
+                int productStock = productService.getProductByNo(productNo).getAmount();
+                if (productAmount <= productStock && productStock > 0) {
+                    Cart c = new Cart();
+                    c.setProduct(productService.getProductByNo(productNo));
+                    c.setAmount(productAmount);
+                    carts.add(c);
                 }
             }
         }else {
@@ -141,7 +142,7 @@ public class CartController {
             List<Cart> carts = (List<Cart>)session.getAttribute("carts");
             if (productAmount <= productStock) {
                 for(Cart cart : carts){
-                    if(cart.getProduct().getNo() == productNo){
+                    if(cart.getProduct().getNo().equals(productNo)){
                         cart.setAmount(productAmount);
                     }
                 }
@@ -163,7 +164,7 @@ public class CartController {
         if(principal == null){
             List<Cart> carts = (List<Cart>)session.getAttribute("carts");
             for (Cart cart : carts) {
-                if (cart.getProduct().getNo() == productNo) {
+                if (cart.getProduct().getNo().equals(productNo)) {
                     carts.remove(cart);
                     return "redirect:/cart";
                 }
