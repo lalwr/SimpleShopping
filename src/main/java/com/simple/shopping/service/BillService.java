@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface BillService {
     List<Bill> getBillsByUserNo(Long userNo);
+    List<Bill> getBillsByPhone(String phone);
     Bill getBillByNo(Long no);
     Bill addBill(Bill bill);
 }

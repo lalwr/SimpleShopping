@@ -16,20 +16,20 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th th:width="300" style="font-size: x-large" scope="col">상품 이미지</th>
-                <th th:width="300" style="font-size: x-large" scope="col">상품명</th>
-                <th th:width="300" style="font-size: x-large" scope="col">주문 수량</th>
-                <th th:width="300" style="font-size: x-large" scope="col">판매 가격</th>
+                <th class="text-center" th:width="300" style="font-size: x-large" scope="col">상품 이미지</th>
+                <th class="text-center" th:width="300" style="font-size: x-large" scope="col">상품명</th>
+                <th class="text-center" th:width="300" style="font-size: x-large" scope="col">주문 수량</th>
+                <th class="text-center" th:width="300" style="font-size: x-large" scope="col">판매 가격</th>
             </tr>
             </thead>
             <div>
                 <tbody>
                 <tr th:each="cart : ${carts}">
-                    <td><img th:src="@{'/static/images/products/ubuntu.jpg'}" width="200" height="200"></td>
+                    <td class="text-center"><img th:src="@{'/static/images/products/ubuntu.jpg'}" width="200" height="200"></td>
                     <!--<td><img th:src="@{'/static/images/products/' + ${cart.product.name} +'.jpg'}" width="200" height="200"></td>-->
-                    <td style="font-size: x-large" th:text="${cart.product.name}"></td>
-                    <td style="font-size: x-large" th:text="${cart.amount}"></td>
-                    <td style="font-size: x-large" th:text="${cart.product.price * cart.amount}+'원'"></td>
+                    <td class="text-center" style="font-size: x-large" th:text="${cart.product.name}"></td>
+                    <td class="text-center" style="font-size: x-large" th:text="${cart.amount}"></td>
+                    <td class="text-center" style="font-size: x-large" th:text="${cart.product.price * cart.amount}+'원'"></td>
                 </tr>
                 </tbody>
             </div>
@@ -39,33 +39,38 @@
 
     <div class="container">
         <div style="font-size: xx-large" class="font-weight-bold">배송지 정보</div>
-        <form action="/order" method="post">
+        <form id="send" action="/order" method="post">
             <div class="form-group mb-3">
-                <div class="form-group-prepend">
+                <div class="form-group-prepend text">
                     <label>수신자 성명</label>
                 </div>
-                <input class="form-control" type="text" placeholder="주문자 성명" name="userName" th:value="${user.name}">
+                <input required class="form-control" type="text" placeholder="주문자 성명" name="userName" th:value="${user.name}">
             </div>
             <div class="form-group mb-3">
                 <div class="form-group-prepend">
                     <label>배송받을 주소</label>
                     <button type="button" class="btn btn-info btn-sm" id="addressSearch">주소검색</button>
                 </div>
-                <input type="text" class="form-control" id="address" name="userAddress" required="" th:value="${user.address}">
+                <input required type="text" class="form-control" id="address" name="userAddress" th:value="${user.address}">
             </div>
 
             <div class="form-group mb-3">
                 <div class="form-group-prepend">
-                    <label>주문자 연락처</label>
+                    <label>주문 고객 연락처</label>
                 </div>
-                <input class="form-control" type="text" placeholder="연락처" name="userPhone" th:value="${user.phone}">
+                <input required class="form-control" type="text" placeholder="연락처" name="userPhone" th:value="${user.phone}">
+            </div>
+            <div th:if="${user.no} == null" class="form-group mb-3">
+                <div class="form-group-prepend">
+                    <label>주문 확인 비밀번호</label>
+                </div>
+                <input required class="form-control" type="password" placeholder="비밀번호" name="password">
             </div>
             <div>
-                <input class="btn btn-primary btn-lg btn-block" type="submit" value="결제하기">
+                <input th:if="(${totalPrice}==0)" class="btn btn-primary btn-lg btn-block" type="button" value="결제하기" disabled>
+                <input th:unless="(${totalPrice}==0)" class="btn btn-primary btn-lg btn-block" type="submit" value="결제하기">
             </div>
         </form>
-
-
     </div>
 </th:block>
 <body>

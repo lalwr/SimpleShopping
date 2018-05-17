@@ -26,6 +26,12 @@ public class BillServiceImpl implements BillService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Bill> getBillsByPhone(String phone) {
+        return billRepository.findBillsByPhone(phone);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Bill getBillByNo(Long no) {
         return billRepository.findBillByNo(no);
     }
