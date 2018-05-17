@@ -27,7 +27,6 @@ function submitWithJson(method, checkName, data, paramName, items, sendUrl){
 
             for(var j=0, itemSize = items.length ; j < itemSize ; j++ ){
                 var item = document.getElementById(items[j]+'.'+idx);
-                category[items[j]] = item.getAttribute("value");
                 var value = null;
                 if(check.tagName=="INPUT"){
                     value = item.value;
