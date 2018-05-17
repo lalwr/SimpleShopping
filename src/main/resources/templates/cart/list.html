@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
+
+<th:block layout:fragment="html_head">
+    <script th:src="@{/static/js/manageCart.js}"></script>
+    <title>장바구니 리스트</title>
+</th:block>
+
+<th:block layout:fragment="body_main">
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="text-center" th:width="300" style="font-size: large" scope="col">상품 이미지</th>
+                <th class="text-center" th:width="300" style="font-size: large" scope="col">상품명</th>
+                <th class="text-center" th:width="300" style="font-size: large" scope="col">주문 수량</th>
+                <th class="text-center" th:width="300" style="font-size: large" scope="col">판매 가격</th>
+                <th class="text-center" th:width="300" style="font-size: large" scope="col"></th>
+            </tr>
+            </thead>
+            <div>
+                <tbody>
+                <tr th:each="cart : ${carts}">
+                    <td class="text-center"><img th:src="@{'/static/images/products/ubuntu.jpg'}" width="200" height="200"></td>
+                    <!--<td><img th:src="@{'/static/images/products/' + ${cart.product.name} +'.jpg'}" width="200" height="200"></td>-->
+                    <td class="text-center" style="font-size: large" th:text="${cart.product.name}" id="cartName"></td>
+                    <td class="text-center" style="font-size: large"><input th:id="${cart.product.no}" class="col-md-5" type="number" th:value="${cart.amount}" min="1" th:max="${cart.product.amount}"/></td>
+                    <td class="text-center" style="font-size: large" th:text="${cart.product.price * cart.amount}+'원'"></td>
+                    <td class="text-center" style="font-size: large">
+                        <form th:id="${cart.product.no}+putCart" action="/cart" method="post">
+                            <input type="hidden" name="productNo" th:value="${cart.product.no}"/>
+                            <input type="hidden" name="productAmount" th:id="${cart.product.no}+'Amount'"/>
+                            <input type="hidden" name="_method" value="put"/>
+                            <input th:id="'update'+${cart.product.no}" class="btn btn-primary" type="button" th:value="수정하기" th:onclick="|loadProductStock(${cart.product.no})|"/>
+                        </form>
+
+                        <form id="deleteCart" action="/cart" method="post">
+                            <input type="hidden" name="productNo" th:value="${cart.product.no}"/>
+                            <input type="hidden" name="_method" value="delete"/>
+                            <input class="btn btn-secondary" type="submit" th:value="삭제하기"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+
+            </div>
+        </table>
+        <div style="font-size: x-large" id="totalPrice" class="text-lg-center font-weight-bold" th:text="'금액 합계 : ' + ${totalPrice} + ' 원'"></div>
+        <br>
+        <div th:each="cart : ${carts}" class="btnTest">
+            <input type="hidden" name="buttontest" th:onclick="|finalCheckStock(${cart.product.no})|"/>
+        </div>
+        <form id="orderProduct" action="/cart/orderable" method="get">
+            <input type="hidden" id="ordercheck" name="ordercheck">
+            <input th:classappend="(${totalPrice}==0)?'disabled':''" class="btn btn-primary btn-lg btn-block" type="button" value="주문하기" onclick="check()">
+        </form>
+    </div>
+
+</th:block>
+</html>

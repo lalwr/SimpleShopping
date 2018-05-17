@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="row d-flex d-md-block flex-nowrap wrapper">
+        <div class="col-md-2 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar">
+            <div class="list-group border-0 card text-center text-md-left">
+                <a th:href="@{/product/list}" class="list-group-item d-inline-block collapsed"><i class="fas fa-gift"></i> <span class="d-none d-md-inline">상품</span></a>
+                <a th:href="@{/users/user}" class="list-group-item d-inline-block collapsed" sec:authorize="isAuthenticated()"><i class="fas fa-user-circle"></i> <span class="d-none d-md-inline">프로필</span></a>
+                <a th:href="@{/cart}" class="list-group-item d-inline-block collapsed"><i class="fas fa-shopping-basket"></i> <span class="d-none d-md-inline">장바구니</span></a>
+                <a th:href="@{/order}" class="list-group-item d-inline-block collapsed" sec:authorize="isAuthenticated()"><i class="fas fa-credit-card"></i> <span class="d-none d-md-inline">주문</span></a>
+                <a th:href="@{/order/formUnsigned}" class="list-group-item d-inline-block collapsed" sec:authorize="!isAuthenticated()"><i class="fas fa-credit-card"></i> <span class="d-none d-md-inline">주문</span></a>
+                <a th:href="@{/chatrooms}" class="list-group-item d-inline-block collapsed" sec:authorize="isAuthenticated()"><i class="fas fa-comments"></i> <span class="d-none d-md-inline">채팅</span></a>
+                <a th:href="@{/admin/roles}" class="list-group-item d-inline-block collapsed" sec:authorize="hasRole('ROLE_ADMIN')"><i class="fas fa-lock"></i> <span class="d-none d-md-inline">권한</span></a>
+                <a th:href="@{/admin/category/list}" class="list-group-item d-inline-block collapsed" sec:authorize="hasRole('ROLE_ADMIN')"><i class="fas fa-bars"></i> <span class="d-none d-md-inline">카테고리</span></a>
+            </div>
+        </div>
+        <main class="col-md-9 float-left col px-5 pl-md-2 pt-2 main">
+            <th:block layout:fragment="body_main"></th:block>
+        </main>
+    </div>
+</div>

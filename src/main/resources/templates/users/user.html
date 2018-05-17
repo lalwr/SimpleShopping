@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
+
+<th:block layout:fragment="html_head">
+    <script th:src="@{/static/js/user.js}"></script>
+    <title>회원 상세정보</title>
+</th:block>
+
+<th:block layout:fragment="body_main">
+    <div class="container py-3">
+        <div class="row">
+            <div class="mx-auto col-sm-6">
+                <!-- form user info -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">User Information</h4>
+                    </div>
+                    <div class="card-body">
+                        <form class="form" role="form" autocomplete="off" id="formUser" method="post">
+                            <input type ="hidden" name="_method" id="formMethod" value="">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">email</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="email" name="email" id="email" th:value="${user.email}" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">name</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="text" name="name" id="name" th:value="${user.name}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">address</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="text" name="address" id="address" th:value="${user.address}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">phone</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="text" name="phone" id="phone" th:value="${user.phone}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="password" name="password" id="password"  >
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Re Password</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="password" name="rePassword" id="rePassword">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">regdate</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="text" th:value="${#temporals.format(user.regdate, 'yyyy-MM-dd HH:mm')}" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label"></label>
+                                <div class="col-lg-9">
+                                    <input type="reset" class="btn btn-secondary" value="Cancel">
+                                    <input type="button" class="btn btn-primary" value="Save Changes" onclick="user()">
+                                    <input type="button" class="btn btn-danger" value="leave" onclick="leave()">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /form user info -->
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</html>

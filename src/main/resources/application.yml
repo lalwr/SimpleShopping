@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: local
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -25,8 +27,18 @@ spring:
       enabled: true
 #    http://localhost:8080/h2-console
 
+#logging color
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
 
+logging:
+  level:
+    org:
+      hibernate:TRACE
 
+filepath: /images/products/
 #spring:
 #  datasource:
 #    url: jdbc:h2:mem:mydb

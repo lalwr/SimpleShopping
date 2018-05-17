@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
+
+<th:block layout:fragment="html_head">
+    <script th:src="@{/static/js/role.js}"></script>
+    <title>권한 리스트</title>
+</th:block>
+
+<th:block layout:fragment="body_main">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect">Add Roles</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect" name="role">
+            <option value="" selected >Choose...</option>
+            <option value="ADMIN">ADMIN</option>
+            <option value="USER">USER</option>
+        </select>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">User</th>
+            <th scope="col">Use Role</th>
+            <th scope="col">Add Role</th>
+            <th scope="col">Delete Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${not #lists.isEmpty(userList)}" th:each="user, iterStat : ${userList}">
+            <th scope="row" th:text="${iterStat.count}"></th>
+            <td th:text="${user.email}"></td>
+            <td><span th:each="role : ${user.roles}" th:text="${role.roleName + ','}"></span></td>
+            <td>
+                <button type="button" class="btn btn-primary" th:onclick="|roleAddUser(${user.no})|">Add</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" th:each="role : ${user.roles}" th:text="${role.roleName}" th:onclick="|roleDeleteUser(${role.no})|"></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+
+</html>
