@@ -50,7 +50,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Product findProduct(Long no) {
         return adminRepository.findProductByNo(no);
     }

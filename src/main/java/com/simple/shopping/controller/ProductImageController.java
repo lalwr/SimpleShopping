@@ -21,7 +21,7 @@ public class ProductImageController {
         this.productImageService = productImageService;
     }
 
-    @RequestMapping("{imageNo}")
+    @RequestMapping("/{imageNo}")
     public void downImageFile(@PathVariable(name = "imageNo") Long imageNo,
                               HttpServletRequest request,
                               HttpServletResponse response){
