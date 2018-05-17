@@ -61,13 +61,14 @@ public class AdminController {
     @GetMapping(path = "/product")
     public String product(@ModelAttribute Product product,
                           @RequestParam(name="write", required = false) Integer write,
-                          @RequestParam(name="no", required = true) Long no,
+                          @RequestParam(name="no", required = false) Long no,
                           ModelMap model){
+        if(no !=null){
+            Product savedProduct = adminService.findProduct(no);
+            model.addAttribute("product", savedProduct);
+        }
 
-        Product savedProduct = adminService.findProduct(no);
         List<Category> categoryList = categoryService.getCategoryList();
-
-        model.addAttribute("product", savedProduct);
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("write",write);
 
