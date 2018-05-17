@@ -6,6 +6,7 @@ import com.simple.shopping.service.ProductImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,7 +95,24 @@ public class ProductImageServiceImpl implements ProductImageService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ProductImage findProductImageByNo(Long no) {
         return productImageRepository.findProductImageByNo(no);
+    }
+
+    @Override
+    public void deleteProductImageFile(ProductImage productImage){
+        if(productImage!=null){
+            File image = new File(productImage.getPath() + productImage.getSaveName());
+            if(image.exists()){
+                image.delete();
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteProductImageByNo(Long no) {
+        productImageRepository.deleteProductImageByNo(no);
     }
 }

@@ -9,14 +9,14 @@
 
 <th:block layout:fragment="body_main">
     <div style="margin-top: 40px"></div>
-    <form th:action="@{/admin/product}" method="post" id="productForm" enctype="multipart/form-data">
+    <form th:action="(${write} == null? @{/admin/product} : @{/admin/product/update})" method="post" id="productForm" enctype="multipart/form-data">
         <div class="container">
 
             <div class="row">
                 <h2 class="text-center mb-4">상품 관리</h2>
                 <div class="col-sm-12 col-md-7">
                     <div th:object="${product}">
-                        <form>
+                        <!--<form th:action="@{/admin/product method="post""}">-->
                             <div class="form-group">
                                 <label for="name">상품명: </label>
                                 <input type="text" class="form-control" id="name"
@@ -46,20 +46,23 @@
                                 <div th:if="*{productImage!=null and productImage.imagePath != null and productImage.imagePath != ''}">
                                     <img class="rounded mx-auto d-block" th:src="'/admin/product/image/'+*{productImage.no}" width="300" height="300">
                                 </div>
-                                <input th:unless="*{productImage!=null and productImage.imagePath != null && productImage.imagePath != ''}" type="file" class="form-control" id="image" name="file">
+                                <input type="file" class="form-control" id="image" name="file">
                             </div>
                             <div class="form-group">
                                 <label for="description">설명: </label>
                                 <textarea cols="70" rows="5" id="description" name="description"
                                     th:inline="text">[[*{description}]]</textarea>
                             </div>
-                            <input type="hidden" name="write" value="2">
+                            <!--<input type="hidden" name="write" value="2">-->
+                            <span>
+                                <input type="hidden" name="productNo" th:value="${product.no}">
+                            </span>
                             <div th:switch="${write}">
                                 <button th:case="${null}" type="submit" class="btn btn-primary">등록</button>
                                 <button th:case="1" type="submit" class="btn btn-primary">수정</button>
-                                <button th:case="2" type="button" class="btn btn-primary" onclick="submitByMethod('productForm', 'PUT')">수정</button>
+                                <!--<button th:case="2" type="button" class="btn btn-primary" onclick="submitByMethod('productForm', 'PUT')">수정</button>-->
                             </div>
-                        </form>
+                        <!--</form>-->
                     </div>
                 </div>
             </div>

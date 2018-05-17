@@ -2,6 +2,7 @@ package com.simple.shopping.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -69,5 +70,14 @@ public class Product {
         if(productImage.getProduct() != this){
             productImage.setProduct(this);
         }
+    }
+
+    public void setProductRegisterFormValue(Product product){
+        this.name = product.getName();
+        this.description = product.getDescription();
+        this.amount = product.getAmount();
+        this.price = product.getPrice();
+        this.category = product.getCategory();
+        this.setProductImage(product.getProductImage());
     }
 }

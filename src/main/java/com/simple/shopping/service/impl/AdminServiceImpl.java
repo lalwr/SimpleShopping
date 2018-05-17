@@ -69,4 +69,9 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
+    @Transactional
+    public void updateProduct(Product savedProduct, Product inputProduct) {
+        savedProduct.setProductRegisterFormValue(inputProduct);
+    }
 }

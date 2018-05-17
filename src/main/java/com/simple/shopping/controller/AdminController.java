@@ -42,14 +42,9 @@ public class AdminController {
                             ,@RequestParam(name="searchStr", required = false) String searchStr
                             ,@RequestParam(name="categoryNo", required = false) Long categoryNo
                             ,ModelMap modelMap){
-        System.out.println("categoryNo: "+categoryNo);
-//        categoryNo = 1L;
+
         Pagination pagination = new Pagination(page, searchType, searchStr);
-        System.out.println("pagination: "+pagination);
         Page<Product> productList = adminService.getProductList(pagination, categoryNo);
-
-
-
 
         pagination.setButtonCount(5);
         pagination.setTotalCount(productList.getTotalElements());
@@ -60,9 +55,6 @@ public class AdminController {
         modelMap.addAttribute("categoryList", categoryService.getCategoryList());
         modelMap.addAttribute("categoryNo", categoryNo);
 
-        System.out.println(pagination.getStartPage());
-        System.out.println(pagination.getEndPage());
-        System.out.println(pagination.getCurPage());
         return "/admin/product/product_list";
     }
 
@@ -78,11 +70,6 @@ public class AdminController {
         }
         List<Category> categoryList = categoryService.getCategoryList();
 
-        if(product.getProductImage()!=null){
-            System.out.println("=========================================");
-            System.out.println(product.getProductImage().getSaveName());
-        }
-
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("write",write);
 
@@ -94,19 +81,33 @@ public class AdminController {
                              @ModelAttribute Product product,
                              HttpSession session
                             ,HttpServletRequest request){
-        ProductImage productImage = productImageService.saveProductImage(multipartFile);
-        product.setProductImage(productImage);
+        ProductImage productImage = null;
+        if(multipartFile!=null){
+            productImage = productImageService.saveProductImage(multipartFile);
+            product.setProductImage(productImage);
+        }
         adminService.addProduct(product);
-        String realPath = session.getServletContext().getRealPath("/");
-        System.out.println("============================");
-        System.out.println("realPath " +realPath);
         return "redirect:/admin/product/list";
     }
 
-    @PutMapping(path = "/product")
-    public String updateProduct(@RequestBody ProductDto productDto){
-        System.out.println("categoryDto.getCategoryList().size(): "+productDto.getProductList().size());
-//        adminService.addProduct(product);
+    @PostMapping(path = "/product/update")
+    public String updateProduct(@RequestParam(name = "productNo", required = false) Long productNo,
+                                @RequestParam(name = "file", required = false) MultipartFile multipartFile,
+                                @ModelAttribute Product product){
+        Product savedProduct = adminService.findProduct(productNo);
+        ProductImage productImage = null;
+
+        if(multipartFile!=null){
+            if(savedProduct.getProductImage()!=null){
+                productImageService.deleteProductImageFile(savedProduct.getProductImage());
+                productImageService.deleteProductImageByNo(savedProduct.getProductImage().getNo());
+            }
+            productImage = productImageService.saveProductImage(multipartFile);
+            product.setProductImage(productImage);
+        }
+        product.setProductImage(productImage);
+        adminService.updateProduct(savedProduct, product);
+
         return "redirect:/admin/product/list";
     }
 
@@ -114,9 +115,7 @@ public class AdminController {
     @ResponseBody
     public String ajaxDeleteProduct(@RequestBody ProductDto productDto){
         String message = "success";
-        for (Product product: productDto.getProductList()){
-            System.out.println(product.getNo());
-        }
+
         adminService.deleteProductList(productDto.getProductList());
 
         return message;

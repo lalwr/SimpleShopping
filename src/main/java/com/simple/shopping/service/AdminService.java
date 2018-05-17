@@ -17,5 +17,5 @@ public interface AdminService {
     Product findProduct(Long no);
     void deleteProductByNo(Long no);
     void deleteProductList(List<Product> productList);
-
+    void updateProduct(Product savedProduct, Product inputProduct);
 }
