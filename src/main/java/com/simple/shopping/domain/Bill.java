@@ -20,6 +20,7 @@ public class Bill {
     private String name;
     private String address;
     private String phone;
+    private String password;
     private String status;
     private LocalDateTime regdate;
 
@@ -34,7 +35,7 @@ public class Bill {
         }
     }
 
-    @OneToMany(mappedBy = "bill", fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
     public void addOrderProduct(OrderProduct orderProduct){

@@ -14,9 +14,13 @@ public class OrderProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
 
-    private int amount;
+    private String imagePath;
 
-//    private String status;
+    private String name;
+
+    private int price;
+
+    private int amount;
 
     @ManyToOne
     @JoinColumn(name = "bill_no")
