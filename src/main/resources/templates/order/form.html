@@ -25,7 +25,7 @@
             <div>
                 <tbody>
                 <tr th:each="cart : ${carts}">
-                    <td class="text-center"><img th:src="@{'/static/images/products/ubuntu.jpg'}" width="200" height="200"></td>
+                    <td class="text-center"><img th:src="@{'/static/images/products/Ubuntu.jpg'}" width="200" height="200"></td>
                     <!--<td><img th:src="@{'/static/images/products/' + ${cart.product.name} +'.jpg'}" width="200" height="200"></td>-->
                     <td class="text-center" style="font-size: x-large" th:text="${cart.product.name}"></td>
                     <td class="text-center" style="font-size: x-large" th:text="${cart.amount}"></td>
