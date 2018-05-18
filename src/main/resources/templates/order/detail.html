@@ -18,8 +18,7 @@
             <div>
                 <tbody>
                 <tr th:each="op : ${orderProducts}">
-                    <td class="text-center"><img th:src="@{'/static/images/products/Ubuntu.jpg'}" width="200" height="200"></td>
-                    <!--<td><img th:src="@{'/static/images/products/' + ${op.name} +'.jpg'}" width="200" height="200"></td>-->
+                    <td class="text-center"><img th:src="@{/product/image}+'/'+${op.product.productImage.no}" width="200" height="200"></td>
                     <td class="text-center" style="font-size: x-large" th:text="${op.name}"></td>
                     <td class="text-center" style="font-size: x-large" th:text="${op.amount}"/></td>
                     <td style="font-size: x-large" th:text="${op.price * op.amount}+'원'"></td>
@@ -30,6 +29,5 @@
         </table>
         <div style="font-size: x-large" class="text-lg-center font-weight-bold" th:text="'금액 합계 : ' + ${totalPrice} + ' 원'"></div>
     </div>
-
 </th:block>
 </html>

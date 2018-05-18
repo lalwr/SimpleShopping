@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface ProductImageService {
-    ProductImage saveProductImage(MultipartFile multipartFile);
+    ProductImage saveProductImage(MultipartFile multipartFile, String filePath);
     void downProductImage(HttpServletRequest request, HttpServletResponse response, ProductImage productImage);
     ProductImage findProductImageByNo(Long No);
     void deleteProductImageFile(ProductImage productImage);

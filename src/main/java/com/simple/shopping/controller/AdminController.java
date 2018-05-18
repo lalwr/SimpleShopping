@@ -82,7 +82,7 @@ public class AdminController {
                             ,HttpServletRequest request){
         ProductImage productImage = null;
         if(multipartFile!=null){
-            productImage = productImageService.saveProductImage(multipartFile);
+            productImage = productImageService.saveProductImage(multipartFile, request.getContextPath());
             product.setProductImage(productImage);
         }
         adminService.addProduct(product);
@@ -90,9 +90,11 @@ public class AdminController {
     }
 
     @PostMapping(path = "/product/update")
-    public String updateProduct(@RequestParam(name = "productNo", required = false) Long productNo,
+    public String updateProduct(HttpServletRequest servletRequest,
+                                @RequestParam(name = "productNo", required = false) Long productNo,
                                 @RequestParam(name = "file", required = false) MultipartFile multipartFile,
                                 @ModelAttribute Product product){
+        String filepath = servletRequest.getContextPath();
         Product savedProduct = adminService.findProduct(productNo);
         ProductImage productImage = null;
 
@@ -101,7 +103,7 @@ public class AdminController {
                 productImageService.deleteProductImageFile(savedProduct.getProductImage());
                 productImageService.deleteProductImageByNo(savedProduct.getProductImage().getNo());
             }
-            productImage = productImageService.saveProductImage(multipartFile);
+            productImage = productImageService.saveProductImage(multipartFile, filepath);
             product.setProductImage(productImage);
         }
         product.setProductImage(productImage);

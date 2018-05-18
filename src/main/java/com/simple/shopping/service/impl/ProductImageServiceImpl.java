@@ -19,8 +19,6 @@ import java.util.UUID;
 @Service
 public class ProductImageServiceImpl implements ProductImageService{
     ProductImageRepository productImageRepository;
-    @Value("${filepath}")
-    String filePath;
 
     @Autowired
     public ProductImageServiceImpl(ProductImageRepository productImageRepository){
@@ -28,7 +26,8 @@ public class ProductImageServiceImpl implements ProductImageService{
     }
 
     @Override
-    public ProductImage saveProductImage(MultipartFile multipartFile) {
+    public ProductImage saveProductImage(MultipartFile multipartFile, String filePath) {
+        filePath += "resources/static/images/products/";
         ProductImage productImage = new ProductImage();
         UUID uuid = UUID.randomUUID();
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -42,7 +41,7 @@ public class ProductImageServiceImpl implements ProductImageService{
         productImage.setContentType(multipartFile.getContentType());
         productImage.setSize(multipartFile.getSize());
 
-        String filePath = dir+productImage.getSaveName();
+        filePath = dir+productImage.getSaveName();
         File file = new File(dir);
         byte[] fileBuffer = new byte[1024];
         int length = 0;

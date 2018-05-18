@@ -23,8 +23,6 @@ public class Product {
 
     private String description;
 
-    private String imagePath;
-
     private int amount;
 
     private int price;
