@@ -81,7 +81,7 @@ public class CategoryController {
 
             categoryService.deleteCategoryList(categoryDto.getCategoryList());
 
-        return"success";
+        return "success";
 
     }
 
