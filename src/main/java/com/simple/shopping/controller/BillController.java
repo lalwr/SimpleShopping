@@ -74,7 +74,6 @@ public class BillController {
                         OrderProduct orderProduct = new OrderProduct();
                         orderProduct.setBill(bill);
                         orderProduct.setName(cart.getProduct().getName());
-                        orderProduct.setImagePath(cart.getProduct().getImagePath());
                         orderProduct.setAmount(cart.getAmount());
                         orderProduct.setPrice(cart.getProduct().getPrice());
                         bill.addOrderProduct(orderProduct);
@@ -109,7 +108,6 @@ public class BillController {
                     if (cart.getAmount() <= productStock) {
                         OrderProduct orderProduct = new OrderProduct();
                         orderProduct.setProduct(cart.getProduct());
-                        orderProduct.setImagePath(cart.getProduct().getImagePath());
                         orderProduct.setName(cart.getProduct().getName());
                         orderProduct.setAmount(cart.getAmount());
                         orderProduct.setPrice(cart.getProduct().getPrice());
