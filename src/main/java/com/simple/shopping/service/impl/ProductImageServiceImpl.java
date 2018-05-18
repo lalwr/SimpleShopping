@@ -27,7 +27,7 @@ public class ProductImageServiceImpl implements ProductImageService{
 
     @Override
     public ProductImage saveProductImage(MultipartFile multipartFile, String filePath) {
-        filePath += "resources/static/images/products/";
+        filePath += "src/main/resources/static/images/products/";
         ProductImage productImage = new ProductImage();
         UUID uuid = UUID.randomUUID();
         LocalDateTime localDateTime = LocalDateTime.now();
