@@ -25,8 +25,7 @@
 
         <div class="row">
             <div class="col-md-6" th:if="${not #lists.isEmpty(products)}" th:each="product : ${products}">
-                <div><a th:href="@{'/product/detail/' + ${product.no}}"><img class="rounded mx-auto d-block" th:src="@{/admin/product/image}+'/'+${product.productImage.no}" width="300" height="300"></a></div>
-                <!--<div><a th:href="@{'/product/detail/' + ${product.no}}"><img class="rounded mx-auto d-block" th:src="@{'/static/images/products/'+${product.name}+'.jpg'}" width="300" height="300"></a></div>-->
+                <div><a th:href="@{'/product/detail/' + ${product.no}}"><img class="rounded mx-auto d-block" th:src="@{/product/image}+'/'+${product.productImage.no}" width="300" height="300"></a></div>
                 <div style="font-weight: bold; font-size: xx-large" class="text-lg-center" th:text="${product.name}"></div><br>
                 <div class="text-center" th:text="'판매가격 : ' + ${product.price}+'원'"></div><br>
             </div>
