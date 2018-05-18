@@ -55,7 +55,7 @@ public class AdminController {
         modelMap.addAttribute("categoryList", categoryService.getCategoryList());
         modelMap.addAttribute("categoryNo", categoryNo);
 
-        return "/admin/product/product_list";
+        return "admin/product/product_list";
     }
 
     @GetMapping(path = "/product")
@@ -72,7 +72,7 @@ public class AdminController {
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("write",write);
 
-        return "/admin/product/product_detail";
+        return "admin/product/product_detail";
     }
 
     @PostMapping(path = "/product")

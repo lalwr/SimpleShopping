@@ -139,7 +139,7 @@ public class BillController {
 
         Long totalPrice = orderProductService.getTotalPrice(bill.getNo());
         modelMap.addAttribute("totalPrice", totalPrice);
-        return "/order/detail";
+        return "order/detail";
     }
 
     @GetMapping(path = "/unsigned")
@@ -189,7 +189,7 @@ public class BillController {
             User user = new User();
             modelMap.addAttribute("user", user);
 
-            return "/order/form";
+            return "order/form";
         }else {
             User user = userService.getUserByEmail(principal.getName());
             modelMap.addAttribute("user", user);
@@ -207,7 +207,7 @@ public class BillController {
             modelMap.addAttribute("totalPrice", totalPrice);
 
 
-            return "/order/form";
+            return "order/form";
         }
     }
 

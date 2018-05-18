@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping("/admin/product/image")
+@RequestMapping("/product/image")
 public class ProductImageController {
     ProductImageService productImageService;
 

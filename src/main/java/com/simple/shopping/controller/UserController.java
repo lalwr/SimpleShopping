@@ -36,7 +36,7 @@ public class UserController {
     public String join(@Valid UserJoinForm userJoinForm, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
-            return "/login/join";
+            return "login/join";
         }
 
         if(!userJoinForm.getPassword().equals(userJoinForm.getRePassword())){
