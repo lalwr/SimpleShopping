@@ -54,8 +54,8 @@ public class CartController {
                     int productAmount = cart.getAmount();
                     cartService.addCart(principal.getName(), productNo, productAmount);
                 }
+                sessionCart.clear();
             }
-            sessionCart.clear();
             List<Cart> carts = cartService.getCartsbyUserNo(userNo);
             modelMap.addAttribute("carts", carts);
 
