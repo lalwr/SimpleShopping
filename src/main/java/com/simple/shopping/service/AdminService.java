@@ -1,5 +1,6 @@
 package com.simple.shopping.service;
 
+import com.simple.shopping.domain.Bill;
 import com.simple.shopping.domain.Category;
 import com.simple.shopping.domain.Product;
 import com.simple.shopping.domain.ProductImage;
@@ -18,4 +19,7 @@ public interface AdminService {
     void deleteProductByNo(Long no);
     void deleteProductList(List<Product> productList);
     void updateProduct(Product savedProduct, Product inputProduct);
+    Page<Bill> getBillList(Pagination pagination);
+    Bill getBill(Long no);
+    void updateBillStatus(Bill bill, String status);
 }
