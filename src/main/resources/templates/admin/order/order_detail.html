@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layout/main_layout">
+
+<th:block layout:fragment="html_head">
+    <script th:src="@{/static/js/admin.js}"></script>
+    <title>주문 보기</title>
+</th:block>
+
+<th:block layout:fragment="body_main">
+    <div style="margin-top: 40px"></div>
+    <form th:action="@{/admin/order}" method="post" id="orderForm">
+        <div class="container">
+
+            <div class="row">
+                <h2 class="text-center mb-4">주문 관리</h2>
+                <div class="col-sm-12 col-md-7">
+                    <div th:object="${bill}">
+                        <div class="form-group">
+                            주문자:
+                            <span th:text="*{user.name}">
+                        </span>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                배송지:
+                                <span th:text="*{address}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                연락처:
+                                <span th:text="*{phone}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            주문상품:
+                            <span  th:each="product, status: *{orderProducts}" th:text="not ${status.last}? ${product.name}+', ' : ${product.name}"></span>
+                        </div>
+                        <div class="form-group">
+                            결제금액:
+                            <span th:text="*{totalPrice}">
+                        </div>
+                        <form th:action="@{/admin/order}" method="post" id="orderForm">
+                            <div class="form-group">
+                                <label for="status">주문상태: </label>
+                                <select name="status" id="status">
+                                    <option value="상품준비중" th:selected="*{status=='배송중'}?'selected'">상품준비중</option>
+                                    <option value="배송중" th:selected="*{status=='배송중'}?'selected'">배송중</option>
+                                    <option value="배송완료" th:selected="*{status=='배송완료'}?'selected'">배송완료</option>
+                                </select>
+                                <button type="button " class="btn btn-primary" onclick="submitByMethod('orderForm', 'PUT')">수정</button>
+                            </div>
+                            <div>
+                                <a th:href="@{/admin/order/list}" class="btn btn-primary">주문목록</a>
+                            </div>
+                            <input type="hidden" name="no" th:value="*{no}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+
+</th:block>
+</html>

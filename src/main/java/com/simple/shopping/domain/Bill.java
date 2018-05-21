@@ -44,4 +44,12 @@ public class Bill {
             orderProduct.setBill(this);
         }
     }
+
+    public int getTotalPrice(){
+        int totalPrice = 0;
+        for(OrderProduct orderProduct: orderProducts){
+            totalPrice+=orderProduct.getPrice()*orderProduct.getAmount();
+        }
+        return totalPrice;
+    }
 }
