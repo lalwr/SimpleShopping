@@ -38,6 +38,14 @@ logging:
     org:
       hibernate:TRACE
 
+filePath: src/main/resources/static/images/products/
+
+---
+spring:
+  profiles: aws
+
+filePath:
+
 #spring:
 #  datasource:
 #    url: jdbc:h2:mem:mydb

@@ -14,11 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Service
 public class ProductImageServiceImpl implements ProductImageService{
     ProductImageRepository productImageRepository;
+
+    @Value("${filePath}")
+    private String filePath;
 
     @Autowired
     public ProductImageServiceImpl(ProductImageRepository productImageRepository){
@@ -27,14 +31,11 @@ public class ProductImageServiceImpl implements ProductImageService{
 
     @Override
     public ProductImage saveProductImage(MultipartFile multipartFile, String filePath) {
-        filePath += "src/main/resources/static/images/products/";
         ProductImage productImage = new ProductImage();
         UUID uuid = UUID.randomUUID();
-        LocalDateTime localDateTime = LocalDateTime.now();
-        StringBuilder sb = new StringBuilder();
-        sb.append(localDateTime.getYear()).append("/")
-                .append(localDateTime.getMonthValue()).append("/").append(localDateTime.getDayOfMonth()).append("/");
-        String dir = filePath+sb.toString();
+        String localDatedir = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/"));
+        String dir = filePath+localDatedir;
+        System.out.println(dir);
         productImage.setOriginFileName(multipartFile.getOriginalFilename());
         productImage.setSaveName(uuid.toString());
         productImage.setPath(dir);
@@ -63,6 +64,9 @@ public class ProductImageServiceImpl implements ProductImageService{
 
     @Override
     public void downProductImage(HttpServletRequest request, HttpServletResponse response, ProductImage productImage){
+        if(filePath == null){
+             filePath = "";
+        }
         OutputStream os = null;
         try{
             os = response.getOutputStream();
@@ -71,13 +75,13 @@ public class ProductImageServiceImpl implements ProductImageService{
         }
 
         try(
-                FileInputStream fis = new FileInputStream(productImage.getPath()+productImage.getSaveName());){
+                FileInputStream fis = new FileInputStream(filePath+productImage.getPath()+productImage.getSaveName());){
 
             //응답 헤더 설정
             response.setHeader("Content-Disposition", "attachment; filename=\"" + URLEncoder.encode(productImage.getOriginFileName(), "UTF-8") + "\";");
             response.setHeader("Content-Transfer-Encoding", "binary");
             response.setHeader("Content-Type", productImage.getContentType());
-            response.setHeader("Content-Length", Long.toString(productImage.getSize()));
+//            response.setHeader("Content-Length", Long.toString(productImage.getSize()));
             response.setHeader("Pragma", "no-cache;");
             response.setHeader("Expires", "-1;");
 
