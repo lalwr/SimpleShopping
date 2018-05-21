@@ -39,7 +39,7 @@ public class AdminRepositoryCustomImpl extends QuerydslRepositorySupport impleme
                     break;
             }
         }
-        if(categoryNo != null && categoryNo != 0L){
+        if(categoryNo != null && categoryNo != 0L && categoryNo!=1){
             query.where(product.category.no.eq(categoryNo));
         }
 
@@ -49,4 +49,5 @@ public class AdminRepositoryCustomImpl extends QuerydslRepositorySupport impleme
 
         return new PageImpl<>(productList, pageable, totalCount);
     }
+
 }
