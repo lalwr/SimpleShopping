@@ -7,6 +7,7 @@ import com.simple.shopping.service.AdminService;
 import com.simple.shopping.service.CategoryService;
 import com.simple.shopping.service.ProductImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +24,9 @@ public class AdminController {
     AdminService adminService;
     CategoryService categoryService;
     ProductImageService productImageService;
+
+    @Value("${filePath}")
+    private String filePath;
 
     @Autowired
     public AdminController(AdminService adminService, CategoryService categoryService, ProductImageService productImageService){
@@ -75,9 +79,12 @@ public class AdminController {
                              @ModelAttribute Product product,
                              HttpSession session
                             ,HttpServletRequest request){
+        if("".equals(filePath)) {
+            filePath = request.getContextPath();
+        }
         ProductImage productImage = null;
         if(multipartFile!=null){
-            productImage = productImageService.saveProductImage(multipartFile, request.getContextPath());
+            productImage = productImageService.saveProductImage(multipartFile, filePath);
             product.setProductImage(productImage);
         }
         adminService.addProduct(product);
@@ -89,7 +96,12 @@ public class AdminController {
                                 @RequestParam(name = "productNo", required = false) Long productNo,
                                 @RequestParam(name = "file", required = false) MultipartFile multipartFile,
                                 @ModelAttribute Product product){
-        String filepath = servletRequest.getContextPath();
+        System.out.println("--------------------");
+        System.out.println(filePath);
+        System.out.println("--------------------");
+        if("".equals(filePath)) {
+            filePath = servletRequest.getContextPath();
+        }
         Product savedProduct = adminService.findProduct(productNo);
         ProductImage productImage = null;
 
@@ -98,7 +110,7 @@ public class AdminController {
                 productImageService.deleteProductImageFile(savedProduct.getProductImage());
                 productImageService.deleteProductImageByNo(savedProduct.getProductImage().getNo());
             }
-            productImage = productImageService.saveProductImage(multipartFile, filepath);
+            productImage = productImageService.saveProductImage(multipartFile, filePath);
             product.setProductImage(productImage);
         }
         product.setProductImage(productImage);
